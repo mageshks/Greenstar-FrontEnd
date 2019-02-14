@@ -26,31 +26,11 @@ export class SchoolData {
             columns: {
                 className: {
                     title: 'Class',
-                    type: 'string',
-                    editor: {
-                        type: 'list',
-                        config: {
-                            selectText: 'Select',
-                            list: this.getClassFieldValue()
-                        },
-                    }
+                    type: 'number',
                 },
                 sectionName: {
                     title: 'Section',
                     type: 'string',
-                    editor: {
-                        type: 'list',
-                        config: {
-                            selectText: 'Select',
-                            list: [
-                                { title: 'A', value: 'A' },
-                                { title: 'B', value: 'B' },
-                                { title: 'C', value: 'C' },
-                                { title: 'D', value: 'D' },
-                                { title: 'E', value: 'D' }
-                            ]
-                        },
-                    }
                 }
             }
         };
@@ -141,32 +121,11 @@ export class SchoolData {
     public static getDefaultPerfParamDetail(): IPerformanceParam[] {
 
         var classList: IPerformanceParam[] = [
-            { paramTitle: 'Attendance', paramDesc: 'Attendance Performance' },
-            { paramTitle: 'Disciplain', paramDesc: 'Disciplain Performance' },
-            { paramTitle: 'Homework', paramDesc: 'Homework Performance' }
+            { paramTitle: 'Attendence', paramDesc: 'Attendence Performance' },
+            { paramTitle: 'Desciplan', paramDesc: 'Desciplan Performance' },
+            { paramTitle: 'Home Work', paramDesc: 'Home Work' }
         ];
         return classList;
-    }
-
-    public static getClassFieldValue(): any {
-
-        var classValues: any[] = [
-            { title: 'LKG', value: 'LKG' },
-            { title: 'UKG', value: 'UKG' },
-            { title: 'First', value: 'First' },
-            { title: 'Second', value: 'Second' },
-            { title: 'Third', value: 'Third' },
-            { title: 'Fourth', value: 'Fourth' },
-            { title: 'Fifth', value: 'Fifth' },
-            { title: 'Sixth', value: 'Sixth' },
-            { title: 'Seventh', value: 'Seventh' },
-            { title: 'Eighth', value: 'Eighth' },
-            { title: 'Ninth', value: 'Ninth' },
-            { title: 'Tenth', value: 'Tenth' },
-            { title: 'Eleventh', value: 'Eleventh' },
-            { title: 'Twelveth', value: 'Twelveth' }
-        ];
-        return classValues;
     }
 
 }
