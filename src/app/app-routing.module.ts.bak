@@ -8,18 +8,13 @@ import {
   NbRequestPasswordComponent,
   NbResetPasswordComponent,
 } from '@nebular/auth';
+import { LoginComponent } from './pages/login/login.component';
 
-import { PAGE_ROUTES } from './pages/pages-routing.module';
-
-const parentRoutes: Routes = [
-  {
-    path: 'greenstarui',
-    children: [      
-      { path: 'login', loadChildren: 'app/login/login.module#LoginModule' },
-      { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },
-    ]
-  },
-  { path: '', redirectTo: 'greenstarui/login', pathMatch: 'full' },
+const routes: Routes = [
+  { path: '', redirectTo: 'pages', pathMatch: 'full' },
+  { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },
+  { path: 'pages/mainmod/dashboard', loadChildren: 'app/pages/pages.module#PagesModule' },
+    
 ];
 
 const config: ExtraOptions = {
@@ -28,7 +23,7 @@ const config: ExtraOptions = {
 };
 
 @NgModule({
-  imports: [RouterModule.forRoot(parentRoutes, config)],
+  imports: [RouterModule.forRoot(routes, config)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {

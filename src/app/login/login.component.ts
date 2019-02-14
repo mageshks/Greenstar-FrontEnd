@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'ngx-login-layout',
+  selector: 'ngx-login-pages',
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
@@ -12,7 +12,7 @@ export class LoginComponent {
   }
 
   public doLoginAuth(): void {
-    this.router.navigate(['/pages/mainmod/dashboard']);
+    this.router.navigate(['greenstarui/pages/dashboard']);
   }
 
 }

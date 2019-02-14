@@ -18,7 +18,7 @@ export const PAGE_ROUTES: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(PAGE_ROUTES)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class PagesRoutingModule {

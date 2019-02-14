@@ -4,12 +4,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Dashboard',
     icon: 'nb-grid-b-outline',
-    link: '/greenstarui/pages/dashboard'
+    link: '/pages/dashboard'
   },
   {
     title: 'School',
     icon: 'nb-home',
-    link: '/greenstarui/pages/school'
+    link: '/pages/dashboard'
    },
   {
     title: 'Student',
