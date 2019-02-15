@@ -1,7 +1,5 @@
-export class ISchoolDetail {    IHoliday: any[];
+export class ISchoolDetail {
 
-
-    public schoolId: number;
     public schoolName: string;
     public address: string;
     public city: string;
@@ -14,12 +12,6 @@ export class ISchoolDetail {    IHoliday: any[];
     // perofrmance parameter
     public perfParamType: string
     public perfParamList: IPerformanceParam[];
-
-    // holiday information
-    public holidays: IHoliday[];
-
-    // weekend working day information
-    public weekendWorkingDayes: IWeekendWorkingDay[];
 }
 
 export class IClass {
@@ -30,15 +22,4 @@ export class IClass {
 export class IPerformanceParam {
     public paramTitle: string;
     public paramDesc: string;
-}
-
-export class IHoliday {
-    public fromDate: string;
-    public toDate: string;
-    public description: string;
-}
-
-export class IWeekendWorkingDay {
-    public workingDate: string;
-    public reason: string;
 }

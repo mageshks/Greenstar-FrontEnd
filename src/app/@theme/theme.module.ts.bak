@@ -65,7 +65,6 @@ import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { LoginLayoutComponent } from './layouts/sample/login.layout';
-import { SmartTableDatePickerComponent } from './components/smart-table-date-picker-component/smart-table-date-picker.components';
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
@@ -99,7 +98,7 @@ const NB_MODULES = [
   NbSpinnerModule,
   NbRadioModule,
   NbSelectModule,
-  NbTooltipModule
+  NbTooltipModule,
 ];
 
 const COMPONENTS = [
@@ -115,12 +114,11 @@ const COMPONENTS = [
   SampleLayoutComponent,
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
-  LoginLayoutComponent,
-  SmartTableDatePickerComponent
+  LoginLayoutComponent
 ];
 
 const ENTRY_COMPONENTS = [
-  ThemeSwitcherListComponent
+  ThemeSwitcherListComponent,
 ];
 
 const PIPES = [

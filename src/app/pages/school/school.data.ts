@@ -1,4 +1,5 @@
-import { ISchoolDetail, IClass, IPerformanceParam } from "./school.interface";
+import { ISchoolDetail, IClass, IPerformanceParam, IHoliday } from "./school.interface";
+import { SmartTableDatePickerComponent } from "../../@theme/components/smart-table-date-picker-component/smart-table-date-picker.components";
 
 export class SchoolData {
 
@@ -13,15 +14,17 @@ export class SchoolData {
                 addButtonContent: '<i class="nb-plus"></i>',
                 createButtonContent: '<i class="nb-checkmark"></i>',
                 cancelButtonContent: '<i class="nb-close"></i>',
+                confirmCreate: true 
             },
             edit: {
                 editButtonContent: '<i class="nb-edit"></i>',
                 saveButtonContent: '<i class="nb-checkmark"></i>',
                 cancelButtonContent: '<i class="nb-close"></i>',
+                confirmSave: true 
             },
             delete: {
                 deleteButtonContent: '<i class="nb-trash"></i>',
-                confirmDelete: true,
+                confirmDelete: true
             },
             columns: {
                 className: {
@@ -64,11 +67,13 @@ export class SchoolData {
                 addButtonContent: '<i class="nb-plus"></i>',
                 createButtonContent: '<i class="nb-checkmark"></i>',
                 cancelButtonContent: '<i class="nb-close"></i>',
+                confirmCreate: true 
             },
             edit: {
                 editButtonContent: '<i class="nb-edit"></i>',
                 saveButtonContent: '<i class="nb-checkmark"></i>',
                 cancelButtonContent: '<i class="nb-close"></i>',
+                confirmSave: true 
             },
             delete: {
                 deleteButtonContent: '<i class="nb-trash"></i>',
@@ -107,8 +112,107 @@ export class SchoolData {
         return settings;
     }
 
+    public static getSchoolHolidaySetting(): any {
+        let settings: any = {
+            add: {
+                addButtonContent: '<i class="nb-plus"></i>',
+                createButtonContent: '<i class="nb-checkmark"></i>',
+                cancelButtonContent: '<i class="nb-close"></i>',
+                confirmCreate: true 
+            },
+            edit: {
+                editButtonContent: '<i class="nb-edit"></i>',
+                saveButtonContent: '<i class="nb-checkmark"></i>',
+                cancelButtonContent: '<i class="nb-close"></i>',
+                confirmSave: true 
+            },
+            delete: {
+                deleteButtonContent: '<i class="nb-trash"></i>',
+                confirmDelete: true
+            },
+            columns: {
+                fromDate: {
+                    title: 'From Date',
+                    type: 'html',
+                    editor: {type: 'custom', component: SmartTableDatePickerComponent }
+                },
+                toDate: {
+                    title: 'To Date',
+                    type: 'html',
+                    editor: {type: 'custom', component: SmartTableDatePickerComponent }
+                },
+                description: {
+                    title: 'Description',
+                    type: 'string',
+                }
+            }
+        };
+
+        return settings;
+    }
+
+    public static getSchoolWeekendWorkingSetting(): any {
+        let settings: any = {
+            add: {
+                addButtonContent: '<i class="nb-plus"></i>',
+                createButtonContent: '<i class="nb-checkmark"></i>',
+                cancelButtonContent: '<i class="nb-close"></i>',
+                confirmCreate: true 
+            },
+            edit: {
+                editButtonContent: '<i class="nb-edit"></i>',
+                saveButtonContent: '<i class="nb-checkmark"></i>',
+                cancelButtonContent: '<i class="nb-close"></i>',
+                confirmSave: true 
+            },
+            delete: {
+                deleteButtonContent: '<i class="nb-trash"></i>',
+                confirmDelete: true
+            },
+            columns: {
+                workingDate: {
+                    title: 'Working Date',
+                    type: 'html',
+                    editor: {type: 'custom', component: SmartTableDatePickerComponent }
+                },
+                reason: {
+                    title: 'Reason',
+                    type: 'string',
+                }
+            }
+        };
+
+        return settings;
+    }
+
+    public static createSchoolDetailObject(): ISchoolDetail {
+        
+        // school information
+        this.schoolDetail.schoolName = '';
+        this.schoolDetail.address = '';
+        this.schoolDetail.city = '';
+        this.schoolDetail.state = '';
+        this.schoolDetail.district = '';
+
+        // class detail
+        this.schoolDetail.classList = [];
+
+        // default performance parameters initialized
+        this.schoolDetail.perfParamType = this.PERF_PARAM_DEFAULT;
+        this.schoolDetail.perfParamList = this.getDefaultPerfParamDetail();
+
+        // holidays
+        this.schoolDetail.holidays = [];
+
+        // weekend working days
+        this.schoolDetail.weekendWorkingDayes = [];
+
+        return this.schoolDetail;
+    }
+
     public static getSchoolDetails(): ISchoolDetail {
 
+        // school information
         this.schoolDetail.schoolName = 'SSVM Matriculation';
         this.schoolDetail.address = 'Coimbatore';
         this.schoolDetail.city = 'Coimbatore';
@@ -167,6 +271,16 @@ export class SchoolData {
             { title: 'Twelveth', value: 'Twelveth' }
         ];
         return classValues;
+    }
+
+    public static getHolidaysDetail(): IHoliday[] {
+        
+        var testHolidays: IHoliday[] = [
+            { fromDate: '2019-01-10', toDate: '2019-01-15', description: 'aaa' },
+            { fromDate: '2019-02-01', toDate: '2019-02-05', description: 'bbb' },
+            { fromDate: '2019-03-25', toDate: '2019-03-30', description: 'ccc' }
+        ];
+        return testHolidays;
     }
 
 }

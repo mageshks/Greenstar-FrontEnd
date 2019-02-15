@@ -5,7 +5,6 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { SchoolListComponent } from './school-list.component';
 import { SchoolComponent } from './school.component';
 import { NbDialogModule } from '@nebular/theme';
-import { SmartTableDatePickerComponent } from '../../@theme/components/smart-table-date-picker-component/smart-table-date-picker.components';
 
 @NgModule({
   imports: [
@@ -18,8 +17,7 @@ import { SmartTableDatePickerComponent } from '../../@theme/components/smart-tab
     SchoolComponent
   ],
   entryComponents: [
-    SchoolComponent,
-    SmartTableDatePickerComponent
+    SchoolComponent
   ],
 })
 export class SchoolModule { }

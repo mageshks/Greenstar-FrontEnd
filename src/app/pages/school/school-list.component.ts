@@ -3,6 +3,9 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SchoolComponent } from './school.component';
 import { NbDialogService } from '@nebular/theme';
+import { ISchoolDetail } from './school.interface';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'ngx-school',
@@ -11,15 +14,20 @@ import { NbDialogService } from '@nebular/theme';
 })
 export class SchoolListComponent {
 
-  constructor(private dialogService: NbDialogService) {
+  constructor(private modalService: NgbModal) {
   }
 
-  open() {
-    this.dialogService.open(SchoolComponent, { 
-      context: {
-        title: 'Add School & Class',
-      },
-    });
+  public createSchool(): void {
+    const activeModal = this.modalService.open(SchoolComponent, { size: 'lg', container: 'nb-layout' });
+    activeModal.componentInstance.title = 'Add School & Class';
+    activeModal.componentInstance.action = 'create';
+  }
+
+  public editSchool(schoolDetail: ISchoolDetail): void {
+    const activeModal = this.modalService.open(SchoolComponent, { size: 'lg', container: 'nb-layout' });
+    activeModal.componentInstance.title = 'Edit School & Class';
+    activeModal.componentInstance.action = 'edit';
+    activeModal.componentInstance.schoolId = schoolDetail.schoolId;
   }
 
 }
