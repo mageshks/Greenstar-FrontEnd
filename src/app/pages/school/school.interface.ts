@@ -1,4 +1,4 @@
-export class ISchoolDetail {    IHoliday: any[];
+export class ISchoolDetail {
 
 
     public schoolId: number;

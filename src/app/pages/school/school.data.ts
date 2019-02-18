@@ -14,13 +14,13 @@ export class SchoolData {
                 addButtonContent: '<i class="nb-plus"></i>',
                 createButtonContent: '<i class="nb-checkmark"></i>',
                 cancelButtonContent: '<i class="nb-close"></i>',
-                confirmCreate: true 
+                confirmCreate: true
             },
             edit: {
                 editButtonContent: '<i class="nb-edit"></i>',
                 saveButtonContent: '<i class="nb-checkmark"></i>',
                 cancelButtonContent: '<i class="nb-close"></i>',
-                confirmSave: true 
+                confirmSave: true
             },
             delete: {
                 deleteButtonContent: '<i class="nb-trash"></i>',
@@ -45,13 +45,7 @@ export class SchoolData {
                         type: 'list',
                         config: {
                             selectText: 'Select',
-                            list: [
-                                { title: 'A', value: 'A' },
-                                { title: 'B', value: 'B' },
-                                { title: 'C', value: 'C' },
-                                { title: 'D', value: 'D' },
-                                { title: 'E', value: 'D' }
-                            ]
+                            list: this.getSectionFieldValue()
                         },
                     }
                 }
@@ -67,13 +61,13 @@ export class SchoolData {
                 addButtonContent: '<i class="nb-plus"></i>',
                 createButtonContent: '<i class="nb-checkmark"></i>',
                 cancelButtonContent: '<i class="nb-close"></i>',
-                confirmCreate: true 
+                confirmCreate: true
             },
             edit: {
                 editButtonContent: '<i class="nb-edit"></i>',
                 saveButtonContent: '<i class="nb-checkmark"></i>',
                 cancelButtonContent: '<i class="nb-close"></i>',
-                confirmSave: true 
+                confirmSave: true
             },
             delete: {
                 deleteButtonContent: '<i class="nb-trash"></i>',
@@ -118,13 +112,13 @@ export class SchoolData {
                 addButtonContent: '<i class="nb-plus"></i>',
                 createButtonContent: '<i class="nb-checkmark"></i>',
                 cancelButtonContent: '<i class="nb-close"></i>',
-                confirmCreate: true 
+                confirmCreate: true
             },
             edit: {
                 editButtonContent: '<i class="nb-edit"></i>',
                 saveButtonContent: '<i class="nb-checkmark"></i>',
                 cancelButtonContent: '<i class="nb-close"></i>',
-                confirmSave: true 
+                confirmSave: true
             },
             delete: {
                 deleteButtonContent: '<i class="nb-trash"></i>',
@@ -134,16 +128,16 @@ export class SchoolData {
                 fromDate: {
                     title: 'From Date',
                     type: 'html',
-                    editor: {type: 'custom', component: SmartTableDatePickerComponent }
+                    editor: { type: 'custom', component: SmartTableDatePickerComponent }
                 },
                 toDate: {
                     title: 'To Date',
                     type: 'html',
-                    editor: {type: 'custom', component: SmartTableDatePickerComponent }
+                    editor: { type: 'custom', component: SmartTableDatePickerComponent }
                 },
                 description: {
                     title: 'Description',
-                    type: 'string',
+                    type: 'string'
                 }
             }
         };
@@ -157,13 +151,13 @@ export class SchoolData {
                 addButtonContent: '<i class="nb-plus"></i>',
                 createButtonContent: '<i class="nb-checkmark"></i>',
                 cancelButtonContent: '<i class="nb-close"></i>',
-                confirmCreate: true 
+                confirmCreate: true
             },
             edit: {
                 editButtonContent: '<i class="nb-edit"></i>',
                 saveButtonContent: '<i class="nb-checkmark"></i>',
                 cancelButtonContent: '<i class="nb-close"></i>',
-                confirmSave: true 
+                confirmSave: true
             },
             delete: {
                 deleteButtonContent: '<i class="nb-trash"></i>',
@@ -173,11 +167,11 @@ export class SchoolData {
                 workingDate: {
                     title: 'Working Date',
                     type: 'html',
-                    editor: {type: 'custom', component: SmartTableDatePickerComponent }
+                    editor: { type: 'custom', component: SmartTableDatePickerComponent }
                 },
                 reason: {
                     title: 'Reason',
-                    type: 'string',
+                    type: 'string'
                 }
             }
         };
@@ -186,7 +180,7 @@ export class SchoolData {
     }
 
     public static createSchoolDetailObject(): ISchoolDetail {
-        
+
         // school information
         this.schoolDetail.schoolName = '';
         this.schoolDetail.address = '';
@@ -210,7 +204,7 @@ export class SchoolData {
         return this.schoolDetail;
     }
 
-    public static getSchoolDetails(): ISchoolDetail {
+    public static getTempSchoolDetails(): ISchoolDetail {
 
         // school information
         this.schoolDetail.schoolName = 'SSVM Matriculation';
@@ -220,7 +214,7 @@ export class SchoolData {
         this.schoolDetail.district = 'Coimbatore';
 
         // class detail
-        this.schoolDetail.classList = this.getClassDetail();
+        this.schoolDetail.classList = this.getTempClassDetail();
 
         // performance parameters
         this.schoolDetail.perfParamType = this.PERF_PARAM_DEFAULT;
@@ -230,14 +224,14 @@ export class SchoolData {
         return this.schoolDetail;
     }
 
-    public static getClassDetail(): IClass[] {
+    public static getTempClassDetail(): IClass[] {
 
         var classList: IClass[] = [
+            { className: 'LKG', sectionName: 'A' },
+            { className: 'LKG', sectionName: 'B' },
+            { className: 'UKG', sectionName: 'A' },
             { className: 'First', sectionName: 'A' },
             { className: 'First', sectionName: 'B' },
-            { className: 'First', sectionName: 'C' },
-            { className: 'Second', sectionName: 'A' },
-            { className: 'Second', sectionName: 'B' },
         ];
         return classList;
     }
@@ -273,14 +267,37 @@ export class SchoolData {
         return classValues;
     }
 
-    public static getHolidaysDetail(): IHoliday[] {
-        
+    public static getSectionFieldValue(): any {
+
+        var sectionValues: any[] = [
+            { title: 'A', value: 'A' },
+            { title: 'B', value: 'B' },
+            { title: 'C', value: 'C' },
+            { title: 'D', value: 'D' },
+            { title: 'E', value: 'D' }
+        ];
+        return sectionValues;
+    }
+
+    public static getTempHolidaysDetail(): IHoliday[] {
+
         var testHolidays: IHoliday[] = [
             { fromDate: '2019-01-10', toDate: '2019-01-15', description: 'aaa' },
             { fromDate: '2019-02-01', toDate: '2019-02-05', description: 'bbb' },
             { fromDate: '2019-03-25', toDate: '2019-03-30', description: 'ccc' }
         ];
         return testHolidays;
+    }
+
+    public static getTempSchoolValue(): any {
+
+        var classValues: any[] = [
+            { title: 'SSVM Matriculation School', value: 'SSVM Matriculation School' },
+            { title: 'Nikita Matriculation School', value: 'Nikita Matriculation School' },
+            { title: 'KV Matriculation School', value: 'KV Matriculation School' },
+            { title: 'Govt.Her.Sec Matriculation School', value: 'Govt.Her.Sec Matriculation School' }
+        ];
+        return classValues;
     }
 
 }

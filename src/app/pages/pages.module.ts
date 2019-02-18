@@ -6,6 +6,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { ThemeModule } from '../@theme/theme.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { SchoolModule } from './school/school.module';
+import { StudentModule } from './student/student.module';
 
 const PAGES_COMPONENTS = [
   PagesComponent
@@ -17,7 +18,8 @@ const PAGES_COMPONENTS = [
     ThemeModule,
     DashboardModule,
     MiscellaneousModule,
-    SchoolModule    
+    SchoolModule,
+    StudentModule  
   ],
   declarations: [
     ...PAGES_COMPONENTS,

@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { ThemeModule } from '../../@theme/theme.module';
-import { SchoolListComponent } from './school-list.component';
-import { SchoolComponent } from './school.component';
+import { StudentListComponent } from './student-list.component';
 import { NbDialogModule } from '@nebular/theme';
 import { SmartTableDatePickerComponent } from '../../@theme/components/smart-table-date-picker-component/smart-table-date-picker.components';
-import { SchoolService } from './school.service';
+import { StudentBulkUploadModalComponent } from './student-bulk-upload.component.modal';
+import { StudentService } from './student.service';
 
 @NgModule({
   imports: [
@@ -15,15 +15,14 @@ import { SchoolService } from './school.service';
     NbDialogModule.forRoot()
   ],
   declarations: [
-    SchoolListComponent,
-    SchoolComponent
+    StudentListComponent,
+    StudentBulkUploadModalComponent
   ],
   entryComponents: [
-    SchoolComponent,
-    SmartTableDatePickerComponent
+    StudentBulkUploadModalComponent
   ],
   providers: [
-    SchoolService
+    StudentService
   ]
 })
-export class SchoolModule { }
+export class StudentModule { }

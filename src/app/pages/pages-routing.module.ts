@@ -5,6 +5,7 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SchoolComponent } from './school/school.component';
 import { SchoolListComponent } from './school/school-list.component';
+import { StudentListComponent } from './student/student-list.component';
 
 export const PAGE_ROUTES: Routes = [
   {
@@ -12,7 +13,8 @@ export const PAGE_ROUTES: Routes = [
     children: [
       { path: '', component: DashboardComponent },
       { path: 'dashboard', component: DashboardComponent },
-      { path: 'school', component: SchoolListComponent }
+      { path: 'school', component: SchoolListComponent },
+      { path: 'student', component: StudentListComponent }
     ]
   }
 ];

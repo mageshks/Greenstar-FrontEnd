@@ -47,7 +47,7 @@ export class SchoolComponent implements OnInit {
     if (this.action === 'create') {
       this.schoolDetail = SchoolData.createSchoolDetailObject();
     } else if (this.action === 'edit') {
-      this.schoolDetail = SchoolData.getSchoolDetails();
+      this.schoolDetail = SchoolData.getTempSchoolDetails();
     } else {
       console.log('No Matches Found For Action');
     }

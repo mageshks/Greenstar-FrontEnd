@@ -14,7 +14,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Student',
     icon: 'nb-person',
-    link: '/pages/dashboard'
+    link: '/greenstarui/pages/student'
   },
   {
     title: 'Performance Data',
