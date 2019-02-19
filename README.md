@@ -85,5 +85,3 @@ Add additional notes about how to deploy this on a live system
 Cognizant owns the project
 
 ## Acknowledgments
-
-

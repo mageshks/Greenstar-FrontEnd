@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header>
+                Performance Data
+            </nb-card-header>
+
+            <nb-card-body>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="table-responsive">
+
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <!-- Top Header Row - Start -->
+                                    <tr>
+                                        <th rowspan="2" scope="col">Roll ID</th>
+                                        <th rowspan="2" scope="col">Name</th>
+                                        <ng-container *ngFor="let headerObj of performanceSource.headers">
+                                            <th colspan="3" scope="col" class="text-center"> {{headerObj.title}} </th>
+                                        </ng-container>
+                                    </tr>
+                                    <!-- Top Header Row - End -->
+
+                                    <!-- Top Sub Header Row - Start -->
+                                    <tr>
+                                        <ng-container *ngFor="let headerObj of performanceSource.headers">
+                                            <ng-container *ngIf="headerObj.subTitleList.length > 0">
+                                                <th *ngFor="let subTitle of headerObj.subTitleList" class="text-center" scope="col">
+                                                    {{subTitle.title}} &nbsp;
+                                                    <input type="checkbox" (change)="checkPerformanceDataStatus($event, headerObj, subTitle);">
+                                                </th>
+                                            </ng-container>
+                                        </ng-container>
+                                    </tr>
+                                    <!-- Top Sub Header Row - End -->
+                                </thead>
+                                <tbody>
+                                    <!-- Row content - Start -->
+                                    <tr *ngFor="let performanceRow of performanceSource.performanceRows">
+                                        <td scope="col">{{ performanceRow.rollId }}</td>
+                                        <td scope="col">{{ performanceRow.name }}</td>
+                                        <ng-container *ngFor="let performanceDay of performanceRow.performanceDays">
+
+                                            <!-- Single Value -->
+                                            <td scope="col" class="text-center" *ngFor="let performanceData of performanceDay.performanceDatas">
+                                                {{performanceData.value}} &nbsp;&nbsp;
+                                                <input type="checkbox" [checked]="performanceData.value" (change)="checkCellPerformanceDataStatus($event, performanceRow, performanceDay, performanceData)">
+                                            </td>
+                                        </ng-container>
+                                    </tr>
+                                    <!-- Row content - End -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
