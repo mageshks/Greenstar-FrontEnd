@@ -8,7 +8,6 @@ import { PerformanceService } from './performance.service';
 import { PerformanceDataComponent } from './performance-data.component';
 import { PerformanceStarComponent } from './performance-star.component';
 import { PerformanceMetricsComponent } from './performance-metrics.component';
-import { PerformanceDataUploadModalComponent } from './performance-data-upload.component.modal';
 
 @NgModule({
   imports: [
@@ -19,11 +18,9 @@ import { PerformanceDataUploadModalComponent } from './performance-data-upload.c
   declarations: [
     PerformanceDataComponent,
     PerformanceMetricsComponent,
-    PerformanceStarComponent,
-    PerformanceDataUploadModalComponent
+    PerformanceStarComponent
   ],
   entryComponents: [
-    PerformanceDataUploadModalComponent
   ],
   providers: [
     PerformanceService
