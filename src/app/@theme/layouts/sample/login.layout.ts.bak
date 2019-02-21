@@ -18,7 +18,7 @@ import { StateService } from '../../../@core/data/state.service';
   template: `
     <nb-layout>
       <nb-layout-header fixed>
-        <ngx-header-login></ngx-header-login>
+        Green Star Application
       </nb-layout-header>
 
       <nb-layout-column class="main-content">

@@ -64,27 +64,32 @@
                     </div>
                 </div>
 
-                <div class="row pt-3">                    
-                    <div class="col-sm-12 text-right">
-                        <button class="btn btn-primary btn-sm" (click)="searchPerformanceData();">Search</button>
+                <div class="row pt-3">
+                    <div class="col-sm-2">
+                        <button class="btn btn-primary btn-sm" (click)="openBulkUploadMmodal();">Bulk Upload</button>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <button class="btn btn-primary btn-sm">Add Perofrmance Data</button>
+                    </div>
+
+                    <div class="col-sm-7 text-right">
+                        <button class="btn btn-primary btn-sm">Search</button>
                     </div>
                 </div>
 
-                <div class="row pt-4">
-                    <div class="col-sm-2">
-                        <button class="btn btn-primary btn-sm" (click)="openBulkUploadMmodal();">Bulk Upload</button>                   
-                    </div>
+                <div class="row pt-5">
                     <div class="col-sm-4">
-                        <button class="btn btn-primary btn-sm">Add Perofrmance Data</button>                    
+                        Performance Data
                     </div>
-                    <div class="col-sm-3 text-right">
-                        <nb-checkbox (change)="checkAllPerformance($event);" [disabled] = "!isPerformanceChkboxEnabled">Select All</nb-checkbox>
+                    <div class="col-sm-4 text-right">
+                        <nb-checkbox (change)="checkAllPerformance($event);">Select All</nb-checkbox>
                     </div>
-                    <div class="col-sm-1 text-right">
-                        <button class="btn btn-primary btn-sm" [disabled] = "!isPerformanceEditEnabled" (click)="editPerformanceData();">Edit</button>
+                    <div class="col-sm-2">
+                        <button class="btn btn-primary btn-sm">Edit</button>
                     </div>
-                    <div class="col-sm-2 text-right">
-                        <button class="btn btn-primary btn-sm" [disabled] = "!isPerformanceChkboxEnabled" (click)="submitPerformanceData();">Submit</button>
+                    <div class="col-sm-2">
+                        <button class="btn btn-primary btn-sm">Submit</button>
                     </div>
                 </div>
 
@@ -100,7 +105,7 @@
                                         <ng-container *ngFor="let headerObj of performanceSource.headers">
                                             <th colspan="3" scope="col" class="text-center">
                                                 <label nbTooltip="{{headerObj.title}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{headerObj.title}}</label> &nbsp;
-                                                <nb-checkbox [value]="headerObj.checkValue" (change)="checkPerformanceDayWise($event, headerObj);" [disabled] = "!isPerformanceChkboxEnabled"></nb-checkbox>
+                                                <nb-checkbox [value]="headerObj.checkValue" (change)="checkPerformanceDayWise($event, headerObj);"></nb-checkbox>
                                             </th>
                                         </ng-container>
                                     </tr>
@@ -112,7 +117,7 @@
                                             <ng-container *ngIf="headerObj.subTitleList.length > 0">
                                                 <th *ngFor="let subTitle of headerObj.subTitleList" class="text-center" scope="col">
                                                     <label nbTooltip="{{subTitle.title}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{subTitle.alais}}</label>
-                                                    <nb-checkbox [value]="subTitle.checkValue" (change)="checkPerformanceParamWise($event, headerObj, subTitle);" class="pl-4" [disabled] = "!isPerformanceChkboxEnabled"></nb-checkbox>
+                                                    <nb-checkbox [value]="subTitle.checkValue" (change)="checkPerformanceParamWise($event, headerObj, subTitle);"></nb-checkbox>
                                                 </th>
                                             </ng-container>
                                         </ng-container>
@@ -127,7 +132,7 @@
                                         <ng-container *ngFor="let performanceDay of performanceRow.performanceDays">
                                             <!-- Single Value -->
                                             <td scope="col" *ngFor="let performanceData of performanceDay.performanceDatas" style="text-align:center;">
-                                                <nb-checkbox [value]="performanceData.value" (change)="checkCellPerformanceDataStatus($event, performanceRow, performanceDay, performanceData)" class="pl-4" [disabled] = "!isPerformanceChkboxEnabled"></nb-checkbox>
+                                                <nb-checkbox [value]="performanceData.value" (change)="checkCellPerformanceDataStatus($event, performanceRow, performanceDay, performanceData)"></nb-checkbox>
                                             </td>
                                         </ng-container>
                                     </tr>
