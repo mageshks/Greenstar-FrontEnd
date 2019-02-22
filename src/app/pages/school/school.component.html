@@ -1,0 +1,124 @@
+<div class="modal-header">
+    <span>{{ title }}</span>
+    <button class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <nb-tabset (changeTab)="onChangeTab($event)" fullWidth>
+        <nb-tab tabTitle="School">
+            <form class="form-horizontal">
+                <div class="row pt-5">
+                    <div class="col-sm-12">
+                        <div class="form-group row">
+                            <label for="schoolName" class="col-sm-3 col-form-label">Name</label>
+                            <div class="input-group col-sm-7">
+                                <input type="text" id="schoolName" name="schoolName" [(ngModel)]="schoolDetail.schoolName" class="form-control" placeholder="School Name"
+                                />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="address" class="col-sm-3 col-form-label">Address</label>
+                            <div class="input-group col-sm-7">
+                                <input type="text" id="address" name="address" [(ngModel)]="schoolDetail.address" class="form-control" placeholder="Address">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="city" class="col-sm-3 col-form-label">City</label>
+                            <div class="input-group col-sm-7">
+                                <input type="text" id="city" name="city" [(ngModel)]="schoolDetail.city" class="form-control" placeholder="City">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="address" class="col-sm-3 col-form-label">State</label>
+                            <div class="input-group col-sm-7">
+                                <select id="state" name="state" [(ngModel)]="schoolDetail.state" class="form-control">
+                                    <option value=''>Select</option>
+                                    <option value='Tamil Nadu'>Tamil Nadu</option>
+                                    <option value='Kerala'>Kerala</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="district" class="col-sm-3 col-form-label">District</label>
+                            <div class="input-group col-sm-7">
+                                <select id="district" name="district" [(ngModel)]="schoolDetail.district" class="form-control">
+                                    <option value=''>Select</option>
+                                    <option value='Coimbatore'>Coimbatore</option>
+                                    <option value='Erode'>Erode</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </nb-tab>
+
+        <nb-tab tabTitle="Class" class="pt-3">
+            <ng2-smart-table [settings]="classTableSetting" [source]="classDetail" (createConfirm)="onPostCallForClass($event)" (editConfirm)="onPostCallForClass($event)"
+                (deleteConfirm)="onDeleteConfirmForClass($event)">
+            </ng2-smart-table>
+        </nb-tab>
+
+        <nb-tab tabTitle="Performance Parameter" class="pt-3">
+            <nb-radio-group [(value)]="schoolDetail.perfParamType" (click)="onChangePerfParamType($event)">
+                <nb-radio [value]="'DEFAULT'"> Default </nb-radio>
+                <nb-radio [value]="'CUSTOMIZED'"> Customized </nb-radio>
+            </nb-radio-group>
+
+            <span *ngIf="schoolDetail.perfParamType == 'DEFAULT'">
+                <ng2-smart-table [settings]="perfParamSetting" [source]="perfParamDetail">
+                </ng2-smart-table>
+            </span>
+            <span *ngIf="schoolDetail.perfParamType == 'CUSTOMIZED'">
+                <ng2-smart-table [settings]="perfParamDynamicSetting" [source]="perfParamDynamicDetail" (createConfirm)="onPostCallForPerfParam($event)"
+                    (editConfirm)="onPostCallForPerfParam($event)" (deleteConfirm)="onDeleteConfirmForPerfParam($event)">
+                </ng2-smart-table>
+            </span>
+        </nb-tab>
+
+        <nb-tab tabTitle="Holidays" class="pt-3">
+
+            <nb-accordion>
+                <nb-accordion-item>
+                    <nb-accordion-item-header>
+                        Holidays
+                    </nb-accordion-item-header>
+                    <nb-accordion-item-body>
+                        <ng2-smart-table 
+                            [settings]="schoolHolidaySetting" 
+                            [source]="schoolHolidayDetail" 
+                            (createConfirm)="onPostCallForHoliday($event)"
+                            (editConfirm)="onPostCallForHoliday($event)" 
+                            (deleteConfirm)="onDeleteConfirmForHoliday($event)">
+                        </ng2-smart-table>
+                    </nb-accordion-item-body>
+                </nb-accordion-item>
+
+                <nb-accordion-item>
+                    <nb-accordion-item-header>
+                        Weekend Working Days
+                    </nb-accordion-item-header>
+                    <nb-accordion-item-body>
+                        <ng2-smart-table 
+                            [settings]="schoolWeekendWorkSetting" 
+                            [source]="schoolWeekendWorkDetail" 
+                            (createConfirm)="onPostCallForWeekendWorking($event)"
+                            (editConfirm)="onPostCallForWeekendWorking($event)" 
+                            (deleteConfirm)="onDeleteConfirmForWeekendWorking($event)">
+                        </ng2-smart-table>
+                    </nb-accordion-item-body>
+                </nb-accordion-item>
+
+            </nb-accordion>
+
+        </nb-tab>
+
+    </nb-tabset>
+</div>
+
+<div class="modal-footer">
+    <button nbButton status="primary" (click)="onSubmitChanges()" class='text-right'>Submit</button>
+</div>
