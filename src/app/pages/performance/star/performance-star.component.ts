@@ -4,11 +4,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { NbDialogService } from '@nebular/theme';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PerformanceService } from './performance.service';
+import { PerformanceService } from '../performance.service';
+import { GreenstarComponent } from './greenstar/greenstar.component';
 
 @Component({
     selector: 'ngx-performance',
-    styleUrls: ['./performance.component.scss'],
+    styleUrls: ['./performance-star.component.scss'],
     templateUrl: './performance-star.component.html',
 })
 export class PerformanceStarComponent implements OnInit {
