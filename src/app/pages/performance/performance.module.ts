@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { ThemeModule } from '../../@theme/theme.module';
-import { NbDialogModule } from '@nebular/theme';
+import { NbDialogModule,NbStepperModule } from '@nebular/theme';
 import { SmartTableDatePickerComponent } from '../../@theme/components/smart-table-date-picker-component/smart-table-date-picker.components';
 import { PerformanceService } from './performance.service';
 import { PerformanceDataComponent } from './performance-data.component';
@@ -14,6 +14,7 @@ import { GreenstarComponent } from './star/greenstar/greenstar.component'
   imports: [
     ThemeModule,
     Ng2SmartTableModule,
+    NbStepperModule,
     NbDialogModule.forRoot()
   ],
   declarations: [
