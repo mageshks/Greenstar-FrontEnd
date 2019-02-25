@@ -27,6 +27,9 @@ export class PerformanceStarComponent implements OnInit {
     public paramTwo =  "Discipline";
     public paramThree =  "Attendance";
 
+    public isDataAvailable = true;
+    public isNoPerfData = false;
+
     //Parameter data for each star
     public perfStarMonthDataParamOne = new Array("#7CFC00","#7CFC00","#7CFC00","#7CFC00","#7CFC00","#7beded","#7beded","#7CFC00","#7CFC00","#7CFC00","#FFFF00","#7CFC00","#7beded","#7beded","#7CFC00","#FF0000","#7CFC00","#7CFC00","#7CFC00","#7beded","#7beded","#7CFC00",
     "#7CFC00","#7CFC00","#FFFF00","#7CFC00","#7beded","#7beded","#7CFC00","#FFFFFF","#FFFFFF");

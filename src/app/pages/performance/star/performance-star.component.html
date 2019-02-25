@@ -9,7 +9,7 @@
 
                 <div class="row">
                     <div class="col-sm-2">
-                        <label for="caltype" class="col-form-label">Calculation Type</label>
+                        <label for="caltype" class="col-form-label required">Calculation Type</label>
                         <div class="input-group">
                             <select id="caltype" class="form-control form-control-sm" (change)="onChangeCalcType($event.target.value)">
                                 <option value=''>Select</option>
@@ -22,7 +22,7 @@
                     </div>
 
                     <div class="col-sm-2" *ngIf="isSchoolViewable">
-                        <label for="school" class="col-form-label">School</label>
+                        <label for="school" class="col-form-label required">School</label>
                         <div class="input-group">
                             <select id="school" name="school" class="form-control form-control-sm">
                                 <option value=''>Select</option>
@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="col-sm-2" *ngIf="isClassViewable">
-                        <label for="className" class="col-form-label">Class</label>
+                        <label for="className" class="col-form-label required">Class</label>
                         <div class="input-group">
                             <select id="className" name="className" class="form-control form-control-sm">
                                 <option value=''>Select</option>
@@ -44,7 +44,7 @@
                     </div>
 
                     <div class="col-sm-2" *ngIf="isSectionViewable">
-                        <label for="section" class="col-form-label">Section</label>
+                        <label for="section" class="col-form-label required">Section</label>
                         <div class="input-group">
                             <select id="section" name="section" class="form-control form-control-sm">
                                 <option value=''>Select</option>
@@ -55,7 +55,7 @@
                     </div>
                     <div class="col-sm-2" *ngIf="isNameViewable || isTeamViewable">
                         <div id="studentName" *ngIf="isNameViewable">
-                            <label for="sname" class="col-form-label">Student Name</label>
+                            <label for="sname" class="col-form-label required">Student Name</label>
                             <div class="input-group">
                                 <select id="sname" name="sname" class="form-control form-control-sm">
                                     <option value=''>Select</option>
@@ -66,7 +66,7 @@
                         </div>
 
                         <div id="teamname" *ngIf="isTeamViewable">
-                            <label for="tname" class="col-form-label">Team Name</label>
+                            <label for="tname" class="col-form-label required">Team Name</label>
                             <div class="input-group">
                                 <select id="tname" name="tname" class="form-control form-control-sm">
                                     <option value=''>Select</option>
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                     <div class="col-sm-2" *ngIf="isMonthViewable">
-                        <label for="month" class="col-form-label">Month</label>
+                        <label for="month" class="col-form-label required">Month</label>
                         <div class="input-group">
                             <select id="month" name="month" class="form-control form-control-sm">
                                 <option value=''>Select</option>
@@ -100,41 +100,55 @@
                 </div>
 
                 <div class="row pt-3 pb-2">
-                    <div class="col-sm-6 text-left">
-                        <button class="btn btn-primary btn-sm" (click)="printStar();">Print Star</button>
-                    </div>
-                    <div class="col-sm-6 text-right">
+                    <div class="col-sm-12 text-right">
                         <button class="btn btn-primary btn-sm" (click)="generatePerformanceStar();">Generate Star</button>
                     </div>
-                  
+                </div>
+
+                <div class="row" *ngIf="isDataAvailable">
+                    <div class="row">
+                        <div class="col-sm-12 text-right">
+                            <button class="btn btn-primary btn-sm" (click)="printStar();">Print Star</button>
+                        </div>
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col-sm-12">
+                            <nb-stepper orientation="horizontal">
+                                <nb-step [label]="paramOne">
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <p>I am detailer</p>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <app-greenstar [perfStarMonthData]="perfStarMonthDataParamOne"></app-greenstar>
+                                        </div>
+                                    </div>
+                                    <button nbButton disabled nbStepperNext>prev</button>
+                                    <button nbButton nbStepperNext>next</button>
+                                </nb-step>
+                                <nb-step [label]="paramTwo">
+                                    <app-greenstar [perfStarMonthData]="perfStarMonthDataParamTwo"></app-greenstar>
+                                    <button nbButton nbStepperPrevious>prev</button>
+                                    <button nbButton nbStepperNext>next</button>
+                                </nb-step>
+                                <nb-step [label]="paramThree">
+                                    <app-greenstar [perfStarMonthData]="perfStarMonthDataParamThree"></app-greenstar>
+                                    <button nbButton nbStepperPrevious>prev</button>
+                                    <button nbButton disabled nbStepperNext>next</button>
+                                </nb-step>
+                            </nb-stepper>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="isNoPerfData">
+                    <div class="col-sm-12 text-center">
+                        <h3>
+                            No data available for the search parameter to generate star!
+                        </h3>
+                    </div>
                 </div>
 
 
-                <nb-stepper orientation="horizontal">
-                    <nb-step [label]="paramOne">
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <p>I am detailer</p>
-                            </div>
-                            <div class="col-sm-10">
-                                <app-greenstar [perfStarMonthData]="perfStarMonthDataParamOne"></app-greenstar>
-                            </div>
-                        </div>
-                        <button nbButton disabled nbStepperNext>prev</button>
-                        <button nbButton nbStepperNext>next</button>
-                    </nb-step>
-                    <nb-step [label]="paramTwo">
-                        <app-greenstar [perfStarMonthData]="perfStarMonthDataParamTwo"></app-greenstar>
-                        <button nbButton nbStepperPrevious>prev</button>
-                        <button nbButton nbStepperNext>next</button>
-                    </nb-step>
-                    <nb-step [label]="paramThree">
-                        <app-greenstar [perfStarMonthData]="perfStarMonthDataParamThree"></app-greenstar>
-                        <button nbButton nbStepperPrevious>prev</button>
-                        <button nbButton disabled nbStepperNext>next</button>
-                    </nb-step>
-
-                </nb-stepper>
             </nb-card-body>
 
         </nb-card>
