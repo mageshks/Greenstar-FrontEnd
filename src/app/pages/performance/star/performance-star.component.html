@@ -111,29 +111,25 @@
 
 
                 <nb-stepper orientation="horizontal">
-                    <nb-step [label]="labelOne">
-                        <ng-template #labelOne>Attendance</ng-template>
-
+                    <nb-step [label]="paramOne">
                         <div class="row">
                             <div class="col-sm-2">
                                 <p>I am detailer</p>
                             </div>
                             <div class="col-sm-10">
-                                <app-greenstar></app-greenstar>
+                                <app-greenstar [perfStarMonthData]="perfStarMonthDataParamOne"></app-greenstar>
                             </div>
                         </div>
                         <button nbButton disabled nbStepperNext>prev</button>
                         <button nbButton nbStepperNext>next</button>
                     </nb-step>
-                    <nb-step [label]="labelTwo">
-                        <ng-template #labelTwo>Discipline</ng-template>
-                        <app-greenstar></app-greenstar>
+                    <nb-step [label]="paramTwo">
+                        <app-greenstar [perfStarMonthData]="perfStarMonthDataParamTwo"></app-greenstar>
                         <button nbButton nbStepperPrevious>prev</button>
                         <button nbButton nbStepperNext>next</button>
                     </nb-step>
-                    <nb-step [label]="labelThree">
-                        <ng-template #labelThree>HomeWork</ng-template>
-                        <app-greenstar></app-greenstar>
+                    <nb-step [label]="paramThree">
+                        <app-greenstar [perfStarMonthData]="perfStarMonthDataParamThree"></app-greenstar>
                         <button nbButton nbStepperPrevious>prev</button>
                         <button nbButton disabled nbStepperNext>next</button>
                     </nb-step>

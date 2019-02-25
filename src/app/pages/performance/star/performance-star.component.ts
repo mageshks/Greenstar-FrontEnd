@@ -21,7 +21,19 @@ export class PerformanceStarComponent implements OnInit {
     public isTeamViewable = false;
     public isNameViewable = false;
     public calcType = "";
+    
+    //Parameter name
+    public paramOne =  "HomeWork";
+    public paramTwo =  "Discipline";
+    public paramThree =  "Attendance";
 
+    //Parameter data for each star
+    public perfStarMonthDataParamOne = new Array("#7CFC00","#7CFC00","#7CFC00","#7CFC00","#7CFC00","#7beded","#7beded","#7CFC00","#7CFC00","#7CFC00","#FFFF00","#7CFC00","#7beded","#7beded","#7CFC00","#FF0000","#7CFC00","#7CFC00","#7CFC00","#7beded","#7beded","#7CFC00",
+    "#7CFC00","#7CFC00","#FFFF00","#7CFC00","#7beded","#7beded","#7CFC00","#FFFFFF","#FFFFFF");
+    public perfStarMonthDataParamTwo = new Array("#7CFC00","#7CFC00","#7CFC00","#7CFC00","#7CFC00","#7beded","#7beded","#7CFC00","#7CFC00","#7CFC00","#FFFF00","#7CFC00","#7beded","#7beded","#7CFC00","#FF0000","#7CFC00","#7CFC00","#7CFC00","#7beded","#7beded","#7CFC00",
+    "#7CFC00","#7CFC00","#FFFF00","#7CFC00","#7beded","#7beded","#7CFC00","#FFFFFF","#FFFFFF");
+    public perfStarMonthDataParamThree = new Array("#7CFC00","#7CFC00","#7CFC00","#7CFC00","#7CFC00","#7beded","#7beded","#7CFC00","#7CFC00","#7CFC00","#FFFF00","#7CFC00","#7beded","#7beded","#7CFC00","#FF0000","#7CFC00","#7CFC00","#7CFC00","#7beded","#7beded","#7CFC00",
+    "#7CFC00","#7CFC00","#FFFF00","#7CFC00","#7beded","#7beded","#7CFC00","#FFFFFF","#FFFFFF");
     constructor() {
     }
 
