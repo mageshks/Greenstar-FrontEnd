@@ -18,6 +18,9 @@ export class PerformanceDataComponent implements OnInit {
 
     public performanceSource: IPerformanceDataTable = {} as IPerformanceDataTable;
 
+    public isPerformanceChkboxEnabled = false;
+    public isPerformanceEditEnabled = false;
+
     constructor(
         private modalService: NgbModal,
         private performanceService: PerformanceService) {
@@ -29,6 +32,20 @@ export class PerformanceDataComponent implements OnInit {
 
     public openBulkUploadMmodal(): void {
         const activeModal = this.modalService.open(PerformanceDataUploadModalComponent, { size: 'lg', container: 'nb-layout' });
+    }
+
+    public searchPerformanceData(): void {
+        this.isPerformanceChkboxEnabled = false;
+        
+        this.isPerformanceEditEnabled = true;
+    }
+
+    public editPerformanceData(): void {
+        this.isPerformanceChkboxEnabled = true;
+    }
+
+    public submitPerformanceData(): void {
+        this.isPerformanceChkboxEnabled = false;
     }
 
     public checkCellPerformanceDataStatus(event: any, performanceRow: IPerformanceRow, performanceDay: IPerformanceDay, performanceData: IPerformanceData): void {
