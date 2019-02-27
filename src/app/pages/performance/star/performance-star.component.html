@@ -105,40 +105,50 @@
                     </div>
                 </div>
 
-                <div class="row" *ngIf="isDataAvailable">
-                    <div class="row">
-                        <div class="col-sm-12 text-right">
+                <div *ngIf="isDataAvailable" >
+                    <div class="row pb-2">
+                        <div class="col-sm-12 text-left">
                             <button class="btn btn-primary btn-sm" (click)="printStar();">Print Star</button>
                         </div>
                     </div>
-                    <div class="row pt-2">
-                        <div class="col-sm-12">
-                            <nb-stepper orientation="horizontal">
-                                <nb-step [label]="paramOne">
-                                    <div class="row">
-                                        <div class="col-sm-2">
-                                            <p>I am detailer</p>
-                                        </div>
-                                        <div class="col-sm-10">
-                                            <app-greenstar [perfStarMonthData]="perfStarMonthDataParamOne"></app-greenstar>
-                                        </div>
-                                    </div>
-                                    <button nbButton disabled nbStepperNext>prev</button>
-                                    <button nbButton nbStepperNext>next</button>
-                                </nb-step>
-                                <nb-step [label]="paramTwo">
+                    <nb-stepper orientation="horizontal">
+                        <nb-step [label]="paramOne" [nbSpinner]="loading" nbSpinnerStatus="danger">
+                            <div class="row" id="paramOneContent">
+                                <div class="col-sm-2">
+                                    <p>Discipline Star</p>
+                                </div>
+                                <div class="col-sm-10">
+                                    <app-greenstar [perfStarMonthData]="perfStarMonthDataParamOne"></app-greenstar>
+                                </div>
+                            </div>
+                            <button nbButton disabled nbStepperNext>prev</button>
+                            <button nbButton nbStepperNext>next</button>
+                        </nb-step>
+                        <nb-step [label]="paramTwo">
+                            <div class="row" id="paramTwoContent">
+                                <div class="col-sm-2">
+                                    <p>Attendance Star</p>
+                                </div>
+                                <div class="col-sm-10">
                                     <app-greenstar [perfStarMonthData]="perfStarMonthDataParamTwo"></app-greenstar>
-                                    <button nbButton nbStepperPrevious>prev</button>
-                                    <button nbButton nbStepperNext>next</button>
-                                </nb-step>
-                                <nb-step [label]="paramThree">
+                                </div>
+                            </div>
+                            <button nbButton nbStepperPrevious>prev</button>
+                            <button nbButton nbStepperNext>next</button>
+                        </nb-step>
+                        <nb-step [label]="paramThree">
+                            <div class="row" id="paramThreeContent">
+                                <div class="col-sm-2">
+                                    <p>HomeWork Star</p>
+                                </div>
+                                <div class="col-sm-10">
                                     <app-greenstar [perfStarMonthData]="perfStarMonthDataParamThree"></app-greenstar>
-                                    <button nbButton nbStepperPrevious>prev</button>
-                                    <button nbButton disabled nbStepperNext>next</button>
-                                </nb-step>
-                            </nb-stepper>
-                        </div>
-                    </div>
+                                </div>
+                            </div>
+                            <button nbButton nbStepperPrevious>prev</button>
+                            <button nbButton disabled nbStepperNext>next</button>
+                        </nb-step>
+                    </nb-stepper>
                 </div>
                 <div class="row" *ngIf="isNoPerfData">
                     <div class="col-sm-12 text-center">

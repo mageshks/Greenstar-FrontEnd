@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-greenstar',
   templateUrl: './greenstar.component.html',
   styleUrls: ['./greenstar.component.scss'],
-  encapsulation: ViewEncapsulation.Native
 })
 export class GreenstarComponent implements OnInit {
 
