@@ -105,51 +105,87 @@
                     </div>
                 </div>
 
-                <div *ngIf="isDataAvailable" >
-                    <div class="row pb-2">
-                        <div class="col-sm-12 text-left">
-                            <button class="btn btn-primary btn-sm" (click)="printStar();">Print Star</button>
+                <nb-card *ngIf="isDataAvailable" [nbSpinner]="loading" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
+                    <nb-card-body>
+                        <div class="row pb-2">
+                            <div class="col-sm-12 text-left">
+                                <button class="btn btn-primary btn-sm" (click)="printStar();">Download Star</button>
+                            </div>
                         </div>
-                    </div>
-                    <nb-stepper orientation="horizontal">
-                        <nb-step [label]="paramOne" [nbSpinner]="loading" nbSpinnerStatus="danger">
-                            <div class="row" id="paramOneContent">
-                                <div class="col-sm-2">
-                                    <p>Discipline Star</p>
+                        <nb-stepper orientation="horizontal">
+                            <nb-step [label]="paramOne">
+                                <div id="paramOneContent">
+                                    <div class="row">
+                                        <div class="col-sm-12 text-center">
+                                            <h2>Homework Star</h2>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <h6>School: Nikita Matriculation School</h6>
+                                            <h6>Class: I</h6>
+                                            <h6>Section: B</h6>
+                                            <h6>Month: Jan</h6>
+                                            <h6>Student Name: Panneer</h6>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <app-greenstar [perfStarMonthData]="perfStarMonthDataParamOne"></app-greenstar>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-sm-10">
-                                    <app-greenstar [perfStarMonthData]="perfStarMonthDataParamOne"></app-greenstar>
+                                <button nbButton disabled nbStepperNext>prev</button>
+                                <button nbButton nbStepperNext>next</button>
+                            </nb-step>
+                            <nb-step [label]="paramTwo">
+                                <div id="paramTwoContent">
+                                    <div class="row">
+                                        <div class="col-sm-12 text-center">
+                                            <h2>Discipline Star</h2>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <h6>School: Nikita Matriculation School</h6>
+                                            <h6>Class: I</h6>
+                                            <h6>Section: B</h6>
+                                            <h6>Month: Jan</h6>
+                                            <h6>Student Name: Panneer</h6>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <app-greenstar [perfStarMonthData]="perfStarMonthDataParamTwo"></app-greenstar>
+                                        </div>
+                                    </div>
+                                    <button nbButton nbStepperPrevious>prev</button>
+                                    <button nbButton nbStepperNext>next</button>
                                 </div>
-                            </div>
-                            <button nbButton disabled nbStepperNext>prev</button>
-                            <button nbButton nbStepperNext>next</button>
-                        </nb-step>
-                        <nb-step [label]="paramTwo">
-                            <div class="row" id="paramTwoContent">
-                                <div class="col-sm-2">
-                                    <p>Attendance Star</p>
+                            </nb-step>
+                            <nb-step [label]="paramThree">
+                                <div id="paramThreeContent">
+                                    <div class="row">
+                                        <div class="col-sm-12 text-center">
+                                            <h2>Attendance Star</h2>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <h6>School: Nikita Matriculation School</h6>
+                                            <h6>Class: I</h6>
+                                            <h6>Section: B</h6>
+                                            <h6>Month: Jan</h6>
+                                            <h6>Student Name: Panneer</h6>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <app-greenstar [perfStarMonthData]="perfStarMonthDataParamThree"></app-greenstar>
+                                        </div>
+                                    </div>
+                                    <button nbButton nbStepperPrevious>prev</button>
+                                    <button nbButton disabled nbStepperNext>next</button>
                                 </div>
-                                <div class="col-sm-10">
-                                    <app-greenstar [perfStarMonthData]="perfStarMonthDataParamTwo"></app-greenstar>
-                                </div>
-                            </div>
-                            <button nbButton nbStepperPrevious>prev</button>
-                            <button nbButton nbStepperNext>next</button>
-                        </nb-step>
-                        <nb-step [label]="paramThree">
-                            <div class="row" id="paramThreeContent">
-                                <div class="col-sm-2">
-                                    <p>HomeWork Star</p>
-                                </div>
-                                <div class="col-sm-10">
-                                    <app-greenstar [perfStarMonthData]="perfStarMonthDataParamThree"></app-greenstar>
-                                </div>
-                            </div>
-                            <button nbButton nbStepperPrevious>prev</button>
-                            <button nbButton disabled nbStepperNext>next</button>
-                        </nb-step>
-                    </nb-stepper>
-                </div>
+                            </nb-step>
+                        </nb-stepper>
+                    </nb-card-body>
+                </nb-card>
+
                 <div class="row" *ngIf="isNoPerfData">
                     <div class="col-sm-12 text-center">
                         <h3>

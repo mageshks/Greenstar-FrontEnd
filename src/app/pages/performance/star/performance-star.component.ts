@@ -58,7 +58,8 @@ export class PerformanceStarComponent implements OnInit {
         starSVGS[0].setAttribute("width", "500");
         starSVGS[0].setAttribute("height", "500");
         //Dynamically choose the parent since the second step content won't be enabled on the first rendering
-        let  paramContent= starSVGS[0].parentElement.parentElement.parentElement;
+        // TODO: Better way to choose the parent dynamically
+        let  paramContent= starSVGS[0].parentElement.parentElement.parentElement.parentElement;
         console.log("Star content id ==> " + paramContent.id);
 
         html2canvas(paramContent,{logging:true}).then(canvas => {
