@@ -29,6 +29,10 @@ export class PerformanceService {
         return this.http.post(API_URL+'/perfdata/updatemetricdatas', performanceDataTable, { headers: this.headerValue });
     }
 
+    public getPerformanceDataTemplate(searchPerformanceData: ISearchPerformanceData): Observable<any> {
+        return this.http.post(API_URL + '/perfdata/downloadtemplate', searchPerformanceData, { responseType: 'blob' });
+    }
+
     private handleError(error: Response | any): any {
         console.log('API Service :: Handle Error' + error);
         return Observable.throw(error);

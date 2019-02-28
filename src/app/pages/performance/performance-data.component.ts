@@ -1,6 +1,5 @@
 import { OnInit, Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { DomSanitizer } from '@angular/platform-browser';
 import { NbDialogService } from '@nebular/theme';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -12,6 +11,8 @@ import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { ValidatorUtil } from '../util/validator-util';
+import { PerformanceDataSuccessModalComponent } from './performance-data-success.component.modal';
+import { saveAs as tempSaveAs } from 'file-saver';
 
 @Component({
     selector: 'ngx-performance',
@@ -26,6 +27,7 @@ export class PerformanceDataComponent implements OnInit {
     public isPerformanceChkboxEnabled = false;
     public isPerformanceEditEnabled = false;
     public isPerformanceAddEnabled = false;
+    public action: string = 'update';
 
     perfDataForm: FormGroup;
 
@@ -51,7 +53,7 @@ export class PerformanceDataComponent implements OnInit {
         this.performanceService.getExistingPerformanceMetricDatas(searchPerformanceData).subscribe(
             (response) => {
                 console.log(response);
-                this.performanceSource = response;
+                this.performanceSource = response.result;
                 if (this.performanceSource != null) {
                     this.isShowPerformanceMetricTable = true;
                     this.isPerformanceEditEnabled = true;
@@ -80,7 +82,7 @@ export class PerformanceDataComponent implements OnInit {
         this.performanceService.getCreatePerformanceMetricDatas(searchPerformanceData).subscribe(
             (response) => {
                 console.log(response);
-                this.performanceSource = response;
+                this.performanceSource = response.result;
                 if (this.performanceSource != null) {
                     this.isShowPerformanceMetricTable = true;
                     this.isPerformanceEditEnabled = true;
@@ -108,6 +110,33 @@ export class PerformanceDataComponent implements OnInit {
         const activeModal = this.modalService.open(PerformanceDataUploadModalComponent, { size: 'lg', container: 'nb-layout' });
     }
 
+    public downloadTemplate(): void {
+
+        if (this.perfDataForm.valid) {
+            let searchPerformanceData: ISearchPerformanceData = {} as ISearchPerformanceData;
+            searchPerformanceData.schoolId = this.perfDataForm.getRawValue().schoolId;
+            searchPerformanceData.className = this.perfDataForm.getRawValue().className;
+            searchPerformanceData.sectionName = this.perfDataForm.getRawValue().sectionName;
+            searchPerformanceData.month = this.perfDataForm.getRawValue().month;
+            searchPerformanceData.week = this.perfDataForm.getRawValue().week;
+
+            this.performanceService.getPerformanceDataTemplate(searchPerformanceData).subscribe(
+                (response) => {
+                    var blob = new Blob([response.result], { type: 'application/xls' });
+                    tempSaveAs(blob, 'performance_template.xls');
+                },
+                error => {
+                    console.log("Http Server error", error);
+                }
+            );
+
+        } else {
+            ValidatorUtil.validateAllFormFields(this.perfDataForm);
+            alert("Please Enter all data");
+        }
+
+    }
+
     public searchPerformanceData(): void {
 
         if (this.perfDataForm.valid) {
@@ -126,6 +155,7 @@ export class PerformanceDataComponent implements OnInit {
     }
 
     public addPerformanceData(): void {
+        this.action = 'create';
         if (this.perfDataForm.valid) {
             let searchPerformanceData: ISearchPerformanceData = {} as ISearchPerformanceData;
             searchPerformanceData.schoolId = this.perfDataForm.getRawValue().schoolId;
@@ -149,11 +179,14 @@ export class PerformanceDataComponent implements OnInit {
 
         this.performanceSource.userId = '534556';
 
-        if (this.isPerformanceAddEnabled) {
+        if (this.action === 'create') {
             this.performanceService.savePerformanceMetricDatas(this.performanceSource).subscribe(
                 (response) => {
                     console.log(response);
-                    this.performanceSource = response;
+                    if (response.status === 200 && response.message === 'SUCCESS') {
+                        const activeModal = this.modalService.open(PerformanceDataSuccessModalComponent, { size: 'sm', container: 'nb-layout' });
+                        activeModal.componentInstance.modalContent = 'Performance Meatric data saved successfully!..';
+                    }
                 },
                 error => {
                     console.log("Http Server error", error);
@@ -163,7 +196,10 @@ export class PerformanceDataComponent implements OnInit {
             this.performanceService.updatePerformanceMetricDatas(this.performanceSource).subscribe(
                 (response) => {
                     console.log(response);
-                    this.performanceSource = response;
+                    if (response.status === 200 && response.message === 'SUCCESS') {
+                        const activeModal = this.modalService.open(PerformanceDataSuccessModalComponent, { size: 'sm', container: 'nb-layout' });
+                        activeModal.componentInstance.modalContent = 'Performance Meatric data saved successfully!..';
+                    }
                 },
                 error => {
                     console.log("Http Server error", error);
@@ -171,6 +207,7 @@ export class PerformanceDataComponent implements OnInit {
             );
         }
 
+        this.action = 'update';
         this.isPerformanceChkboxEnabled = false;
         this.isPerformanceAddEnabled = false;
     }

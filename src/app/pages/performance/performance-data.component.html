@@ -79,11 +79,13 @@
                     <div class="col-sm-2">
                         <button class="btn btn-primary btn-sm" (click)="openBulkUploadMmodal();">Bulk Upload</button>
                     </div>
-                    <div class="col-sm-2">
-                        <button class="btn btn-primary btn-sm" (click)="editPerformanceData();">Template</button>
-                    </div>
                     <div class="col-sm-3">
-                        <button class="btn btn-primary btn-sm" (click)="addPerformanceData();" [disabled]="!isPerformanceAddEnabled">Add Perofrmance Data</button>
+                        <button class="btn btn-primary btn-sm" (click)="downloadTemplate();">
+                            <span>Download Template</span>
+                        </button>
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn btn-primary btn-sm" (click)="addPerformanceData();" [disabled]="!isPerformanceAddEnabled">Add</button>
                     </div>
                     <div class="col-sm-2 text-right">
                         <nb-checkbox (change)="checkAllPerformance($event);" [disabled]="!isPerformanceChkboxEnabled">Select All</nb-checkbox>

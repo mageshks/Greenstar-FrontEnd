@@ -12,6 +12,7 @@ export interface IPerformanceDataTable {
     section: string;
     month: number;
     week: string;
+    userId: string;
     headers: IPerformanceHeader[];
     performanceRows: IPerformanceRow[];
 }

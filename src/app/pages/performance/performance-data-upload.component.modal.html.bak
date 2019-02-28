@@ -17,6 +17,15 @@
                 </div>
             </form>
         </div>
+        <div class="col-sm-6 pt-1">
+            <button type="button" class="btn btn-outline-info" (click)="downloadBulkUploadTemplate()">Click to download template</button>
+        </div>
+    </div>
+    <div class="row pt-3">
+        <div class="col-sm-12">
+            <h5>Note:</h5>
+            <p> Please don't change file name, sheet name, header name in the excel template. </p>
+        </div>
     </div>
 
 </div>
