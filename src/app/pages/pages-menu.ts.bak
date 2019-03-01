@@ -19,16 +19,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Performance Data',
     icon: 'nb-bar-chart',
-    link: '/greenstarui/pages/performancedata'
+    link: '/pages/dashboard'
   },
   {
     title: 'Performance Star',
     icon: 'nb-star',
-    link: '/greenstarui/pages/performancestar'
+    link: '/pages/dashboard'
    },
   {
-    title: 'Performance Metrics',
+    title: 'Metrics',
     icon: 'nb-collapse',
-    link: '/greenstarui/pages/performancemetrics'
+    link: '/pages/dashboard'
   }
 ];
