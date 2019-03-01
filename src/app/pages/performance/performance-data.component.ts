@@ -122,8 +122,11 @@ export class PerformanceDataComponent implements OnInit {
 
             this.performanceService.getPerformanceDataTemplate(searchPerformanceData).subscribe(
                 (response) => {
-                    var blob = new Blob([response.result], { type: 'application/xls' });
-                    tempSaveAs(blob, 'performance_template.xls');
+
+                    console.log(response);
+
+                    var blob = new Blob([response], { type: 'application/octet-stream' });
+                    tempSaveAs(blob, 'performance_template.xlsx');
                 },
                 error => {
                     console.log("Http Server error", error);
