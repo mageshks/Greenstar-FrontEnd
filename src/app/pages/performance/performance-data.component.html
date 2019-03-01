@@ -8,17 +8,100 @@
             <nb-card-body>
 
                 <div class="row">
+                    <div class="col-sm-4">
+                        <label for="address" class="col-form-label">School</label>
+                        <div class="input-group">
+                            <select id="school" name="school" class="form-control form-control-sm">
+                                <option value=''>Select</option>
+                                <option value='Nikita Matriculation School'>Nikita Matriculation School</option>
+                                <option value='SSVM Matriculation School'>SSVM Matriculation School</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <label for="address" class="col-form-label">Class</label>
+                        <div class="input-group">
+                            <select id="className" name="className" class="form-control form-control-sm">
+                                <option value=''>Select</option>
+                                <option value='First'>First</option>
+                                <option value='Second'>Second</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <label for="address" class="col-form-label">Section</label>
+                        <div class="input-group">
+                            <select id="section" name="section" class="form-control form-control-sm">
+                                <option value=''>Select</option>
+                                <option value='A'>A</option>
+                                <option value='B'>B</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <label for="address" class="col-form-label">Month</label>
+                        <div class="input-group">
+                            <select id="month" name="month" class="form-control form-control-sm">
+                                <option value=''>Select</option>
+                                <option value='Jan'>Jan</option>
+                                <option value='Feb'>Feb</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <label for="address" class="col-form-label">Week</label>
+                        <div class="input-group">
+                            <select id="week" name="week" class="form-control form-control-sm">
+                                <option value=''>Select</option>
+                                <option value='First'>Week-1</option>
+                                <option value='Second'>Week-2</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row pt-3">                    
+                    <div class="col-sm-12 text-right">
+                        <button class="btn btn-primary btn-sm" (click)="searchPerformanceData();">Search</button>
+                    </div>
+                </div>
+
+                <div class="row pt-4">
+                    <div class="col-sm-2">
+                        <button class="btn btn-primary btn-sm" (click)="openBulkUploadMmodal();">Bulk Upload</button>                   
+                    </div>
+                    <div class="col-sm-4">
+                        <button class="btn btn-primary btn-sm">Add Perofrmance Data</button>                    
+                    </div>
+                    <div class="col-sm-3 text-right">
+                        <nb-checkbox (change)="checkAllPerformance($event);" [disabled] = "!isPerformanceChkboxEnabled">Select All</nb-checkbox>
+                    </div>
+                    <div class="col-sm-1 text-right">
+                        <button class="btn btn-primary btn-sm" [disabled] = "!isPerformanceEditEnabled" (click)="editPerformanceData();">Edit</button>
+                    </div>
+                    <div class="col-sm-2 text-right">
+                        <button class="btn btn-primary btn-sm" [disabled] = "!isPerformanceChkboxEnabled" (click)="submitPerformanceData();">Submit</button>
+                    </div>
+                </div>
+
+                <div class="row pt-2">
                     <div class="col-sm-12">
                         <div class="table-responsive">
-
-                            <table class="table table-striped table-bordered">
+                            <table class="table table-sm table-striped table-bordered">
                                 <thead>
                                     <!-- Top Header Row - Start -->
                                     <tr>
                                         <th rowspan="2" scope="col">Roll ID</th>
                                         <th rowspan="2" scope="col">Name</th>
                                         <ng-container *ngFor="let headerObj of performanceSource.headers">
-                                            <th colspan="3" scope="col" class="text-center"> {{headerObj.title}} </th>
+                                            <th colspan="3" scope="col" class="text-center">
+                                                <label nbTooltip="{{headerObj.title}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{headerObj.title}}</label> &nbsp;
+                                                <nb-checkbox [value]="headerObj.checkValue" (change)="checkPerformanceDayWise($event, headerObj);" [disabled] = "!isPerformanceChkboxEnabled"></nb-checkbox>
+                                            </th>
                                         </ng-container>
                                     </tr>
                                     <!-- Top Header Row - End -->
@@ -28,8 +111,8 @@
                                         <ng-container *ngFor="let headerObj of performanceSource.headers">
                                             <ng-container *ngIf="headerObj.subTitleList.length > 0">
                                                 <th *ngFor="let subTitle of headerObj.subTitleList" class="text-center" scope="col">
-                                                    {{subTitle.title}} &nbsp;
-                                                    <input type="checkbox" (change)="checkPerformanceDataStatus($event, headerObj, subTitle);">
+                                                    <label nbTooltip="{{subTitle.title}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{subTitle.alais}}</label>
+                                                    <nb-checkbox [value]="subTitle.checkValue" (change)="checkPerformanceParamWise($event, headerObj, subTitle);" class="pl-4" [disabled] = "!isPerformanceChkboxEnabled"></nb-checkbox>
                                                 </th>
                                             </ng-container>
                                         </ng-container>
@@ -42,11 +125,9 @@
                                         <td scope="col">{{ performanceRow.rollId }}</td>
                                         <td scope="col">{{ performanceRow.name }}</td>
                                         <ng-container *ngFor="let performanceDay of performanceRow.performanceDays">
-
                                             <!-- Single Value -->
-                                            <td scope="col" class="text-center" *ngFor="let performanceData of performanceDay.performanceDatas">
-                                                {{performanceData.value}} &nbsp;&nbsp;
-                                                <input type="checkbox" [checked]="performanceData.value" (change)="checkCellPerformanceDataStatus($event, performanceRow, performanceDay, performanceData)">
+                                            <td scope="col" *ngFor="let performanceData of performanceDay.performanceDatas" style="text-align:center;">
+                                                <nb-checkbox [value]="performanceData.value" (change)="checkCellPerformanceDataStatus($event, performanceRow, performanceDay, performanceData)" class="pl-4" [disabled] = "!isPerformanceChkboxEnabled"></nb-checkbox>
                                             </td>
                                         </ng-container>
                                     </tr>

@@ -14,9 +14,11 @@ export class PerformanceStaticData {
 
         // table dynamic headers - start
         let dynamicHeaders: IPerformanceHeader[] = [
-            { title: '18-Feb-2019', subTitleList: this.getSubTitle() },
-            { title: '19-Feb-2019', subTitleList: this.getSubTitle() },
-            { title: '20-Feb-2019', subTitleList: this.getSubTitle() }
+            { title: '18-Feb-2019', alais: '18-Feb-2019', checkValue: false, subTitleList: this.getSubTitle() },
+            { title: '19-Feb-2019', alais: '19-Feb-2019', checkValue: false, subTitleList: this.getSubTitle() },
+            { title: '20-Feb-2019', alais: '20-Feb-2019', checkValue: false, subTitleList: this.getSubTitle() },
+            { title: '21-Feb-2019', alais: '21-Feb-2019', checkValue: false, subTitleList: this.getSubTitle() },
+            { title: '22-Feb-2019', alais: '22-Feb-2019', checkValue: false, subTitleList: this.getSubTitle() }
         ];
 
         this.performanceSource.headers = dynamicHeaders;
@@ -51,7 +53,9 @@ export class PerformanceStaticData {
     public static getSubTitle(): IPerformanceHeader[] {
 
         let dynamicTitle: IPerformanceHeader[] = [
-
+            { title: 'HomeWork',  alais: 'HW', checkValue: false, subTitleList: [] },
+            { title: 'Disciplain', alais: 'DS', checkValue: false, subTitleList: [] },
+            { title: 'Attendance',  alais: 'AT', checkValue: false, subTitleList: [] }
         ];
         return dynamicTitle;
     }
@@ -104,6 +108,16 @@ export class PerformanceStaticData {
         performanceDay3.dateValue = "20-Feb-2019";
         performanceDay3.performanceDatas = this.getPerformanceData();
         performanceDayArray.push(performanceDay3);
+
+        let performanceDay4: IPerformanceDay = {} as IPerformanceDay;
+        performanceDay4.dateValue = "21-Feb-2019";
+        performanceDay4.performanceDatas = this.getPerformanceData();
+        performanceDayArray.push(performanceDay4);
+
+        let performanceDay5: IPerformanceDay = {} as IPerformanceDay;
+        performanceDay5.dateValue = "22-Feb-2019";
+        performanceDay5.performanceDatas = this.getPerformanceData();
+        performanceDayArray.push(performanceDay5);
 
         return performanceDayArray;
     }

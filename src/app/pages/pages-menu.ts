@@ -30,5 +30,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Performance Metrics',
     icon: 'nb-collapse',
     link: '/greenstarui/pages/performancemetrics'
+  },
+  {
+    title: 'Admin',
+    icon: 'nb-gear',
+    link: '/greenstarui/pages/admin'
   }
 ];
