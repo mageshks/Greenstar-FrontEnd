@@ -1,16 +1,284 @@
 <div class="row">
     <div class="col-md-12">
         <nb-card>
-            <nb-card-header>
-                Performance Metrics
-            </nb-card-header>
-
             <nb-card-body>
+              <nb-tabset>
+                <nb-tab tabTitle="Individual Performance Metrics" tabIcon="nb-person" responsive>
+                    <div class='row pt-5'>
+                        <div class='col-md-3'>
+                            <label class='control-label'>School Name</label>
+                            <nb-select placeholder="Select" outline>
+                                <nb-option value="1">Nikita Matriculation School</nb-option>
+                                <nb-option value="2">KV Matriculation School</nb-option>
+                                <nb-option value="3">SSVM Matriculation School</nb-option>
+                            </nb-select>
+                        </div>
+                        <div class='col-md-3'>
+                            <label class='control-label'>Class</label>
+                            <nb-select placeholder="Select" outline>
+                                <nb-option value="1">LKG</nb-option>
+                                <nb-option value="2">UKG</nb-option>
+                                <nb-option value="3">First</nb-option>
+                            </nb-select>
+                        </div>
+                        <div class='col-md-3'>
+                            <label class='control-label'>Section</label>
+                            <nb-select placeholder="Select" outline>
+                                <nb-option value="1">A</nb-option>
+                                <nb-option value="2">B</nb-option>
+                                <nb-option value="3">C</nb-option>
+                                <nb-option value="4">D</nb-option>
+                                <nb-option value="5">E</nb-option>
+                            </nb-select>
+                        </div>
+                    </div>
+                    
+                    <div class='row'>
+                        <div class='col-md-3'>
+                            <label class='control-label'>Month</label>
+                            <nb-select placeholder="Select" outline>
+                                <nb-option value="1">January</nb-option>
+                                <nb-option value="2">February</nb-option>
+                                <nb-option value="3">March</nb-option>
+                                <nb-option value="4">April</nb-option>
+                                <nb-option value="5">May</nb-option>
+                                <nb-option value="6">June</nb-option>
+                                <nb-option value="7">July</nb-option>
+                                <nb-option value="8">August</nb-option>
+                                <nb-option value="9">September</nb-option>
+                                <nb-option value="10">October</nb-option>
+                                <nb-option value="11">November</nb-option>
+                                <nb-option value="12">December</nb-option>
+                            </nb-select>
+                        </div>
+                        <div class='col-md-3'>
+                            <label class='control-label'>Week</label>
+                            <nb-select placeholder="Select" outline>
+                                <nb-option value="1">First</nb-option>
+                                <nb-option value="2">Second</nb-option>
+                                <nb-option value="3">Third</nb-option>
+                                <nb-option value="4">Fourth</nb-option>
+                                <nb-option value="5">Fifth</nb-option>
+                            </nb-select>
+                        </div>
+                    </div>
+    
+                    <div class='row pt-3'>
+                        <div class='col-md-6'>
+                            <button nbButton status="primary">View Metrics</button>
+                        </div>
+                        <div class='col-md-3'>
+                            
+                        </div>
+                        <div class='col-md-3'>
+                            
+                            <button nbButton status="primary" (click)="downloadExcelExport()">Excel Export</button> 
+                        </div>
+                    </div>
+    
+                    <div class="row pt-3">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-striped table-bordered">
+                                    <thead>
+                                        <!-- Top Header Row - Start -->
+                                        <tr>
+                                            <th rowspan="2" scope="col">Roll ID</th>
+                                            <th rowspan="2" scope="col">Name</th>
+                                            <ng-container *ngFor="let headerObj of performanceMetricsSource.headers">
+                                                <th colspan="3" scope="col" class="text-center">
+                                                    <label nbTooltip="{{headerObj.title}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{headerObj.title}}</label> &nbsp;
+                                                </th>
+                                            </ng-container>
+                                        </tr>
+                                        <!-- Top Header Row - End -->
+    
+                                        <!-- Top Sub Header Row - Start -->
+                                        <tr>
+                                            <ng-container *ngFor="let headerObj of performanceMetricsSource.headers">
+                                                <ng-container *ngIf="headerObj.subTitleList.length > 0">
+                                                    <th *ngFor="let subTitle of headerObj.subTitleList" class="text-center" scope="col">
+                                                        <label nbTooltip="{{subTitle.title}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{subTitle.alais}}</label>
+                                                    </th>
+                                                </ng-container>
+                                            </ng-container>
+                                        </tr>
+                                        <!-- Top Sub Header Row - End -->
+                                    </thead>
+                                    <tbody>
+                                        <!-- Row content - Start -->
+                                        <tr *ngFor="let performanceRow of performanceMetricsSource.performanceRows">
+                                            <td scope="col">{{ performanceRow.rollId }}</td>
+                                            <td scope="col">{{ performanceRow.name }}</td>
+                                            <ng-container *ngFor="let performanceDay of performanceRow.performanceMetricsDays">
+                                                <!-- Single Value -->
+                                                <td scope="col" *ngFor="let performanceData of performanceDay.performanceDatas" style="text-align:center;">
+                                                    <label nbTooltip="{{performanceData.value}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{performanceData.value}}</label>
+                                                </td>
+                                            </ng-container>
+                                        </tr>
+                                        <!-- Row content - End -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </nb-tab>
+                <nb-tab tabTitle="Class-wise Metrics" tabIcon="nb-compose" responsive>
+                    <div class='row pt-5'>
+                        <div class='col-md-3'>
+                            <label class='control-label'>School Name</label>
+                            <nb-select placeholder="Select" outline>
+                                <nb-option value="1">Nikita Matriculation School</nb-option>
+                                <nb-option value="2">KV Matriculation School</nb-option>
+                                <nb-option value="3">SSVM Matriculation School</nb-option>
+                            </nb-select>
+                        </div>
+                        <div class='col-md-3'>
+                            <label class='control-label'>Class</label>
+                            <nb-select placeholder="Select" outline>
+                                <nb-option value="1">LKG</nb-option>
+                                <nb-option value="2">UKG</nb-option>
+                                <nb-option value="3">First</nb-option>
+                            </nb-select>
+                        </div>
+                        <div class='col-md-3'>
+                            <label class='control-label'>Section</label>
+                            <nb-select placeholder="Select" outline>
+                                <nb-option value="1">A</nb-option>
+                                <nb-option value="2">B</nb-option>
+                                <nb-option value="3">C</nb-option>
+                                <nb-option value="4">D</nb-option>
+                                <nb-option value="5">E</nb-option>
+                            </nb-select>
+                        </div>
+                    </div>
 
-                Work Inprogress
-                
+                    <div class='row pt-3'>
+                        <div class='col-md-6'>
+                            <button nbButton status="primary">View Metrics</button>
+                        </div>
+                        <div class='col-md-3'>
+                            
+                        </div>
+                        <div class='col-md-3'>
+                            
+                            <button nbButton status="primary" (click)="downloadExcelExport()">Excel Export</button> 
+                        </div>
+                    </div>
+    
+                    <div class="row pt-3">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-striped table-bordered">
+                                    <thead>
+                                        <!-- Top Header Row - Start -->
+                                        <tr>
+                                            <ng-container *ngFor="let headerObj of classWiseMetricsSource.headers">
+                                                <th scope="col" class="text-center">
+                                                    <label nbTooltip="{{headerObj.title}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{headerObj.title}}</label> &nbsp;
+                                                </th>
+                                            </ng-container>
+                                        </tr>
+                                        <!-- Top Header Row - End -->
+                                    </thead>
+                                    <tbody>
+                                        <!-- Row content - Start -->
+                                        <tr class="text-center" *ngFor="let performanceRow of classWiseMetricsSource.performanceRows">
+                                            <td scope="col">{{ performanceRow.class }}</td>
+                                            <td scope="col">{{ performanceRow.attendance }}</td>
+                                            <td scope="col">{{ performanceRow.discipline }}</td>
+                                            <td scope="col">{{ performanceRow.homework }}</td>
+                                            <td scope="col">{{ performanceRow.total }}</td>
+                                        </tr>
+                                        <!-- Row content - End -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </nb-tab>
+                <nb-tab tabTitle="Team-wise Metrics" tabIcon="nb-snowy-circled" responsive>
+                    <div class='row pt-5'>
+                        <div class='col-md-3'>
+                            <label class='control-label'>School Name</label>
+                            <nb-select placeholder="Select" outline>
+                                <nb-option value="1">Nikita Matriculation School</nb-option>
+                                <nb-option value="2">KV Matriculation School</nb-option>
+                                <nb-option value="3">SSVM Matriculation School</nb-option>
+                            </nb-select>
+                        </div>
+                        <div class='col-md-3'>
+                            <label class='control-label'>Class</label>
+                            <nb-select placeholder="Select" outline>
+                                <nb-option value="1">LKG</nb-option>
+                                <nb-option value="2">UKG</nb-option>
+                                <nb-option value="3">First</nb-option>
+                            </nb-select>
+                        </div>
+                        <div class='col-md-3'>
+                            <label class='control-label'>Section</label>
+                            <nb-select placeholder="Select" outline>
+                                <nb-option value="1">A</nb-option>
+                                <nb-option value="2">B</nb-option>
+                                <nb-option value="3">C</nb-option>
+                                <nb-option value="4">D</nb-option>
+                                <nb-option value="5">E</nb-option>
+                            </nb-select>
+                        </div>
+                    </div>
+                    
+                    <div class='row pt-3'>
+                        <div class='col-md-6'>
+                            <button nbButton status="primary">View Metrics</button>
+                        </div>
+                        <div class='col-md-3'>
+                            
+                        </div>
+                        <div class='col-md-3'>
+                            
+                            <button nbButton status="primary" (click)="downloadExcelExport()">Excel Export</button> 
+                        </div>
+                    </div>
+    
+                    <div class="row pt-3">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-striped table-bordered">
+                                    <thead>
+                                        <!-- Top Header Row - Start -->
+                                        <tr>
+                                            <ng-container *ngFor="let headerObj of teamWiseMetricsSource.headers">
+                                                <th scope="col" class="text-center">
+                                                    <label nbTooltip="{{headerObj.title}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{headerObj.title}}</label> &nbsp;
+                                                </th>
+                                            </ng-container>
+                                        </tr>
+                                        <!-- Top Header Row - End -->
+                                    </thead>
+                                    <tbody>
+                                        <!-- Row content - Start -->
+                                        <tr class="text-center" *ngFor="let performanceRow of teamWiseMetricsSource.performanceRows">
+                                            <td scope="col">{{ performanceRow.team }}</td>
+                                            <td scope="col">{{ performanceRow.attendance }}</td>
+                                            <td scope="col">{{ performanceRow.discipline }}</td>
+                                            <td scope="col">{{ performanceRow.homework }}</td>
+                                            <td scope="col">{{ performanceRow.total }}</td>
+                                        </tr>
+                                        <!-- Row content - End -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                  </nb-tab>
+                <nb-tab tabTitle="Encouraging Metrics" tabIcon="nb-arrow-thin-up" responsive>
+                  <p><strong>Encouraging Metrics</strong>.</p>
+                </nb-tab>
+              </nb-tabset>
+          
             </nb-card-body>
-
         </nb-card>
     </div>
 </div>

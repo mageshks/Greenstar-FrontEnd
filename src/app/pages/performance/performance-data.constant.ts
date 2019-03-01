@@ -53,13 +53,9 @@ export class PerformanceStaticData {
     public static getSubTitle(): IPerformanceHeader[] {
 
         let dynamicTitle: IPerformanceHeader[] = [
-<<<<<<< HEAD
-
-=======
             { title: 'HomeWork',  alais: 'HW', checkValue: false, subTitleList: [] },
             { title: 'Disciplain', alais: 'DS', checkValue: false, subTitleList: [] },
             { title: 'Attendance',  alais: 'AT', checkValue: false, subTitleList: [] }
->>>>>>> fc2349d6e35dedbe1856b95656a38034fbc173a4
         ];
         return dynamicTitle;
     }
