@@ -9,13 +9,15 @@ import { StudentListComponent } from './student/student-list.component';
 import { PerformanceDataComponent } from './performance/performance-data.component';
 import { PerformanceStarComponent } from './performance/performance-star.component';
 import { PerformanceMetricsComponent } from './performance/performance-metrics.component';
+import { ECommerceComponent } from './e-commerce/e-commerce.component';
 
 export const PAGE_ROUTES: Routes = [
   {
     path: '', component: PagesComponent,
     children: [
       { path: '', component: DashboardComponent },
-      { path: 'dashboard', component: DashboardComponent },
+      /* { path: 'dashboard', component: DashboardComponent }, */
+      { path: 'dashboard', component: ECommerceComponent },
       { path: 'school', component: SchoolListComponent },
       { path: 'student', component: StudentListComponent },
       { path: 'performancedata', component: PerformanceDataComponent },
