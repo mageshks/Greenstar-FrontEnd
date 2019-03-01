@@ -8,7 +8,7 @@ import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { SchoolModule } from './school/school.module';
 import { StudentModule } from './student/student.module';
 import { PerformanceModule } from './performance/performance.module';
-import { AdminModule } from './admin/admin.module';
+import { ECommerceModule } from './e-commerce/e-commerce.module';
 
 const PAGES_COMPONENTS = [
   PagesComponent
@@ -23,7 +23,7 @@ const PAGES_COMPONENTS = [
     SchoolModule,
     StudentModule,
     PerformanceModule,
-    AdminModule
+    ECommerceModule,
   ],
   declarations: [
     ...PAGES_COMPONENTS,
