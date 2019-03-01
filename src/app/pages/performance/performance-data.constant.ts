@@ -34,12 +34,12 @@ export class PerformanceStaticData {
         
                 // table dynamic headers - start
                 let dynamicHeaders: IPerformanceHeader[] = [
-                    { title: '18-Feb-2019', subTitleList: this.getSubTitle() },
-                    { title: '19-Feb-2019', subTitleList: this.getSubTitle() },
-                    { title: '20-Feb-2019', subTitleList: this.getSubTitle() },
-                    { title: '21-Feb-2019', subTitleList: this.getSubTitle() },
-                    { title: '22-Feb-2019', subTitleList: this.getSubTitle() },
-                    { title: 'Week Summary', subTitleList: this.getSubTitle() }
+                    { title: '18-Feb-2019', alais:"", checkValue: false, subTitleList: this.getSubTitle() },
+                    { title: '19-Feb-2019', alais:"", checkValue: false, subTitleList: this.getSubTitle() },
+                    { title: '20-Feb-2019', alais:"", checkValue: false, subTitleList: this.getSubTitle() },
+                    { title: '21-Feb-2019', alais:"", checkValue: false, subTitleList: this.getSubTitle() },
+                    { title: '22-Feb-2019', alais:"", checkValue: false, subTitleList: this.getSubTitle() },
+                    { title: 'Week Summary', alais:"", checkValue: false, subTitleList: this.getSubTitle() }
                 ];
         
                 this.performanceMetricsSource.headers = dynamicHeaders;
