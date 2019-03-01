@@ -1,4 +1,18 @@
+export interface ISearchPerformanceData {
+    schoolId: number;
+    className: string;
+    sectionName: string;
+    month: number;
+    week: string;    
+}
+
 export interface IPerformanceDataTable {
+    schoolId: number;
+    className: string;
+    section: string;
+    month: number;
+    week: string;
+    userId: string;
     headers: IPerformanceHeader[];
     performanceRows: IPerformanceRow[];
 }
@@ -12,17 +26,16 @@ export interface IPerformanceHeader {
 
 export interface IPerformanceRow {
     rollId: string;
-    name: string;
+    studentName: string;
     performanceDays: IPerformanceDay[];
 }
 
 export interface IPerformanceDay {
     dateValue: string;
-    performanceDatas: IPerformanceData[];
+    performanceData: IPerformanceData[];
 }
 
 export interface IPerformanceData {
-
     key: string;
     value: boolean;
 }

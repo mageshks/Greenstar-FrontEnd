@@ -74,7 +74,7 @@ export class PerformanceStaticData {
 
         let performanceRow: IPerformanceRow = {} as IPerformanceRow;
         performanceRow.rollId = "LKG01";
-        performanceRow.name = "Panneer";
+        performanceRow.studentName = "Panneer";
         performanceRow.performanceDays = this.getPerformanceDays();
 
         return performanceRow;
@@ -84,7 +84,7 @@ export class PerformanceStaticData {
 
         let performanceRow: IPerformanceRow = {} as IPerformanceRow;
         performanceRow.rollId = "LKG02";
-        performanceRow.name = "Magesh";
+        performanceRow.studentName = "Magesh";
         performanceRow.performanceDays = this.getPerformanceDays();
 
         return performanceRow;
@@ -96,27 +96,27 @@ export class PerformanceStaticData {
 
         let performanceDay1: IPerformanceDay = {} as IPerformanceDay;
         performanceDay1.dateValue = "18-Feb-2019";
-        performanceDay1.performanceDatas = this.getPerformanceData();
+        performanceDay1.performanceData = this.getPerformanceData();
         performanceDayArray.push(performanceDay1);
 
         let performanceDay2: IPerformanceDay = {} as IPerformanceDay;
         performanceDay2.dateValue = "19-Feb-2019";
-        performanceDay2.performanceDatas = this.getPerformanceData();
+        performanceDay2.performanceData = this.getPerformanceData();
         performanceDayArray.push(performanceDay2);
 
         let performanceDay3: IPerformanceDay = {} as IPerformanceDay;
         performanceDay3.dateValue = "20-Feb-2019";
-        performanceDay3.performanceDatas = this.getPerformanceData();
+        performanceDay3.performanceData = this.getPerformanceData();
         performanceDayArray.push(performanceDay3);
 
         let performanceDay4: IPerformanceDay = {} as IPerformanceDay;
         performanceDay4.dateValue = "21-Feb-2019";
-        performanceDay4.performanceDatas = this.getPerformanceData();
+        performanceDay4.performanceData = this.getPerformanceData();
         performanceDayArray.push(performanceDay4);
 
         let performanceDay5: IPerformanceDay = {} as IPerformanceDay;
         performanceDay5.dateValue = "22-Feb-2019";
-        performanceDay5.performanceDatas = this.getPerformanceData();
+        performanceDay5.performanceData = this.getPerformanceData();
         performanceDayArray.push(performanceDay5);
 
         return performanceDayArray;
