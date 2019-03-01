@@ -1,5 +1,4 @@
 export * from './header/header.component';
-export * from './header/header-login.component';
 export * from './footer/footer.component';
 export * from './search-input/search-input.component';
 export * from './theme-settings/theme-settings.component';

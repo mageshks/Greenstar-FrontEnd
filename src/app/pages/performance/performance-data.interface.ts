@@ -5,7 +5,9 @@ export interface IPerformanceDataTable {
 
 export interface IPerformanceHeader {
     title: string;
+    alais: string;
     subTitleList: IPerformanceHeader[];
+    checkValue: boolean;
 }
 
 export interface IPerformanceRow {
