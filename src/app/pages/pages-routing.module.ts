@@ -10,6 +10,7 @@ import { PerformanceDataComponent } from './performance/performance-data.compone
 import { PerformanceStarComponent } from './performance/star/performance-star.component';
 import { PerformanceMetricsComponent } from './performance/performance-metrics.component';
 import { ECommerceComponent } from './e-commerce/e-commerce.component';
+import { AdminComponent } from './admin/admin.component';
 
 export const PAGE_ROUTES: Routes = [
   {
@@ -22,7 +23,8 @@ export const PAGE_ROUTES: Routes = [
       { path: 'student', component: StudentListComponent },
       { path: 'performancedata', component: PerformanceDataComponent },
       { path: 'performancemetrics', component: PerformanceMetricsComponent },
-      { path: 'performancestar', component: PerformanceStarComponent }
+      { path: 'performancestar', component: PerformanceStarComponent },
+      { path: 'admin', component: AdminComponent }
     ]
   }
 ];
