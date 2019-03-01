@@ -24,16 +24,14 @@ import { PerformanceDataSuccessModalComponent } from './performance-data-success
     PerformanceMetricsComponent,
     PerformanceStarComponent,
     PerformanceDataUploadModalComponent,
-    GreenstarComponent
-  ],
-  entryComponents: [
-    PerformanceDataUploadModalComponent,GreenstarComponent
-    PerformanceDataSuccessModalComponent
+    GreenstarComponent,
+    PerformanceDataSuccessModalComponent 
   ],
   entryComponents: [
     PerformanceDataUploadModalComponent,
+    GreenstarComponent,
     PerformanceDataSuccessModalComponent
-  ],
+  ], 
   providers: [
     PerformanceService
   ]
