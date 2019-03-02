@@ -3,25 +3,20 @@ export interface ISearchPerformanceStarData {
     schoolId: number;
     studentId: number;
     classId: number;
-    sectionId: number;
+    teamName: string;
     month: number
 }
 
 export class ISchoolDetail {
     public id: number;
     public schoolName: string;
-    public classList: IClassDetail[];
 }
 
-export class IClassDetail {
+export class IClassSectionDetail {
     public id: number;
     public className: string;
-    public sectionList: ISection[];
-}
-
-export class ISection {
-    public id: number;
     public sectionName: string;
+    public classAndSectionName: string;
     public studentList: IStudent[];
     public teamList: string[];
 }

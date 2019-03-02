@@ -8,7 +8,7 @@ import { PerformanceStarService } from './performance-star.service';
 import { GreenstarComponent } from './greenstar/greenstar.component';
 import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
-import { ISchoolDetail, IClassDetail,ISection,IStudent } from "./performance-star.interface";
+import { ISearchPerformanceStarData, ISchoolDetail, IClassSectionDetail, IStudent } from "./performance-star.interface";
 
 import * as jspdf from 'jspdf';
 
@@ -23,17 +23,23 @@ export class PerformanceStarComponent implements OnInit {
     // Enable indicators for search inputs
     public isSchoolViewable = false;
     public isClassViewable = false;
-    public isSectionViewable = false;
     public isMonthViewable = false;
     public isTeamViewable = false;
     public isNameViewable = false;
 
-    //Value holders for search input
+    //Value holders for search input used to display the value in star
+    public schoolName = "";
+    public classAndSectionName = "";
+    public teamName = "";
+    public studentName = "";
+    public month = "";
 
-    public calcType = "";
 
     // Loading indicator used on printing pdf
     public loading = false;
+
+    // loading drop down values on selection
+    public loadingDropdown = false;
 
     //Parameter name
     public paramOne = "HomeWork";
@@ -43,7 +49,14 @@ export class PerformanceStarComponent implements OnInit {
     public isDataAvailable = true;
     public isNoPerfData = false;
 
+    // Holds the value to be displayed in dropdown with the information from backend
     public schoolList: ISchoolDetail[];
+    public classList: IClassSectionDetail[];
+    public studentList: IStudent[];
+    public teamList: string[];
+
+    public searchPerformanceStarData: ISearchPerformanceStarData = {} as ISearchPerformanceStarData;
+
 
     //Parameter data for each star
     public perfStarMonthDataParamOne = new Array("#7CFC00", "#7CFC00", "#7CFC00", "#7CFC00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#7CFC00", "#7CFC00", "#FFFF00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#FF0000", "#7CFC00", "#7CFC00", "#7CFC00", "#7beded", "#7beded", "#7CFC00",
@@ -52,12 +65,19 @@ export class PerformanceStarComponent implements OnInit {
         "#7CFC00", "#7CFC00", "#FFFF00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#FFFFFF", "#FFFFFF");
     public perfStarMonthDataParamThree = new Array("#7CFC00", "#7CFC00", "#7CFC00", "#7CFC00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#7CFC00", "#7CFC00", "#FFFF00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#FF0000", "#7CFC00", "#7CFC00", "#7CFC00", "#7beded", "#7beded", "#7CFC00",
         "#7CFC00", "#7CFC00", "#FFFF00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#FFFFFF", "#FFFFFF");
-   
+
     constructor(private formBuilder: FormBuilder,
         private performanceStarService: PerformanceStarService) {
     }
+    ngOnInit(): void {
+        this.searchPerformanceStarData.calcType = "Select";
+        this.searchPerformanceStarData.classId = 0;
+        this.searchPerformanceStarData.month = 0;
+        this.searchPerformanceStarData.schoolId = 0;
+        this.searchPerformanceStarData.studentId = 0;
+        this.searchPerformanceStarData.teamName = "Select";
+    }
 
-    
 
     /**
     * Method to print the star for each param on each page, to change the 
@@ -87,42 +107,114 @@ export class PerformanceStarComponent implements OnInit {
             this.loading = false;
         });
     }
-    ngOnInit(): void {
-    }
 
     // Method to enable disable input based on the type selection
     public onChangeCalcType(selectedValue: string) {
+        this.loadingDropdown = true;
         this.enableSearchComponents(selectedValue);
+        // Populate school list
         this.performanceStarService.getSchools().subscribe(
             (response) => {
                 console.log(response);
                 this.schoolList = response;
+                this.loadingDropdown = false;
             },
             error => {
                 console.log("Http Server error", error);
-            }
+                this.loadingDropdown = false;
+            },
+            
         );
+     }
+
+    // Method to enable disable input based on the type selection
+    public onChangeSchoolChange($event) {
+        this.loadingDropdown = true;
+        this.schoolName = $event.target.options[$event.target.options.selectedIndex].text;
+        // Reset other dropdowns
+        this.searchPerformanceStarData.classId = 0;
+        this.searchPerformanceStarData.month = 0;
+        this.searchPerformanceStarData.studentId = 0;
+        this.searchPerformanceStarData.teamName = "Select";
+        // Populate class details
+        if (this.searchPerformanceStarData.schoolId != 0) {
+            let schoolDetail:ISchoolDetail  = {} as ISchoolDetail;
+            schoolDetail.id = this.searchPerformanceStarData.schoolId;
+            this.performanceStarService.getClassList(schoolDetail).subscribe(
+                (response) => {
+                    console.log(response);
+                    this.classList = response;
+                    this.loadingDropdown = false;
+                },
+                error => {
+                    console.log("Http Server error", error);
+                    this.loadingDropdown = false;
+                }
+            );
+        }
     }
 
-    private enableSearchComponents(selectedValue: string){
+    public onChangeClassChange($event) {
+        this.loadingDropdown = true;
+        this.classAndSectionName = $event.target.options[$event.target.options.selectedIndex].text;
+        // Reset other dropdowns
+        this.searchPerformanceStarData.month = 0;
+        this.searchPerformanceStarData.studentId = 0;
+        this.searchPerformanceStarData.teamName = "Select";
+
+         // Populate student and team details
+        if (this.searchPerformanceStarData.classId != 0) {
+            let classDetail:IClassSectionDetail  = {} as IClassSectionDetail;
+            classDetail.id = this.searchPerformanceStarData.classId;
+            this.performanceStarService.getClassDetail(classDetail).subscribe(
+                (response) => {
+                    console.log(response);
+                    this.studentList = response.studentList;
+                    this.teamList = response.teamList;
+                    this.loadingDropdown = false;
+                },
+                error => {
+                    console.log("Http Server error", error);
+                    this.loadingDropdown = false;
+                }
+            );
+        }
+    }
+
+    public onChangeStudentChange($event) {
+        this.studentName = $event.target.options[$event.target.options.selectedIndex].text;
+        // Reset other dropdowns
+        this.searchPerformanceStarData.month = 0;
+        this.searchPerformanceStarData.teamName = "Select";
+    }
+
+    public onChangeTeamChange($event) {
+        this.teamName = $event.target.options[$event.target.options.selectedIndex].text;
+        // Reset other dropdowns
+        this.searchPerformanceStarData.month = 0;
+        this.searchPerformanceStarData.studentId = 0;
+    }
+
+    public onChangeMonthChange($event) {
+        this.month = $event.target.options[$event.target.options.selectedIndex].text;
+    }
+
+    private enableSearchComponents(selectedValue: string) {
         if (selectedValue == "Individual") {
             this.isSchoolViewable = true;
             this.isClassViewable = true;
-            this.isSectionViewable = true;
             this.isMonthViewable = true;
             this.isNameViewable = true;
             this.isTeamViewable = false;
         } else if (selectedValue == "Team") {
             this.isSchoolViewable = true;
             this.isClassViewable = true;
-            this.isSectionViewable = true;
             this.isMonthViewable = true;
             this.isNameViewable = false;
             this.isTeamViewable = true;
         } else if (selectedValue == "Class") {
             this.isSchoolViewable = true;
             this.isClassViewable = true;
-            this.isSectionViewable = true;
             this.isMonthViewable = true;
             this.isNameViewable = false;
             this.isTeamViewable = false;
@@ -130,9 +222,26 @@ export class PerformanceStarComponent implements OnInit {
             this.isSchoolViewable = true;
             this.isMonthViewable = true;
             this.isClassViewable = false;
-            this.isSectionViewable = false;
             this.isNameViewable = false;
             this.isTeamViewable = false;
+        } else if (selectedValue == "Select") {
+            this.isSchoolViewable = false;
+            this.isMonthViewable = false;
+            this.isClassViewable = false;
+            this.isNameViewable = false;
+            this.isTeamViewable = false;
+            this.schoolList = [];
         }
+        //Reset the dropdown values
+        this.searchPerformanceStarData.classId = 0;
+        this.searchPerformanceStarData.month = 0;
+        this.searchPerformanceStarData.schoolId = 0;
+        this.searchPerformanceStarData.studentId = 0;
+        this.searchPerformanceStarData.teamName = "Select";
+
+        //Reset the dropdown values
+        this.classList = [];
+        this.studentList = [];
+        this.teamList = [];
     }
 }

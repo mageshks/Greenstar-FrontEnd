@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
-import { ISchoolDetail, IClassDetail,ISection,IStudent } from "./performance-star.interface";
+import { ISearchPerformanceStarData,ISchoolDetail, IClassSectionDetail,IStudent } from "./performance-star.interface";
 
 const API_URL: string = 'http://localhost:2620';
 
@@ -15,6 +15,14 @@ export class PerformanceStarService {
 
     public getSchools(): Observable<any> {
         return this.http.post(API_URL+'/school/getSchools', { headers: this.headerValue });
+    }
+
+    public getClassList(school: ISchoolDetail): Observable<any> {
+        return this.http.post(API_URL+'/school/getClassList',school,{ headers: this.headerValue });
+    }
+
+    public getClassDetail(classInfo: IClassSectionDetail): Observable<any> {
+        return this.http.post(API_URL+'/school/getClassDetail',classInfo,{ headers: this.headerValue });
     }
 
   /**  public getExistingPerformanceMetricDatas(searchPerformanceData: ISearchPerformanceData): Observable<any> {

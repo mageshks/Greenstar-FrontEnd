@@ -6,105 +6,104 @@
             </nb-card-header>
 
             <nb-card-body>
+                <nb-card>
 
-                <div class="row">
-                    <div class="col-sm-2">
-                        <label for="caltype" class="col-form-label required">Calculation Type</label>
-                        <div class="input-group">
-                            <select id="caltype" class="form-control form-control-sm" (change)="onChangeCalcType($event.target.value)">
-                                <option value=''>Select</option>
-                                <option value='Individual'>Individual</option>
-                                <option value='Team'>Team</option>
-                                <option value='Class'>Class</option>
-                                <option value='School'>School</option>
-                            </select>
-                        </div>
-                    </div>
+                    <nb-card-body  [nbSpinner]="loadingDropdown" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="caltype" class="col-form-label required">Calculation Type</label>
+                                <div class="input-group">
+                                    <select id="caltype" class="form-control form-control-sm" [(ngModel)]="searchPerformanceStarData.calcType" (change)="onChangeCalcType($event.target.value)">
+                                        <option value='Select'>--Select--</option>
+                                        <option value='Individual'>Individual</option>
+                                        <option value='Team'>Team</option>
+                                        <option value='Class'>Class</option>
+                                        <option value='School'>School</option>
+                                    </select>
+                                </div>
+                            </div>
 
-                    <div class="col-sm-2" *ngIf="isSchoolViewable">
-                        <label for="school" class="col-form-label required">School</label>
-                        <div class="input-group">
-                            <select id="school" name="school" class="form-control form-control-sm">
-                                <option value="0">--Select--</option>
-                                <option *ngFor="let school of schoolList" value={{school.id}}>
-                                    {{school.schoolName}}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
+                            <div class="col-sm-4" *ngIf="isSchoolViewable">
+                                <label for="school" class="col-form-label required">School</label>
+                                <div class="input-group">
+                                    <select id="school" name="school" class="form-control form-control-sm" [(ngModel)]="searchPerformanceStarData.schoolId" (change)="onChangeSchoolChange($event)">
+                                        <option value="0">--Select--</option>
+                                        <option *ngFor="let school of schoolList" value={{school.id}}>
+                                            {{school.schoolName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
 
-                    <div class="col-sm-2" *ngIf="isClassViewable">
-                        <label for="className" class="col-form-label required">Class</label>
-                        <div class="input-group">
-                            <select id="className" name="className" class="form-control form-control-sm">
-                                <option value=''>Select</option>
-                                <option value='First'>First</option>
-                                <option value='Second'>Second</option>
-                            </select>
-                        </div>
-                    </div>
+                            <div class="col-sm-2" *ngIf="isClassViewable">
+                                <label for="className" class="col-form-label required">Class</label>
+                                <div class="input-group">
+                                    <select id="className" name="className" class="form-control form-control-sm" [(ngModel)]="searchPerformanceStarData.classId"
+                                        (change)="onChangeClassChange($event)">
+                                        <option value="0">--Select--</option>
+                                        <option *ngFor="let class of classList" value={{class.id}}>
+                                            {{class.classAndSectionName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
 
-                    <div class="col-sm-2" *ngIf="isSectionViewable">
-                        <label for="section" class="col-form-label required">Section</label>
-                        <div class="input-group">
-                            <select id="section" name="section" class="form-control form-control-sm">
-                                <option value=''>Select</option>
-                                <option value='A'>A</option>
-                                <option value='B'>B</option>
-                            </select>
+                            <div class="col-sm-2" *ngIf="isNameViewable || isTeamViewable">
+                                <div id="studentName" *ngIf="isNameViewable">
+                                    <label for="sname" class="col-form-label required">Student Name</label>
+                                    <div class="input-group">
+                                        <select id="sname" name="sname" class="form-control form-control-sm" [(ngModel)]="searchPerformanceStarData.studentId" (change)="onChangeStudentChange($event)">
+                                            <option value='0'>--Select--</option>
+                                            <option *ngFor="let student of studentList" value={{student.id}}>
+                                                {{student.studentName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="teamname" *ngIf="isTeamViewable">
+                                    <label for="tname" class="col-form-label required">Team Name</label>
+                                    <div class="input-group">
+                                        <select id="tname" name="tname" class="form-control form-control-sm" [(ngModel)]="searchPerformanceStarData.teamName" (change)="onChangeTeamChange($event)">
+                                            <option value='Select'>--Select--</option>
+                                            <option *ngFor="let teamName of teamList" value={{teamName}}>
+                                                {{teamName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2" *ngIf="isMonthViewable">
+                                <label for="month" class="col-form-label required">Month</label>
+                                <div class="input-group">
+                                    <select id="month" name="month" class="form-control form-control-sm" [(ngModel)]="searchPerformanceStarData.month" (change)="onChangeMonthChange($event)">
+                                        <option value='0'>--Select--</option>
+                                        <option value='1'>Jan</option>
+                                        <option value='2'>Feb</option>
+                                        <option value='3'>Mar</option>
+                                        <option value='4'>Apr</option>
+                                        <option value='5'>May</option>
+                                        <option value='6'>Jun</option>
+                                        <option value='7'>Jul</option>
+                                        <option value='8'>Aug</option>
+                                        <option value='9'>Sep</option>
+                                        <option value='10'>Oct</option>
+                                        <option value='11'>Nov</option>
+                                        <option value='12'>Dec</option>
+                                    </select>
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
-                    <div class="col-sm-2" *ngIf="isNameViewable || isTeamViewable">
-                        <div id="studentName" *ngIf="isNameViewable">
-                            <label for="sname" class="col-form-label required">Student Name</label>
-                            <div class="input-group">
-                                <select id="sname" name="sname" class="form-control form-control-sm">
-                                    <option value=''>Select</option>
-                                    <option value='Panneer'>Panneer</option>
-                                    <option value='Panneer'>Bharath</option>
-                                </select>
+
+                        <div class="row pt-3 pb-2">
+                            <div class="col-sm-12 text-right">
+                                <button class="btn btn-primary btn-sm" (click)="generatePerformanceStar();">Generate Star</button>
                             </div>
                         </div>
 
-                        <div id="teamname" *ngIf="isTeamViewable">
-                            <label for="tname" class="col-form-label required">Team Name</label>
-                            <div class="input-group">
-                                <select id="tname" name="tname" class="form-control form-control-sm">
-                                    <option value=''>Select</option>
-                                    <option value='Blue'>Blue</option>
-                                    <option value='Blue'>Green</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-2" *ngIf="isMonthViewable">
-                        <label for="month" class="col-form-label required">Month</label>
-                        <div class="input-group">
-                            <select id="month" name="month" class="form-control form-control-sm">
-                                <option value=''>Select</option>
-                                <option value='1'>Jan</option>
-                                <option value='2'>Feb</option>
-                                <option value='3'>Mar</option>
-                                <option value='4'>Apr</option>
-                                <option value='5'>May</option>
-                                <option value='6'>Jun</option>
-                                <option value='7'>Jul</option>
-                                <option value='8'>Aug</option>
-                                <option value='9'>Sep</option>
-                                <option value='10'>Oct</option>
-                                <option value='11'>Nov</option>
-                                <option value='12'>Dec</option>
-                            </select>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row pt-3 pb-2">
-                    <div class="col-sm-12 text-right">
-                        <button class="btn btn-primary btn-sm" (click)="generatePerformanceStar();">Generate Star</button>
-                    </div>
-                </div>
+                    </nb-card-body>
+                </nb-card>
 
                 <nb-card *ngIf="isDataAvailable" [nbSpinner]="loading" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
                     <nb-card-body>
