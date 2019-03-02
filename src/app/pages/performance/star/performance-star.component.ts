@@ -8,7 +8,7 @@ import { PerformanceStarService } from './performance-star.service';
 import { GreenstarComponent } from './greenstar/greenstar.component';
 import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
-import { ISchoolDetail, IClassDetail,ISection,IStudent,ITeam } from "./performance-star.interface";
+import { ISchoolDetail, IClassDetail,ISection,IStudent } from "./performance-star.interface";
 
 import * as jspdf from 'jspdf';
 
@@ -43,6 +43,8 @@ export class PerformanceStarComponent implements OnInit {
     public isDataAvailable = true;
     public isNoPerfData = false;
 
+    public schoolList: ISchoolDetail[];
+
     //Parameter data for each star
     public perfStarMonthDataParamOne = new Array("#7CFC00", "#7CFC00", "#7CFC00", "#7CFC00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#7CFC00", "#7CFC00", "#FFFF00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#FF0000", "#7CFC00", "#7CFC00", "#7CFC00", "#7beded", "#7beded", "#7CFC00",
         "#7CFC00", "#7CFC00", "#FFFF00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#FFFFFF", "#FFFFFF");
@@ -55,7 +57,7 @@ export class PerformanceStarComponent implements OnInit {
         private performanceStarService: PerformanceStarService) {
     }
 
-    public schoolList: ISchoolDetail[];
+    
 
     /**
     * Method to print the star for each param on each page, to change the 
@@ -90,6 +92,19 @@ export class PerformanceStarComponent implements OnInit {
 
     // Method to enable disable input based on the type selection
     public onChangeCalcType(selectedValue: string) {
+        this.enableSearchComponents(selectedValue);
+        this.performanceStarService.getSchools().subscribe(
+            (response) => {
+                console.log(response);
+                this.schoolList = response;
+            },
+            error => {
+                console.log("Http Server error", error);
+            }
+        );
+    }
+
+    private enableSearchComponents(selectedValue: string){
         if (selectedValue == "Individual") {
             this.isSchoolViewable = true;
             this.isClassViewable = true;

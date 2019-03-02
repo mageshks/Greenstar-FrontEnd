@@ -23,15 +23,10 @@ export class ISection {
     public id: number;
     public sectionName: string;
     public studentList: IStudent[];
-    public teamList: ITeam[];
+    public teamList: string[];
 }
 
 export class IStudent {
-    public id: number;
-    public studentName: string;
-}
-
-export class ITeam {
     public id: number;
     public studentName: string;
 }
