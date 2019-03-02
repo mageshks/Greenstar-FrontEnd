@@ -5,9 +5,10 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { NbDialogModule,NbStepperModule,NbSpinnerModule } from '@nebular/theme';
 import { SmartTableDatePickerComponent } from '../../@theme/components/smart-table-date-picker-component/smart-table-date-picker.components';
 import { PerformanceDataService } from './data/performance-data.service';
+import { PerformanceMetricsService } from './metrics/performance-metrics.service';
 import { PerformanceDataComponent } from './data/performance-data.component';
 import { PerformanceStarComponent } from './star/performance-star.component';
-import { PerformanceMetricsComponent } from './performance-metrics.component';
+import { PerformanceMetricsComponent } from './metrics/performance-metrics.component';
 import { PerformanceDataUploadModalComponent } from './data/performance-data-upload.component.modal';
 import { GreenstarComponent } from './star/greenstar/greenstar.component'
 import { PerformanceDataSuccessModalComponent } from './data/performance-data-success.component.modal';
@@ -35,6 +36,7 @@ import { PerformanceStarService } from './star/performance-star.service';
   ], 
   providers: [
     PerformanceDataService,
+    PerformanceMetricsService,
     PerformanceStarService
   ]
 })
