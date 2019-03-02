@@ -8,7 +8,7 @@
             <nb-card-body>
                 <nb-card>
 
-                    <nb-card-body  [nbSpinner]="loadingDropdown" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
+                    <nb-card-body [nbSpinner]="loadingDropdown" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
                         <div class="row">
                             <div class="col-sm-2">
                                 <label for="caltype" class="col-form-label required">Calculation Type</label>
@@ -97,7 +97,10 @@
                         </div>
 
                         <div class="row pt-3 pb-2">
-                            <div class="col-sm-12 text-right">
+                            <div class="col-sm-8 text-left errormsg">
+                                <span *ngIf="isSearchDataNotValid">All fields are mandatory to generate star!</span>
+                            </div>
+                            <div class="col-sm-4 text-right">
                                 <button class="btn btn-primary btn-sm" (click)="generatePerformanceStar();">Generate Star</button>
                             </div>
                         </div>
