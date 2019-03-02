@@ -3,7 +3,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { NbDialogService } from '@nebular/theme';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PerformanceService } from '../performance.service';
+import { PerformanceDataService } from './performance-data.service';
 import { IPerformanceDataTable, IPerformanceRow, IPerformanceDay, IPerformanceData, IPerformanceHeader, ISearchPerformanceData } from './performance-data.interface';
 import { PerformanceStaticData, } from './performance-data.constant';
 import { PerformanceDataUploadModalComponent } from './performance-data-upload.component.modal';
@@ -34,7 +34,7 @@ export class PerformanceDataComponent implements OnInit {
     constructor(
         private modalService: NgbModal,
         private formBuilder: FormBuilder,
-        private performanceService: PerformanceService) {
+        private performanceDataService: PerformanceDataService) {
     }
 
     ngOnInit(): void {
@@ -50,7 +50,7 @@ export class PerformanceDataComponent implements OnInit {
 
     public loadExistingPerformanceData(searchPerformanceData: ISearchPerformanceData): void {
 
-        this.performanceService.getExistingPerformanceMetricDatas(searchPerformanceData).subscribe(
+        this.performanceDataService.getExistingPerformanceMetricDatas(searchPerformanceData).subscribe(
             (response) => {
                 console.log(response);
                 this.performanceSource = response.result;
@@ -79,7 +79,7 @@ export class PerformanceDataComponent implements OnInit {
 
     public loadCreatePerformanceData(searchPerformanceData: ISearchPerformanceData): void {
 
-        this.performanceService.getCreatePerformanceMetricDatas(searchPerformanceData).subscribe(
+        this.performanceDataService.getCreatePerformanceMetricDatas(searchPerformanceData).subscribe(
             (response) => {
                 console.log(response);
                 this.performanceSource = response.result;
@@ -120,7 +120,7 @@ export class PerformanceDataComponent implements OnInit {
             searchPerformanceData.month = this.perfDataForm.getRawValue().month;
             searchPerformanceData.week = this.perfDataForm.getRawValue().week;
 
-            this.performanceService.getPerformanceDataTemplate(searchPerformanceData).subscribe(
+            this.performanceDataService.getPerformanceDataTemplate(searchPerformanceData).subscribe(
                 (response) => {
 
                     console.log(response);
@@ -183,7 +183,7 @@ export class PerformanceDataComponent implements OnInit {
         this.performanceSource.userId = '534556';
 
         if (this.action === 'create') {
-            this.performanceService.savePerformanceMetricDatas(this.performanceSource).subscribe(
+            this.performanceDataService.savePerformanceMetricDatas(this.performanceSource).subscribe(
                 (response) => {
                     console.log(response);
                     if (response.status === 200 && response.message === 'SUCCESS') {
@@ -196,7 +196,7 @@ export class PerformanceDataComponent implements OnInit {
                 }
             );
         } else {
-            this.performanceService.updatePerformanceMetricDatas(this.performanceSource).subscribe(
+            this.performanceDataService.updatePerformanceMetricDatas(this.performanceSource).subscribe(
                 (response) => {
                     console.log(response);
                     if (response.status === 200 && response.message === 'SUCCESS') {

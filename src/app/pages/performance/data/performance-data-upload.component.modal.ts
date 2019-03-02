@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { PerformanceService } from "../performance.service";
+import { PerformanceDataService } from "./performance-data.service";
 
 @Component({
     selector: 'ngx-modal',
@@ -12,7 +12,7 @@ export class PerformanceDataUploadModalComponent {
 
     constructor(
         private activeModal: NgbActiveModal,
-        private performanceService: PerformanceService
+        private performanceDataService: PerformanceDataService
     ) { }
 
     public uploadBulkData(): void {
