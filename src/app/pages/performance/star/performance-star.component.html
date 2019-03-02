@@ -5,7 +5,7 @@
                 Performance Star
             </nb-card-header>
 
-            <nb-card-body>
+            <nb-card-body [nbSpinner]="loading" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
                 <nb-card>
 
                     <nb-card-body [nbSpinner]="loadingDropdown" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
@@ -108,7 +108,7 @@
                     </nb-card-body>
                 </nb-card>
 
-                <nb-card *ngIf="isDataAvailable" [nbSpinner]="loading" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
+                <nb-card *ngIf="isDataAvailable">
                     <nb-card-body>
                         <div class="row pb-2">
                             <div class="col-sm-12 text-left">
@@ -116,69 +116,75 @@
                             </div>
                         </div>
                         <nb-stepper orientation="horizontal">
-                            <nb-step [label]="paramOne">
+                            <nb-step [label]="performanceStarData.paramOne">
                                 <div name="starDisplayContent" id="paramOneContent">
                                     <div class="row">
                                         <div class="col-sm-12 text-center">
-                                            <h2>Homework Star</h2>
+                                            <h2>{{performanceStarData.paramOne}} Star</h2>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-2">
-                                            <h6>School: Nikita Matriculation School</h6>
-                                            <h6>Class: I</h6>
-                                            <h6>Section: B</h6>
-                                            <h6>Month: Jan</h6>
-                                            <h6>Student Name: Panneer</h6>
+                                            <h6 *ngIf="searchPerformanceStarData.calcType != 'Select'">School: {{schoolName}}</h6>
+                                            <h6 *ngIf="searchPerformanceStarData.calcType == 'Individual' || 
+                                            searchPerformanceStarData.calcType == 'Team' ||
+                                            searchPerformanceStarData.calcType == 'Class'">Class: {{classAndSectionName}}</h6>
+                                            <h6 *ngIf="searchPerformanceStarData.calcType == 'Team'">Team Name: {{teamName}}</h6>
+                                            <h6 *ngIf="searchPerformanceStarData.calcType == 'Individual'">Student Name: {{studentName}}</h6>
+                                            <h6 *ngIf="searchPerformanceStarData.calcType != 'Select'">Month: {{month}}</h6>
                                         </div>
                                         <div class="col-sm-10">
-                                            <app-greenstar [perfStarMonthData]="perfStarMonthDataParamOne"></app-greenstar>
+                                            <app-greenstar [perfStarMonthData]="performanceStarData.paramOneMonthColorCodes"></app-greenstar>
                                         </div>
                                     </div>
                                 </div>
                                 <button nbButton disabled nbStepperNext>prev</button>
                                 <button nbButton nbStepperNext>next</button>
                             </nb-step>
-                            <nb-step [label]="paramTwo">
+                            <nb-step [label]="performanceStarData.paramTwo">
                                 <div name="starDisplayContent" id="paramTwoContent">
                                     <div class="row">
                                         <div class="col-sm-12 text-center">
-                                            <h2>Discipline Star</h2>
+                                            <h2>{{performanceStarData.paramTwo}} Star</h2>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-2">
-                                            <h6>School: Nikita Matriculation School</h6>
-                                            <h6>Class: I</h6>
-                                            <h6>Section: B</h6>
-                                            <h6>Month: Jan</h6>
-                                            <h6>Student Name: Panneer</h6>
+                                            <h6 *ngIf="searchPerformanceStarData.calcType != 'Select'">School: {{schoolName}}</h6>
+                                            <h6 *ngIf="searchPerformanceStarData.calcType == 'Individual' || 
+                                                    searchPerformanceStarData.calcType == 'Team' ||
+                                                    searchPerformanceStarData.calcType == 'Class'">Class: {{classAndSectionName}}</h6>
+                                            <h6 *ngIf="searchPerformanceStarData.calcType == 'Team'">Team Name: {{teamName}}</h6>
+                                            <h6 *ngIf="searchPerformanceStarData.calcType == 'Individual'">Student Name: {{studentName}}</h6>
+                                            <h6 *ngIf="searchPerformanceStarData.calcType != 'Select'">Month: {{month}}</h6>
                                         </div>
                                         <div class="col-sm-10">
-                                            <app-greenstar [perfStarMonthData]="perfStarMonthDataParamTwo"></app-greenstar>
+                                            <app-greenstar [perfStarMonthData]="performanceStarData.paramTwoMonthColorCodes"></app-greenstar>
                                         </div>
                                     </div>
                                     <button nbButton nbStepperPrevious>prev</button>
                                     <button nbButton nbStepperNext>next</button>
                                 </div>
                             </nb-step>
-                            <nb-step [label]="paramThree">
+                            <nb-step [label]="performanceStarData.paramThree">
                                 <div name="starDisplayContent" id="paramThreeContent">
                                     <div class="row">
                                         <div class="col-sm-12 text-center">
-                                            <h2>Attendance Star</h2>
+                                            <h2>{{performanceStarData.paramThree}} Star</h2>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-2">
-                                            <h6>School: Nikita Matriculation School</h6>
-                                            <h6>Class: I</h6>
-                                            <h6>Section: B</h6>
-                                            <h6>Month: Jan</h6>
-                                            <h6>Student Name: Panneer</h6>
+                                            <h6 *ngIf="searchPerformanceStarData.calcType != 'Select'">School: {{schoolName}}</h6>
+                                            <h6 *ngIf="searchPerformanceStarData.calcType == 'Individual' || 
+                                                    searchPerformanceStarData.calcType == 'Team' ||
+                                                    searchPerformanceStarData.calcType == 'Class'">Class: {{classAndSectionName}}</h6>
+                                            <h6 *ngIf="searchPerformanceStarData.calcType == 'Team'">Team Name: {{teamName}}</h6>
+                                            <h6 *ngIf="searchPerformanceStarData.calcType == 'Individual'">Student Name: {{studentName}}</h6>
+                                            <h6 *ngIf="searchPerformanceStarData.calcType != 'Select'">Month: {{month}}</h6>
                                         </div>
                                         <div class="col-sm-10">
-                                            <app-greenstar [perfStarMonthData]="perfStarMonthDataParamThree"></app-greenstar>
+                                            <app-greenstar [perfStarMonthData]="performanceStarData.paramThreeMonthColorCodes"></app-greenstar>
                                         </div>
                                     </div>
                                     <button nbButton nbStepperPrevious>prev</button>

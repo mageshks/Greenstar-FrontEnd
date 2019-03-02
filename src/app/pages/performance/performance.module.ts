@@ -13,6 +13,8 @@ import { PerformanceDataUploadModalComponent } from './data/performance-data-upl
 import { GreenstarComponent } from './star/greenstar/greenstar.component'
 import { PerformanceDataSuccessModalComponent } from './data/performance-data-success.component.modal';
 import { PerformanceStarService } from './star/performance-star.service';
+import { PerformanceGenerateStarService } from './star/performance-star.generate.service';
+
 @NgModule({
   imports: [
     ThemeModule,
@@ -37,7 +39,8 @@ import { PerformanceStarService } from './star/performance-star.service';
   providers: [
     PerformanceDataService,
     PerformanceMetricsService,
-    PerformanceStarService
+    PerformanceStarService,
+    PerformanceGenerateStarService
   ]
 })
 export class PerformanceModule { }

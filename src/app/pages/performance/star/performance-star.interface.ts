@@ -1,3 +1,4 @@
+// Holds the data used to display star
 export interface IPerformanceStarData {
     paramOne: string;
     paramTwo: string;

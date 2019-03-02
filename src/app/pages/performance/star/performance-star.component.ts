@@ -9,7 +9,7 @@ import { PerformanceGenerateStarService } from './performance-star.generate.serv
 import { GreenstarComponent } from './greenstar/greenstar.component';
 import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
-import { ISearchPerformanceStarData, ISchoolDetail, IClassSectionDetail, IStudent,IPerformanceStarData } from "./performance-star.interface";
+import { ISearchPerformanceStarData, ISchoolDetail, IClassSectionDetail, IStudent, IPerformanceStarData } from "./performance-star.interface";
 
 import * as jspdf from 'jspdf';
 
@@ -36,7 +36,7 @@ export class PerformanceStarComponent implements OnInit {
     public month = "";
 
 
-    // Loading indicator used on printing pdf
+    // Loading indicator used on printing pdf and loading star
     public loading = false;
 
     // loading drop down values on selection
@@ -45,12 +45,8 @@ export class PerformanceStarComponent implements OnInit {
     //To enable validation error
     public isSearchDataNotValid = false;
 
-    //Parameter name
-    public paramOne = "HomeWork";
-    public paramTwo = "Discipline";
-    public paramThree = "Attendance";
-
-    public isDataAvailable = true;
+    // To disable or enable the star dispaly nb card
+    public isDataAvailable = false;
     public isNoPerfData = false;
 
     // Holds the value to be displayed in dropdown with the information from backend
@@ -61,15 +57,8 @@ export class PerformanceStarComponent implements OnInit {
 
     public searchPerformanceStarData: ISearchPerformanceStarData = {} as ISearchPerformanceStarData;
 
-    public performanceStarData: IPerformanceStarData;
+    public performanceStarData: IPerformanceStarData = {} as IPerformanceStarData;
 
-    //Parameter data for each star
-    public perfStarMonthDataParamOne = new Array("#7CFC00", "#7CFC00", "#7CFC00", "#7CFC00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#7CFC00", "#7CFC00", "#FFFF00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#FF0000", "#7CFC00", "#7CFC00", "#7CFC00", "#7beded", "#7beded", "#7CFC00",
-        "#7CFC00", "#7CFC00", "#FFFF00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#FFFFFF", "#FFFFFF");
-    public perfStarMonthDataParamTwo = new Array("#7CFC00", "#7CFC00", "#7CFC00", "#7CFC00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#7CFC00", "#7CFC00", "#FFFF00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#FF0000", "#7CFC00", "#7CFC00", "#7CFC00", "#7beded", "#7beded", "#7CFC00",
-        "#7CFC00", "#7CFC00", "#FFFF00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#FFFFFF", "#FFFFFF");
-    public perfStarMonthDataParamThree = new Array("#7CFC00", "#7CFC00", "#7CFC00", "#7CFC00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#7CFC00", "#7CFC00", "#FFFF00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#FF0000", "#7CFC00", "#7CFC00", "#7CFC00", "#7beded", "#7beded", "#7CFC00",
-        "#7CFC00", "#7CFC00", "#FFFF00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#FFFFFF", "#FFFFFF");
 
     constructor(private formBuilder: FormBuilder,
         private performanceStarService: PerformanceStarService,
@@ -83,25 +72,37 @@ export class PerformanceStarComponent implements OnInit {
         this.searchPerformanceStarData.schoolId = 0;
         this.searchPerformanceStarData.studentId = 0;
         this.searchPerformanceStarData.teamName = "Select";
-    }
 
+        //Hide the star div
+        this.isDataAvailable = false;
+        this.isNoPerfData = false;
+    }
     /**
      * Method to generate performance start based on the search criteria 
      * */
     public generatePerformanceStar() {
         if (!this.validateSearch()) {
+            this.loading = true;
             this.performanceGenerateStarService.getPerformanceStar(this.searchPerformanceStarData).subscribe(
                 (response) => {
                     console.log(response);
                     this.performanceStarData = response;
+                    if (this.performanceStarData.paramOneMonthColorCodes.length > 0) {
+                        this.isDataAvailable = true;
+                        this.isNoPerfData = false;
+                    } else {
+                        this.isDataAvailable = false;
+                        this.isNoPerfData = true;
+                    }
+                    this.loading = false;
                 },
                 error => {
                     console.log("Http Server error", error);
+                    this.loading = false;
                 }
             );
-        } else {
-            this.isSearchDataNotValid = this.validateSearch();
         }
+        this.isSearchDataNotValid = this.validateSearch();
     }
 
 
@@ -161,6 +162,10 @@ export class PerformanceStarComponent implements OnInit {
         }
         //Reset error message
         this.isSearchDataNotValid = false;
+
+        //Hide the star div
+        this.isDataAvailable = false;
+        this.isNoPerfData = false;
     }
 
     // Method to enable disable input based on the type selection
@@ -195,6 +200,10 @@ export class PerformanceStarComponent implements OnInit {
 
         //Reset error message
         this.isSearchDataNotValid = false;
+
+        //Hide the star div
+        this.isDataAvailable = false;
+        this.isNoPerfData = false;
     }
 
     public onChangeClassChange($event) {
@@ -228,6 +237,10 @@ export class PerformanceStarComponent implements OnInit {
 
         //Reset error message
         this.isSearchDataNotValid = false;
+
+        //Hide the star div
+        this.isDataAvailable = false;
+        this.isNoPerfData = false;
     }
 
     public onChangeStudentChange($event) {
@@ -237,6 +250,10 @@ export class PerformanceStarComponent implements OnInit {
         this.searchPerformanceStarData.teamName = "Select";
         //Reset error message
         this.isSearchDataNotValid = false;
+
+        //Hide the star div
+        this.isDataAvailable = false;
+        this.isNoPerfData = false;
     }
 
     public onChangeTeamChange($event) {
@@ -246,12 +263,20 @@ export class PerformanceStarComponent implements OnInit {
         this.searchPerformanceStarData.studentId = 0;
         //Reset error message
         this.isSearchDataNotValid = false;
+
+        //Hide the star div
+        this.isDataAvailable = false;
+        this.isNoPerfData = false;
     }
 
     public onChangeMonthChange($event) {
         this.month = $event.target.options[$event.target.options.selectedIndex].text;
         //Reset error message
         this.isSearchDataNotValid = false;
+
+        //Hide the star div
+        this.isDataAvailable = false;
+        this.isNoPerfData = false;
     }
 
     private enableSearchComponents(selectedValue: string) {
