@@ -27,7 +27,7 @@ export class SchoolListComponent {
     const activeModal = this.modalService.open(SchoolComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.title = 'Edit School & Class';
     activeModal.componentInstance.action = 'edit';
-    activeModal.componentInstance.schoolId = schoolDetail.schoolId;
+    activeModal.componentInstance.schoolId = schoolDetail.id;
   }
 
 }

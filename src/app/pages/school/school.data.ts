@@ -184,7 +184,7 @@ export class SchoolData {
         // school information
         this.schoolDetail.schoolName = '';
         this.schoolDetail.address = '';
-        this.schoolDetail.city = '';
+        this.schoolDetail.cityName = '';
         this.schoolDetail.state = '';
         this.schoolDetail.district = '';
 
@@ -209,7 +209,7 @@ export class SchoolData {
         // school information
         this.schoolDetail.schoolName = 'SSVM Matriculation';
         this.schoolDetail.address = 'Coimbatore';
-        this.schoolDetail.city = 'Coimbatore';
+        this.schoolDetail.cityName = 'Coimbatore';
         this.schoolDetail.state = 'Tamil Nadu';
         this.schoolDetail.district = 'Coimbatore';
 

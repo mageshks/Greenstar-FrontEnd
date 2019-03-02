@@ -1,10 +1,10 @@
 export class ISchoolDetail {
 
 
-    public schoolId: number;
+    public id: number;
     public schoolName: string;
     public address: string;
-    public city: string;
+    public cityName: string;
     public state: string;
     public district: string;
 
