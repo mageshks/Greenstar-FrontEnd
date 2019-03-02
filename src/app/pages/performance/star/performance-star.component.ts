@@ -5,10 +5,11 @@ import { NbDialogService, NbStepperComponent, NbSpinnerComponent } from '@nebula
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PerformanceStarService } from './performance-star.service';
+import { PerformanceGenerateStarService } from './performance-star.generate.service';
 import { GreenstarComponent } from './greenstar/greenstar.component';
 import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
-import { ISearchPerformanceStarData, ISchoolDetail, IClassSectionDetail, IStudent } from "./performance-star.interface";
+import { ISearchPerformanceStarData, ISchoolDetail, IClassSectionDetail, IStudent,IPerformanceStarData } from "./performance-star.interface";
 
 import * as jspdf from 'jspdf';
 
@@ -60,6 +61,7 @@ export class PerformanceStarComponent implements OnInit {
 
     public searchPerformanceStarData: ISearchPerformanceStarData = {} as ISearchPerformanceStarData;
 
+    public performanceStarData: IPerformanceStarData;
 
     //Parameter data for each star
     public perfStarMonthDataParamOne = new Array("#7CFC00", "#7CFC00", "#7CFC00", "#7CFC00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#7CFC00", "#7CFC00", "#FFFF00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#FF0000", "#7CFC00", "#7CFC00", "#7CFC00", "#7beded", "#7beded", "#7CFC00",
@@ -70,7 +72,8 @@ export class PerformanceStarComponent implements OnInit {
         "#7CFC00", "#7CFC00", "#FFFF00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#FFFFFF", "#FFFFFF");
 
     constructor(private formBuilder: FormBuilder,
-        private performanceStarService: PerformanceStarService) {
+        private performanceStarService: PerformanceStarService,
+        private performanceGenerateStarService: PerformanceGenerateStarService) {
     }
 
     ngOnInit(): void {
@@ -81,11 +84,24 @@ export class PerformanceStarComponent implements OnInit {
         this.searchPerformanceStarData.studentId = 0;
         this.searchPerformanceStarData.teamName = "Select";
     }
+
     /**
      * Method to generate performance start based on the search criteria 
      * */
     public generatePerformanceStar() {
-
+        if (!this.validateSearch()) {
+            this.performanceGenerateStarService.getPerformanceStar(this.searchPerformanceStarData).subscribe(
+                (response) => {
+                    console.log(response);
+                    this.performanceStarData = response;
+                },
+                error => {
+                    console.log("Http Server error", error);
+                }
+            );
+        } else {
+            this.isSearchDataNotValid = this.validateSearch();
+        }
     }
 
 
@@ -284,35 +300,36 @@ export class PerformanceStarComponent implements OnInit {
         this.teamList = [];
     }
 
-    private validateSearch() {
-
+    private validateSearch(): boolean {
+        let isSearchNotValid = false;
         if (this.searchPerformanceStarData.calcType == "Individual") {
             if (this.searchPerformanceStarData.schoolId == 0 ||
                 this.searchPerformanceStarData.classId == 0 ||
                 this.searchPerformanceStarData.studentId == 0 ||
                 this.searchPerformanceStarData.month == 0) {
-                this.isSearchDataNotValid = true;
+                isSearchNotValid = true;
             }
         } else if (this.searchPerformanceStarData.calcType == "Team") {
             if (this.searchPerformanceStarData.schoolId == 0 ||
                 this.searchPerformanceStarData.classId == 0 ||
                 this.searchPerformanceStarData.month == 0 ||
                 this.searchPerformanceStarData.teamName == "Select") {
-                this.isSearchDataNotValid = true;
+                isSearchNotValid = true;
             }
         } else if (this.searchPerformanceStarData.calcType == "Class") {
             if (this.searchPerformanceStarData.schoolId == 0 ||
                 this.searchPerformanceStarData.classId == 0 ||
                 this.searchPerformanceStarData.month == 0) {
-                this.isSearchDataNotValid = true;
+                isSearchNotValid = true;
             }
         } else if (this.searchPerformanceStarData.calcType == "School") {
             if (this.searchPerformanceStarData.schoolId == 0 ||
                 this.searchPerformanceStarData.month == 0) {
-                this.isSearchDataNotValid = true;
+                isSearchNotValid = true;
             }
         } else if (this.searchPerformanceStarData.calcType == "Select") {
-            this.isSearchDataNotValid = true;
+            isSearchNotValid = true;
         }
+        return isSearchNotValid;
     }
 }

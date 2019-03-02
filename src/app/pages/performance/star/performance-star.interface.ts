@@ -1,3 +1,12 @@
+export interface IPerformanceStarData {
+    paramOne: string;
+    paramTwo: string;
+    paramThree: string;
+    paramOneMonthColorCodes: string[];
+    paramTwoMonthColorCodes: string[];
+    paramThreeMonthColorCodes: string[];
+}
+
 export interface ISearchPerformanceStarData {
     calcType: string;
     schoolId: number;
