@@ -12,7 +12,7 @@
             <form class="form-horizontal">
                 <div class="form-group">
                     <div class="input-group">
-                        <input type="file" id="uploadFile" name="uploadFile" class="form-control" placeholder="Upload Student Data" />
+                        <input type="file" id="uploadFile" name="uploadFile" (change)="handleFileInput($event.target.files)" class="form-control" placeholder="Upload Student Data" />
                     </div>
                 </div>
             </form>
@@ -22,5 +22,5 @@
 </div>
 
 <div class="modal-footer">
-    <button class="btn btn-md btn-primary" (click)="uploadBulkData()">Upload</button>
+    <button class="btn btn-md btn-primary" [disabled]="isDisableButton" (click)="uploadBulkData()">Upload</button>
 </div>

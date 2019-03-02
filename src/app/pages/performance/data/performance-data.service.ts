@@ -33,6 +33,10 @@ export class PerformanceDataService {
         return this.http.post(API_URL + '/perfdata/downloadtemplate', searchPerformanceData, { responseType: 'blob' });
     }
 
+    public uploadBulkPerformanceData(formData: FormData): Observable<any> {
+        return this.http.post(API_URL + '/perfdata/uploadbulkdata', formData, { headers: this.headerValue });
+    }
+
     private handleError(error: Response | any): any {
         console.log('API Service :: Handle Error' + error);
         return Observable.throw(error);

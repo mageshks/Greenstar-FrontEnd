@@ -25,12 +25,8 @@ export class PerformanceMetricsComponent implements OnInit {
     public teamWiseMetricsSource: ITeamWiseMetricsDataTable = {} as ITeamWiseMetricsDataTable;
 
     constructor(
-<<<<<<< HEAD:src/app/pages/performance/performance-metrics.component.ts
-        private modalService: NgbModal) {
-=======
         private modalService: NgbModal,
         private performanceMetricsService: PerformanceMetricsService) {
->>>>>>> df34b0e0b98d99526cc0d9bf33060aa28c1e6d17:src/app/pages/performance/metrics/performance-metrics.component.ts
     }
 
     ngOnInit(): void {
