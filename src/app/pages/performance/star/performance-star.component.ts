@@ -17,14 +17,19 @@ import html2canvas from 'html2canvas';
 })
 export class PerformanceStarComponent implements OnInit {
 
+    // Enable indicators for search inputs
     public isSchoolViewable = false;
     public isClassViewable = false;
     public isSectionViewable = false;
     public isMonthViewable = false;
     public isTeamViewable = false;
     public isNameViewable = false;
+
+    //Value holders for search input
+
     public calcType = "";
 
+    // Loading indicator used on printing pdf
     public loading = false;
 
     //Parameter name
@@ -58,9 +63,8 @@ export class PerformanceStarComponent implements OnInit {
         starSVGS[0].setAttribute("width", "500");
         starSVGS[0].setAttribute("height", "500");
         //Dynamically choose the parent since the second step content won't be enabled on the first rendering
-        // TODO: Better way to choose the parent dynamically
-        let  paramContent= starSVGS[0].parentElement.parentElement.parentElement.parentElement;
-        console.log("Star content id ==> " + paramContent.id);
+        let  paramContent = document.getElementsByName("starDisplayContent")[0];
+        console.log("Content to be printed ==> " + paramContent.id);
 
         html2canvas(paramContent,{logging:true}).then(canvas => {
             const paramStar = canvas.toDataURL('image/png')
@@ -74,9 +78,9 @@ export class PerformanceStarComponent implements OnInit {
         });
     }
     ngOnInit(): void {
-
     }
 
+    // Method to enable disable input based on the type selection
     public onChangeCalcType(selectedValue: string) {
         if (selectedValue == "Individual") {
             this.isSchoolViewable = true;
