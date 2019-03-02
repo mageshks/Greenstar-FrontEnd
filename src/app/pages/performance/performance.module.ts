@@ -5,12 +5,12 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { NbDialogModule,NbStepperModule,NbSpinnerModule } from '@nebular/theme';
 import { SmartTableDatePickerComponent } from '../../@theme/components/smart-table-date-picker-component/smart-table-date-picker.components';
 import { PerformanceService } from './performance.service';
-import { PerformanceDataComponent } from './performance-data.component';
+import { PerformanceDataComponent } from './data/performance-data.component';
 import { PerformanceStarComponent } from './star/performance-star.component';
 import { PerformanceMetricsComponent } from './performance-metrics.component';
-import { PerformanceDataUploadModalComponent } from './performance-data-upload.component.modal';
+import { PerformanceDataUploadModalComponent } from './data/performance-data-upload.component.modal';
 import { GreenstarComponent } from './star/greenstar/greenstar.component'
-import { PerformanceDataSuccessModalComponent } from './performance-data-success.component.modal';
+import { PerformanceDataSuccessModalComponent } from './data/performance-data-success.component.modal';
 @NgModule({
   imports: [
     ThemeModule,

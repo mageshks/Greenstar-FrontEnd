@@ -6,7 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SchoolComponent } from './school/school.component';
 import { SchoolListComponent } from './school/school-list.component';
 import { StudentListComponent } from './student/student-list.component';
-import { PerformanceDataComponent } from './performance/performance-data.component';
+import { PerformanceDataComponent } from './performance/data/performance-data.component';
 import { PerformanceStarComponent } from './performance/star/performance-star.component';
 import { PerformanceMetricsComponent } from './performance/performance-metrics.component';
 import { ECommerceComponent } from './e-commerce/e-commerce.component';

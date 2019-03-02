@@ -10,8 +10,8 @@ import { SchoolData } from '../school/school.data';
 import { StudentBulkUploadModalComponent } from '../student/student-bulk-upload.component.modal';
 import { SchoolService } from '../school/school.service';
 import { StudentService } from '../student/student.service';
-import { IPerformanceDataTable, IPerformanceRow, IPerformanceDay, IPerformanceData, IPerformanceHeader, IPerformanceMetricsDataTable, IClassWiseMetricsDataTable, ITeamWiseMetricsDataTable } from './performance-data.interface';
-import { PerformanceStaticData, } from './performance-data.constant';
+import { IPerformanceDataTable, IPerformanceRow, IPerformanceDay, IPerformanceData, IPerformanceHeader, IPerformanceMetricsDataTable, IClassWiseMetricsDataTable, ITeamWiseMetricsDataTable } from './data/performance-data.interface';
+import { PerformanceStaticData, } from './data/performance-data.constant';
 
 @Component({
     selector: 'ngx-performance',

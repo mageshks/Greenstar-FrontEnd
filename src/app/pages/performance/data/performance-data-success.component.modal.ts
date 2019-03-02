@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { PerformanceService } from "./performance.service";
+import { PerformanceService } from "../performance.service";
 
 @Component({
     selector: 'ngx-modal',

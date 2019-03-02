@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
-import { IPerformanceDataTable, ISearchPerformanceData } from "./performance-data.interface";
+import { IPerformanceDataTable, ISearchPerformanceData } from "./data/performance-data.interface";
 
 const API_URL: string = 'http://localhost:2640';
 

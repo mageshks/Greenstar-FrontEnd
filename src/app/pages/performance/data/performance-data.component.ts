@@ -3,14 +3,14 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { NbDialogService } from '@nebular/theme';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PerformanceService } from './performance.service';
+import { PerformanceService } from '../performance.service';
 import { IPerformanceDataTable, IPerformanceRow, IPerformanceDay, IPerformanceData, IPerformanceHeader, ISearchPerformanceData } from './performance-data.interface';
 import { PerformanceStaticData, } from './performance-data.constant';
 import { PerformanceDataUploadModalComponent } from './performance-data-upload.component.modal';
 import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { ValidatorUtil } from '../util/validator-util';
+import { ValidatorUtil } from '../../util/validator-util';
 import { PerformanceDataSuccessModalComponent } from './performance-data-success.component.modal';
 import { saveAs as tempSaveAs } from 'file-saver';
 
