@@ -11,6 +11,7 @@ import { PerformanceMetricsComponent } from './performance-metrics.component';
 import { PerformanceDataUploadModalComponent } from './data/performance-data-upload.component.modal';
 import { GreenstarComponent } from './star/greenstar/greenstar.component'
 import { PerformanceDataSuccessModalComponent } from './data/performance-data-success.component.modal';
+import { PerformanceStarService } from './star/performance-star.service';
 @NgModule({
   imports: [
     ThemeModule,
@@ -33,7 +34,8 @@ import { PerformanceDataSuccessModalComponent } from './data/performance-data-su
     PerformanceDataSuccessModalComponent
   ], 
   providers: [
-    PerformanceService
+    PerformanceService,
+    PerformanceStarService
   ]
 })
 export class PerformanceModule { }

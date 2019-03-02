@@ -4,8 +4,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { NbDialogService, NbStepperComponent, NbSpinnerComponent } from '@nebular/theme';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PerformanceService } from '../performance.service';
+import { PerformanceStarService } from './performance-star.service';
 import { GreenstarComponent } from './greenstar/greenstar.component';
+import { FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import { ISchoolDetail, IClassDetail,ISection,IStudent,ITeam } from "./performance-star.interface";
 
 import * as jspdf from 'jspdf';
 
@@ -47,15 +50,20 @@ export class PerformanceStarComponent implements OnInit {
         "#7CFC00", "#7CFC00", "#FFFF00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#FFFFFF", "#FFFFFF");
     public perfStarMonthDataParamThree = new Array("#7CFC00", "#7CFC00", "#7CFC00", "#7CFC00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#7CFC00", "#7CFC00", "#FFFF00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#FF0000", "#7CFC00", "#7CFC00", "#7CFC00", "#7beded", "#7beded", "#7CFC00",
         "#7CFC00", "#7CFC00", "#FFFF00", "#7CFC00", "#7beded", "#7beded", "#7CFC00", "#FFFFFF", "#FFFFFF");
-    constructor() {
+   
+    constructor(private formBuilder: FormBuilder,
+        private performanceStarService: PerformanceStarService) {
     }
+
+    public schoolList: ISchoolDetail[];
+
     /**
     * Method to print the star for each param on each page, to change the 
     * svg size while printing the svg size is set to the required size and
     * reset back to support responsiveness
     * */
     public printStar() {
-        this.loading= true;
+        this.loading = true;
         let starSVGS = document.getElementsByClassName("svgClass");
         console.log("Star Svg's count ==> " + starSVGS.length);
         console.log("starSVGS[0] ==> " + starSVGS[0]);
@@ -63,10 +71,10 @@ export class PerformanceStarComponent implements OnInit {
         starSVGS[0].setAttribute("width", "500");
         starSVGS[0].setAttribute("height", "500");
         //Dynamically choose the parent since the second step content won't be enabled on the first rendering
-        let  paramContent = document.getElementsByName("starDisplayContent")[0];
+        let paramContent = document.getElementsByName("starDisplayContent")[0];
         console.log("Content to be printed ==> " + paramContent.id);
 
-        html2canvas(paramContent,{logging:true}).then(canvas => {
+        html2canvas(paramContent, { logging: true }).then(canvas => {
             const paramStar = canvas.toDataURL('image/png')
             let pdf = new jspdf('p', 'mm', 'a4');
             pdf.addImage(paramStar, 'PNG', 20, 50, 0, 0);// change x and y coordinates to print star in centre
@@ -74,7 +82,7 @@ export class PerformanceStarComponent implements OnInit {
             // Reset the height and width of svg to be responsive
             starSVGS[0].setAttribute("width", "100%");
             starSVGS[0].setAttribute("height", "100%");
-            this.loading= false;   
+            this.loading = false;
         });
     }
     ngOnInit(): void {
