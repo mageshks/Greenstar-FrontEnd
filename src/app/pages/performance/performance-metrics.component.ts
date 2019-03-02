@@ -4,7 +4,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { NbDialogService } from '@nebular/theme';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PerformanceService } from './performance.service';
 import { IStudentDetail } from '../student/student.interface';
 import { SchoolData } from '../school/school.data';
 import { StudentBulkUploadModalComponent } from '../student/student-bulk-upload.component.modal';
@@ -25,8 +24,7 @@ export class PerformanceMetricsComponent implements OnInit {
     public teamWiseMetricsSource: ITeamWiseMetricsDataTable = {} as ITeamWiseMetricsDataTable;
 
     constructor(
-        private modalService: NgbModal,
-        private performanceService: PerformanceService) {
+        private modalService: NgbModal) {
     }
 
     ngOnInit(): void {

@@ -4,7 +4,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from '../../@theme/theme.module';
 import { NbDialogModule,NbStepperModule,NbSpinnerModule } from '@nebular/theme';
 import { SmartTableDatePickerComponent } from '../../@theme/components/smart-table-date-picker-component/smart-table-date-picker.components';
-import { PerformanceService } from './performance.service';
+import { PerformanceDataService } from './data/performance-data.service';
 import { PerformanceDataComponent } from './data/performance-data.component';
 import { PerformanceStarComponent } from './star/performance-star.component';
 import { PerformanceMetricsComponent } from './performance-metrics.component';
@@ -34,7 +34,7 @@ import { PerformanceStarService } from './star/performance-star.service';
     PerformanceDataSuccessModalComponent
   ], 
   providers: [
-    PerformanceService,
+    PerformanceDataService,
     PerformanceStarService
   ]
 })
