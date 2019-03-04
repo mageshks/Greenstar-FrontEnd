@@ -10,7 +10,7 @@ import { SchoolData } from '../../school/school.data';
 import { StudentBulkUploadModalComponent } from '../../student/student-bulk-upload.component.modal';
 import { SchoolService } from '../../school/school.service';
 import { StudentService } from '../../student/student.service';
-import { IPerformanceDataTable, IPerformanceRow, IPerformanceDay, IPerformanceData, IPerformanceHeader, IPerformanceMetricsDataTable, IClassWiseMetricsDataTable, ITeamWiseMetricsDataTable } from './performance-metrics.interface';
+import { IPerformanceDataTable, IPerformanceRow, IPerformanceDay, IPerformanceData, IPerformanceHeader, IPerformanceMetricsDataTable, IClassWiseMetricsDataTable, ITeamWiseMetricsDataTable, IEncouragingMetricsDataTable } from './performance-metrics.interface';
 import { PerformanceStaticData } from './performance-metrics.constant';
 
 @Component({
@@ -23,6 +23,7 @@ export class PerformanceMetricsComponent implements OnInit {
     public performanceMetricsSource: IPerformanceMetricsDataTable = {} as IPerformanceMetricsDataTable;
     public classWiseMetricsSource: IClassWiseMetricsDataTable = {} as IClassWiseMetricsDataTable;
     public teamWiseMetricsSource: ITeamWiseMetricsDataTable = {} as ITeamWiseMetricsDataTable;
+    public encouragingMetricsSource: IEncouragingMetricsDataTable = {} as IEncouragingMetricsDataTable;
 
     constructor(
         private modalService: NgbModal,
@@ -33,6 +34,7 @@ export class PerformanceMetricsComponent implements OnInit {
         this.performanceMetricsSource = PerformanceStaticData.getPerformanceMetricsTableContent();
         this.classWiseMetricsSource = PerformanceStaticData.getClassWiseTableContent();
         this.teamWiseMetricsSource = PerformanceStaticData.getTeamWiseTableContent();
+        this.encouragingMetricsSource = PerformanceStaticData.getEncouragingTableContent();
     }
 
 }
