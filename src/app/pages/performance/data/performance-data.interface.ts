@@ -1,5 +1,6 @@
 export interface ISearchPerformanceData {
     schoolId: number;
+    classId: number;
     className: string;
     sectionName: string;
     month: number;
@@ -8,6 +9,7 @@ export interface ISearchPerformanceData {
 
 export interface IPerformanceDataTable {
     schoolId: number;
+    classId: number;
     className: string;
     section: string;
     month: number;

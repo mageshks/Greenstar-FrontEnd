@@ -1,18 +1,18 @@
 import { OnInit, Component } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { saveAs as tempSaveAs } from 'file-saver';
 import { NbDialogService } from '@nebular/theme';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PerformanceDataService } from './performance-data.service';
+import { LocalDataSource } from 'ng2-smart-table';
 import { IPerformanceDataTable, IPerformanceRow, IPerformanceDay, IPerformanceData, IPerformanceHeader, ISearchPerformanceData } from './performance-data.interface';
 import { PerformanceStaticData, } from './performance-data.constant';
 import { PerformanceDataUploadModalComponent } from './performance-data-upload.component.modal';
-import { FormBuilder } from '@angular/forms';
-import { FormGroup } from '@angular/forms';
-import { Validators } from '@angular/forms';
-import { ValidatorUtil } from '../../util/validator-util';
 import { PerformanceDataSuccessModalComponent } from './performance-data-success.component.modal';
-import { saveAs as tempSaveAs } from 'file-saver';
+import { PerformanceDataService } from './performance-data.service';
+import { PerformanceStarService } from '../star/performance-star.service';
+import { ValidatorUtil } from '../../util/validator-util';
+import { ISchoolDetail, IClassSectionDetail } from '../star/performance-star.interface';
 
 @Component({
     selector: 'ngx-performance',
@@ -23,36 +23,49 @@ export class PerformanceDataComponent implements OnInit {
 
     public performanceSource: IPerformanceDataTable = {} as IPerformanceDataTable;
 
-    public isShowPerformanceMetricTable: boolean= false;
+    public isShowPerformanceMetricTable: boolean = false;
     public isPerformanceChkboxEnabled: boolean = false;
     public isPerformanceEditEnabled: boolean = false;
     public isPerformanceAddEnabled: boolean = false;
+    public isSearchDataNotValid: boolean = false;
+    public isSpinner: boolean = false;
     public action: string = 'update';
+
+    public schoolList: ISchoolDetail[];
+    public classList: IClassSectionDetail[];
 
     public perfDataForm: FormGroup;
 
     constructor(
         private modalService: NgbModal,
         private formBuilder: FormBuilder,
-        private performanceDataService: PerformanceDataService) {
+        private performanceDataService: PerformanceDataService,
+        private performanceStarService: PerformanceStarService) {
     }
 
     ngOnInit(): void {
+        this.initializeForm();
+        this.loadSchoolDetails();
+    }
+
+    private initializeForm(): void {
         this.perfDataForm = this.formBuilder.group({
-            schoolId: ['1', Validators.required],
-            className: ['First', Validators.required],
-            sectionName: ['A', Validators.required],
-            month: ['2', Validators.required],
+            schoolId: ['', Validators.required],
+            classId: ['', Validators.required],
+            month: ['', Validators.required],
             week: ['', Validators.required]
         });
     }
 
+    public resetPerformanceSearch(): void {
+        this.initializeForm();
+    }
 
     public loadExistingPerformanceData(searchPerformanceData: ISearchPerformanceData): void {
-
+        this.isSpinner = true;
         this.performanceDataService.getExistingPerformanceMetricDatas(searchPerformanceData).subscribe(
             (response) => {
-                console.log(response);
+                this.isSpinner = false;
                 this.performanceSource = response.result;
                 if (this.performanceSource != null) {
                     this.isShowPerformanceMetricTable = true;
@@ -72,16 +85,17 @@ export class PerformanceDataComponent implements OnInit {
                 }
             },
             error => {
+                this.isSpinner = false;
                 console.log("Http Server error", error);
             }
         );
     }
 
     public loadCreatePerformanceData(searchPerformanceData: ISearchPerformanceData): void {
-
+        this.isSpinner = true;
         this.performanceDataService.getCreatePerformanceMetricDatas(searchPerformanceData).subscribe(
             (response) => {
-                console.log(response);
+                this.isSpinner = false;
                 this.performanceSource = response.result;
                 if (this.performanceSource != null) {
                     this.isShowPerformanceMetricTable = true;
@@ -101,9 +115,43 @@ export class PerformanceDataComponent implements OnInit {
                 }
             },
             error => {
+                this.isSpinner = false;
                 console.log("Http Server error", error);
             }
         );
+    }
+
+    private loadSchoolDetails(): void {
+        this.isSpinner = true;
+        this.performanceStarService.getSchools().subscribe(
+            (response) => {
+                this.schoolList = response;
+                this.isSpinner = false;
+            },
+            error => {
+                console.log("Http Server error", error);
+                this.isSpinner = false;
+            },
+
+        );
+    }
+
+    private loadClassDetailsBySchool($event) : void {
+        if (this.perfDataForm.getRawValue().schoolId != 0) {
+            this.isSpinner = true;
+            let schoolDetail: ISchoolDetail = {} as ISchoolDetail;
+            schoolDetail.id = this.perfDataForm.getRawValue().schoolId;
+            this.performanceStarService.getClassList(schoolDetail).subscribe(
+                (response) => {
+                    this.classList = response;
+                    this.isSpinner = false;
+                },
+                error => {
+                    console.log("Http Server error", error);
+                    this.isSpinner = false;
+                }
+            );
+        }
     }
 
     public openBulkUploadMmodal(): void {
@@ -111,66 +159,70 @@ export class PerformanceDataComponent implements OnInit {
     }
 
     public downloadTemplate(): void {
-
+        
+        this.isSearchDataNotValid = false;
         if (this.perfDataForm.valid) {
             let searchPerformanceData: ISearchPerformanceData = {} as ISearchPerformanceData;
             searchPerformanceData.schoolId = this.perfDataForm.getRawValue().schoolId;
-            searchPerformanceData.className = this.perfDataForm.getRawValue().className;
-            searchPerformanceData.sectionName = this.perfDataForm.getRawValue().sectionName;
+            searchPerformanceData.classId = this.perfDataForm.getRawValue().classId;
             searchPerformanceData.month = this.perfDataForm.getRawValue().month;
             searchPerformanceData.week = this.perfDataForm.getRawValue().week;
 
+            let fileName = searchPerformanceData.schoolId
+                + '_' + searchPerformanceData.classId 
+                + '_' + searchPerformanceData.month
+                + '_' + searchPerformanceData.week
+                + '.xlsx';
+
+            this.isSpinner = true;
             this.performanceDataService.getPerformanceDataTemplate(searchPerformanceData).subscribe(
                 (response) => {
-
-                    console.log(response);
-
+                    this.isSpinner = false;
                     var blob = new Blob([response], { type: 'application/octet-stream' });
-                    tempSaveAs(blob, 'performance_template.xlsx');
+                    tempSaveAs(blob, fileName);
                 },
                 error => {
+                    this.isSpinner = false;
                     console.log("Http Server error", error);
                 }
             );
-
         } else {
             ValidatorUtil.validateAllFormFields(this.perfDataForm);
-            alert("Please Enter all data");
+            this.isSearchDataNotValid = true;
         }
-
     }
 
     public searchPerformanceData(): void {
 
+        this.isSearchDataNotValid = false;
         if (this.perfDataForm.valid) {
             let searchPerformanceData: ISearchPerformanceData = {} as ISearchPerformanceData;
             searchPerformanceData.schoolId = this.perfDataForm.getRawValue().schoolId;
-            searchPerformanceData.className = this.perfDataForm.getRawValue().className;
-            searchPerformanceData.sectionName = this.perfDataForm.getRawValue().sectionName;
+            searchPerformanceData.classId = this.perfDataForm.getRawValue().classId;
             searchPerformanceData.month = this.perfDataForm.getRawValue().month;
             searchPerformanceData.week = this.perfDataForm.getRawValue().week;
 
             this.loadExistingPerformanceData(searchPerformanceData);
         } else {
             ValidatorUtil.validateAllFormFields(this.perfDataForm);
-            alert("Please Enter all data");
+            this.isSearchDataNotValid = true;
         }
     }
 
     public addPerformanceData(): void {
         this.action = 'create';
+        this.isSearchDataNotValid = false;
         if (this.perfDataForm.valid) {
             let searchPerformanceData: ISearchPerformanceData = {} as ISearchPerformanceData;
             searchPerformanceData.schoolId = this.perfDataForm.getRawValue().schoolId;
-            searchPerformanceData.className = this.perfDataForm.getRawValue().className;
-            searchPerformanceData.sectionName = this.perfDataForm.getRawValue().sectionName;
+            searchPerformanceData.classId = this.perfDataForm.getRawValue().classId;
             searchPerformanceData.month = this.perfDataForm.getRawValue().month;
             searchPerformanceData.week = this.perfDataForm.getRawValue().week;
 
             this.loadCreatePerformanceData(searchPerformanceData);
         } else {
             ValidatorUtil.validateAllFormFields(this.perfDataForm);
-            alert("Please Enter all data");
+            this.isSearchDataNotValid = true;
         }
     }
 
@@ -183,39 +235,43 @@ export class PerformanceDataComponent implements OnInit {
         this.performanceSource.userId = '534556';
 
         if (this.action === 'create') {
+            this.isSpinner = true;
             this.performanceDataService.savePerformanceMetricDatas(this.performanceSource).subscribe(
                 (response) => {
-                    console.log(response);
+                    this.isSpinner = false;
                     if (response.status === 200 && response.message === 'SUCCESS') {
                         const activeModal = this.modalService.open(PerformanceDataSuccessModalComponent, { size: 'sm', container: 'nb-layout' });
                         activeModal.componentInstance.modalContent = 'Performance Meatric data saved successfully!..';
                     }
                 },
                 error => {
+                    this.isSpinner = false;
                     console.log("Http Server error", error);
                 }
             );
         } else {
+            this.isSpinner = true;
             this.performanceDataService.updatePerformanceMetricDatas(this.performanceSource).subscribe(
                 (response) => {
-                    console.log(response);
+                    this.isSpinner = false;
                     if (response.status === 200 && response.message === 'SUCCESS') {
                         const activeModal = this.modalService.open(PerformanceDataSuccessModalComponent, { size: 'sm', container: 'nb-layout' });
                         activeModal.componentInstance.modalContent = 'Performance Meatric data saved successfully!..';
                     }
                 },
                 error => {
+                    this.isSpinner = false;
                     console.log("Http Server error", error);
                 }
             );
         }
-
         this.action = 'update';
         this.isPerformanceChkboxEnabled = false;
         this.isPerformanceAddEnabled = false;
     }
 
     public isFieldValid(field: string): boolean {
+        this.isSearchDataNotValid = false;
         return ValidatorUtil.isFieldValid(this.perfDataForm, field);
     }
 
@@ -224,18 +280,10 @@ export class PerformanceDataComponent implements OnInit {
     }
 
     public checkCellPerformanceDataStatus(event: any, performanceRow: IPerformanceRow, performanceDay: IPerformanceDay, performanceData: IPerformanceData): void {
-
-        console.log(performanceRow);
-        console.log(performanceDay);
-        console.log(performanceData);
-
         performanceData.value = event.target.checked;
     }
 
     public checkPerformanceParamWise(event: any, headerObj: IPerformanceHeader, subTitle: IPerformanceHeader): void {
-        console.log("Header Event -> " + event.target.checked);
-        console.log(headerObj);
-        console.log(subTitle);
 
         this.performanceSource.performanceRows.forEach(
             (performanceRow) => {
@@ -251,12 +299,9 @@ export class PerformanceDataComponent implements OnInit {
                         }
                     });
             });
-
     }
 
     public checkPerformanceDayWise(event: any, headerObj: IPerformanceHeader): void {
-        console.log("Header Day Event -> " + event.target.checked);
-        console.log(headerObj);
 
         this.performanceSource.performanceRows.forEach(
             (performanceRow) => {
@@ -287,9 +332,6 @@ export class PerformanceDataComponent implements OnInit {
     }
 
     public checkAllPerformance(event: any): void {
-
-        console.log("Table Level Event -> " + event.target.checked);
-
         // check all performance parameters
         this.performanceSource.performanceRows.forEach(
             (performanceRow) => {
@@ -311,8 +353,6 @@ export class PerformanceDataComponent implements OnInit {
                         performanceHeader.checkValue = event.target.checked;
                     });
             });
-
     }
-
 
 }

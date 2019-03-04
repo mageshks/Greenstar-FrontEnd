@@ -5,27 +5,43 @@
     </button>
 </div>
 
-<div class="modal-body">
-
+<div class="modal-body" [nbSpinner]="isSpinner" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
+    <div class="row" *ngIf='isShowSuccessMsg'>
+        <div class="col-sm-12">
+            <p class="text-success">
+                <strong> Performance metric data uploaded successfully !...</strong>
+            </p>
+        </div>
+    </div>
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-6">
             <form class="form-horizontal">
                 <div class="form-group">
                     <div class="input-group">
-                        <input type="file" id="uploadFile" name="uploadFile" (change)="handleFileInput($event.target.files)" class="form-control" placeholder="Upload Student Data" />
+                        <input type="file" id="uploadFile" name="uploadFile" (change)="handleFileInput($event.target.files)" class="form-control"
+                            placeholder="Upload Student Data" />
                     </div>
                 </div>
             </form>
         </div>
+        <div class="col-sm-6 pt-4">{{fileName}}</div>
+    </div>
 
-        <div class="col-sm-8">
-            <div *ngIf='errorMessages != null && errorMessages.length > 0' class="table-responsive">
-                <table class="table table-sm table-striped table-bordered">
+    <div class="row">
+        <div class="col-sm-12">
+            <p *ngIf='isShowErrorMsg' class="text-danger">
+                <strong>Please Correct Below Errors:</strong>
+            </p>
+            <div *ngIf='isShowErrorMsg' class="text-danger">
+                {{errorMessage}}
+            </div>
+            <div *ngIf='isShowErrorMsg && errorMessages != null && errorMessages.length > 0' class="table-responsive">
+
+                <table class="table table-sm table-striped table-bordered table-danger">
                     <thead>
-                        <!-- Top Header Row - Start-->
                         <tr>
-                            <th rowspan="2" scope="col">Excel ID</th>
-                            <th rowspan="2" scope="col">Value</th>
+                            <th rowspan="2" scope="col">Excel Row Id</th>
+                            <th rowspan="2" scope="col">Sheet / Value</th>
                             <th rowspan="2" scope="col">Error Message</th>
                         </tr>
                     </thead>
@@ -37,9 +53,10 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>           
+            </div>
         </div>
     </div>
+
 </div>
 
 <div class="modal-footer">
