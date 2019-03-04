@@ -1,8 +1,6 @@
-import { IPerformanceHeader, IPerformanceDataTable, IPerformanceData, IPerformanceRow, IPerformanceDay, IPerformanceMetricsWeek, IPerformanceMetricsRow, IPerformanceMetricsDay, IPerformanceMetricsData, IPerformanceMetricsDataTable, IClassWiseMetricsDataTable, IClassWiseHeader, IClassWiseMetricsRow, ITeamWiseMetricsDataTable, ITeamWiseHeader, ITeamWiseMetricsRow } from "./performance-metrics.interface";
+import { IPerformanceHeader, IPerformanceDataTable, IPerformanceData, IPerformanceRow, IPerformanceDay, IPerformanceMetricsWeek, IPerformanceMetricsRow, IPerformanceMetricsDay, IPerformanceMetricsData, IPerformanceMetricsDataTable, IClassWiseMetricsDataTable, IClassWiseHeader, IClassWiseMetricsRow, ITeamWiseMetricsDataTable, ITeamWiseHeader, ITeamWiseMetricsRow, IEncouragingMetricsDataTable, IEncouragingMetrics, ISection, IAverageRow } from "./performance-metrics.interface";
 
 export class PerformanceStaticData {
-
-    public static performanceSource: IPerformanceDataTable = {} as IPerformanceDataTable;
 
     public static performanceMetricsSource: IPerformanceMetricsDataTable = {} as IPerformanceMetricsDataTable;
 
@@ -10,25 +8,7 @@ export class PerformanceStaticData {
 
     public static teamwiseSource: ITeamWiseMetricsDataTable = {} as ITeamWiseMetricsDataTable;
 
-    public static getTestTableContent(): IPerformanceDataTable {
-
-        // table dynamic headers - start
-        let dynamicHeaders: IPerformanceHeader[] = [
-            { title: '18-Feb-2019', alais: '18-Feb-2019', checkValue: false, subTitleList: this.getSubTitle() },
-            { title: '19-Feb-2019', alais: '19-Feb-2019', checkValue: false, subTitleList: this.getSubTitle() },
-            { title: '20-Feb-2019', alais: '20-Feb-2019', checkValue: false, subTitleList: this.getSubTitle() },
-            { title: '21-Feb-2019', alais: '21-Feb-2019', checkValue: false, subTitleList: this.getSubTitle() },
-            { title: '22-Feb-2019', alais: '22-Feb-2019', checkValue: false, subTitleList: this.getSubTitle() }
-        ];
-
-        this.performanceSource.headers = dynamicHeaders;
-        // table dynamic headers - end
-
-        this.performanceSource.performanceRows = this.getPerformanceContents();
-
-        return this.performanceSource;
-    }
-
+    public static encouragingMetricsSource: IEncouragingMetricsDataTable = {} as IEncouragingMetricsDataTable;
 
     public static getPerformanceMetricsTableContent(): IPerformanceMetricsDataTable {
         
@@ -382,4 +362,96 @@ export class PerformanceStaticData {
                         return teamwiseMetricsData;
                     }            
 
+                    public static getEncouragingTableContent(): IEncouragingMetricsDataTable {
+                
+                        this.encouragingMetricsSource.metrics = this.getEncouragingMetricsContents();
+                
+                        return this.encouragingMetricsSource;
+                    }
+                    public static getEncouragingMetricsContents(): IEncouragingMetrics[] {
+                        let teamwiseMetricsRowArray: IEncouragingMetrics[] = [];
+                        
+                        teamwiseMetricsRowArray.push(this.getEncouragingMetricsAttendanceObj());
+                        teamwiseMetricsRowArray.push(this.getEncouragingMetricsHomeWorkObj());
+                        teamwiseMetricsRowArray.push(this.getEncouragingMetricsDisciplineObj());
+
+                        return teamwiseMetricsRowArray;
+                    }
+                    public static getEncouragingMetricsAttendanceObj(): IEncouragingMetrics {
+                        let encouragingMetricsData: IEncouragingMetrics = {} as IEncouragingMetrics;
+                        
+
+                        encouragingMetricsData.metricsType="Attendance";
+                        encouragingMetricsData.classs="5th";
+                        encouragingMetricsData.sectionData=this.getMetricsSectionArray();
+                        encouragingMetricsData.averageRow= this.getMetricsAverageRow();
+                        
+                        return encouragingMetricsData;
+                    }
+
+                    public static getMetricsSectionArray(): ISection[] {
+                        let sectionArray : ISection[] = [];
+                        let section1 : ISection = {} as ISection;
+                        section1.section="A";
+                        section1.month1percentage="52%";
+                        section1.month2percentage="59%";
+                        section1.changeinpercentage="7%";
+                        sectionArray.push(section1);
+                        let section2 : ISection = {} as ISection;
+                        section2.section="B";
+                        section2.month1percentage="51%";
+                        section2.month2percentage="54%";
+                        section2.changeinpercentage="3%";
+                        sectionArray.push(section2);
+                        let section3 : ISection = {} as ISection;
+                        section3.section="C";
+                        section3.month1percentage="51%";
+                        section3.month2percentage="52%";
+                        section3.changeinpercentage="1%";
+                        sectionArray.push(section3);
+                        let section4 : ISection = {} as ISection;
+                        section4.section="D";
+                        section4.month1percentage="42%";
+                        section4.month2percentage="54%";
+                        section4.changeinpercentage="12%";
+                        sectionArray.push(section4);
+                        let section5 : ISection = {} as ISection;
+                        section5.section="E";
+                        section5.month1percentage="29%";
+                        section5.month2percentage="38%";
+                        section5.changeinpercentage="9%";
+                        sectionArray.push(section5);
+                        return sectionArray;
+                    }
+
+                    public static getMetricsAverageRow(): IAverageRow {
+                        let averageRow : IAverageRow = {} as IAverageRow;
+                        averageRow.month1average = "50%";
+                        averageRow.month2average = "56%";
+                        averageRow.changeinaverage = "6%"
+                        return averageRow;
+                    }
+        
+                    public static getEncouragingMetricsHomeWorkObj(): IEncouragingMetrics {
+                        let encouragingMetricsData: IEncouragingMetrics = {} as IEncouragingMetrics;
+                        
+
+                        encouragingMetricsData.metricsType="Homework";
+                        encouragingMetricsData.classs="5th";
+                        encouragingMetricsData.sectionData=this.getMetricsSectionArray();
+                        encouragingMetricsData.averageRow= this.getMetricsAverageRow();
+                        
+                        return encouragingMetricsData;
+                    }
+                    public static getEncouragingMetricsDisciplineObj(): IEncouragingMetrics {
+                        let encouragingMetricsData: IEncouragingMetrics = {} as IEncouragingMetrics;
+                        
+
+                        encouragingMetricsData.metricsType="Discipline";
+                        encouragingMetricsData.classs="5th";
+                        encouragingMetricsData.sectionData=this.getMetricsSectionArray();
+                        encouragingMetricsData.averageRow= this.getMetricsAverageRow();
+                        
+                        return encouragingMetricsData;
+                    }
 }

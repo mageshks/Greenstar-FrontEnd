@@ -137,3 +137,27 @@ export interface ITeamWiseMetricsRow {
     homework: number;
     total: number;
 }
+
+export interface IEncouragingMetricsDataTable {
+    metrics: IEncouragingMetrics[];
+}
+
+export interface IEncouragingMetrics {
+    metricsType: string;
+    classs: string;
+    sectionData: ISection[];
+    averageRow: IAverageRow;
+}
+
+export interface ISection {
+    section: string;
+    month1percentage: string;
+    month2percentage: string;
+    changeinpercentage: string;
+}
+
+export interface IAverageRow {
+    month1average: string;
+    month2average: string;
+    changeinaverage: string;
+}
