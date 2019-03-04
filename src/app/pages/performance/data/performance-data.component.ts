@@ -23,13 +23,13 @@ export class PerformanceDataComponent implements OnInit {
 
     public performanceSource: IPerformanceDataTable = {} as IPerformanceDataTable;
 
-    public isShowPerformanceMetricTable = false;
-    public isPerformanceChkboxEnabled = false;
-    public isPerformanceEditEnabled = false;
-    public isPerformanceAddEnabled = false;
+    public isShowPerformanceMetricTable: boolean= false;
+    public isPerformanceChkboxEnabled: boolean = false;
+    public isPerformanceEditEnabled: boolean = false;
+    public isPerformanceAddEnabled: boolean = false;
     public action: string = 'update';
 
-    perfDataForm: FormGroup;
+    public perfDataForm: FormGroup;
 
     constructor(
         private modalService: NgbModal,

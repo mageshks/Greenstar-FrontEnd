@@ -8,7 +8,7 @@
 <div class="modal-body">
 
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
             <form class="form-horizontal">
                 <div class="form-group">
                     <div class="input-group">
@@ -17,10 +17,32 @@
                 </div>
             </form>
         </div>
-    </div>
 
+        <div class="col-sm-8">
+            <div *ngIf='errorMessages != null && errorMessages.length > 0' class="table-responsive">
+                <table class="table table-sm table-striped table-bordered">
+                    <thead>
+                        <!-- Top Header Row - Start-->
+                        <tr>
+                            <th rowspan="2" scope="col">Excel ID</th>
+                            <th rowspan="2" scope="col">Value</th>
+                            <th rowspan="2" scope="col">Error Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let errorMessage of errorMessages">
+                            <td>{{errorMessage.cellNo}}</td>
+                            <td>{{errorMessage.value}}</td>
+                            <td>{{errorMessage.message}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>           
+        </div>
+    </div>
 </div>
 
 <div class="modal-footer">
+    <button class="btn btn-md btn-primary" (click)="closeModal()">Cancel</button>
     <button class="btn btn-md btn-primary" [disabled]="isDisableButton" (click)="uploadBulkData()">Upload</button>
 </div>

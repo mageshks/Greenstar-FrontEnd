@@ -10,6 +10,7 @@ export class PerformanceDataUploadModalComponent implements OnInit {
 
     public uploadFile: File = null;
     public isDisableButton: boolean = true;
+    public errorMessages = [];
 
     constructor(
         private activeModal: NgbActiveModal,
@@ -33,10 +34,17 @@ export class PerformanceDataUploadModalComponent implements OnInit {
         if (this.uploadFile != null) {
             const formData = new FormData();
             formData.append('file', this.uploadFile);
+            formData.append('userId', '534556');
 
             this.performanceDataService.uploadBulkPerformanceData(formData).subscribe(
                 (response) => {
                     console.log(response);
+                    if(response.message == null ) {
+                        this.errorMessages = response.result;
+                    } else {
+                        this.uploadFile = null;
+                        this.isDisableButton = true;
+                    }
                 },
                 error => {
                     console.log("Http Server error", error);

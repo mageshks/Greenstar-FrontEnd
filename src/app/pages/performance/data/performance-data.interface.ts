@@ -3,7 +3,7 @@ export interface ISearchPerformanceData {
     className: string;
     sectionName: string;
     month: number;
-    week: string;    
+    week: string;
 }
 
 export interface IPerformanceDataTable {
@@ -65,13 +65,13 @@ export interface IPerformanceMetricsWeek {
 
 
 export interface IPerformanceMetricsData {
-    
-        key: string;
-        value: number;
-    }
+
+    key: string;
+    value: number;
+}
 
 
-    export interface IPerformanceMetricsDataTable {
+export interface IPerformanceMetricsDataTable {
     headers: IPerformanceHeader[];
     performanceRows: IPerformanceMetricsRow[];
 }
@@ -94,10 +94,10 @@ export interface IPerformanceMetricsWeek {
 }
 
 export interface IPerformanceMetricsData {
-    
-        key: string;
-        value: number;
-    }
+
+    key: string;
+    value: number;
+}
 
 export interface IClassWiseHeader {
     title: string;
@@ -136,4 +136,10 @@ export interface ITeamWiseMetricsRow {
     discipline: number;
     homework: number;
     total: number;
+}
+
+export interface ITemplateError {
+    cellNo: number;
+    value: string;
+    message: string;
 }

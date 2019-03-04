@@ -108,7 +108,7 @@
                                         <th rowspan="2" scope="col">Roll ID</th>
                                         <th rowspan="2" scope="col">Name</th>
                                         <ng-container *ngFor="let headerObj of performanceSource.headers">
-                                            <th colspan="2" scope="col" class="text-center">
+                                            <th [attr.colspan]="performanceSource.totalSubTitle" scope="col" class="text-center">
                                                 <label nbTooltip="{{headerObj.title}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{headerObj.title}}</label> &nbsp;
                                                 <nb-checkbox [value]="headerObj.checkValue" (change)="checkPerformanceDayWise($event, headerObj);" [disabled]="!isPerformanceChkboxEnabled"></nb-checkbox>
                                             </th>
@@ -132,7 +132,13 @@
                                     <!-- Top Sub Header Row - End -->
                                 </thead>
                                 <tbody>
-                                    <!-- Row content - Start -->
+                                    <!-- Row content : No data found - Start -->
+                                    <tr class="text-center" *ngIf='performanceSource.performanceRows == null || performanceSource.performanceRows.length == 0'>
+                                        <td [attr.colspan]="(performanceSource.totalSubTitle * performanceSource.headers.length) + 2" scope="col">No Data Found</td>
+                                    </tr>
+                                    <!-- Row content : No data found - End -->
+
+                                    <!-- Row content : Performance data - Start -->
                                     <tr *ngFor="let performanceRow of performanceSource.performanceRows">
                                         <td scope="col">{{ performanceRow.rollId }}</td>
                                         <td scope="col">{{ performanceRow.studentName }}</td>
@@ -145,19 +151,11 @@
                                             </td>
                                         </ng-container>
                                     </tr>
-                                    <!-- Row content - End -->
+                                    <!-- Row content : Performance data- End -->
                                 </tbody>
                             </table>
-
-                            <table class="table table-sm table-striped table-bordered">
-                                <tr class="text-center" *ngIf='performanceSource.performanceRows == null || performanceSource.performanceRows.length == 0'>
-                                    <td scope="col">No Data Found</td>
-                                </tr>
-                            </table>
-
                         </div>
                     </div>
-
                 </div>
             </nb-card-body>
         </nb-card>
