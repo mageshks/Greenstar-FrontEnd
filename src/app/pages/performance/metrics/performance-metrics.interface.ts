@@ -1,5 +1,6 @@
 export interface ISearchPerformanceData {
     schoolId: number;
+    classId: string;
     className: string;
     sectionName: string;
     month: number;

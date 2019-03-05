@@ -14,7 +14,7 @@ export class PerformanceMetricsService {
     }
 
     public getIndividualPerformanceMetrics(searchPerformanceData: ISearchPerformanceData): Observable<any> {
-        return this.http.post(API_URL+'/perfmetrics/individual', searchPerformanceData, { headers: this.headerValue });
+        return this.http.post(API_URL+'/perfdata/existingmetricdatas', searchPerformanceData, { headers: this.headerValue });
     }
 
     public getTeamwisePerformanceMetrics(searchPerformanceData: ISearchPerformanceData): Observable<any> {
