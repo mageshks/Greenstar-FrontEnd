@@ -17,8 +17,8 @@ export const PAGE_ROUTES: Routes = [
     path: '', component: PagesComponent,
     children: [
       { path: '', component: DashboardComponent },
-      /* { path: 'dashboard', component: DashboardComponent }, */
-      { path: 'dashboard', component: ECommerceComponent },
+      { path: 'dashboard', component: DashboardComponent },
+      /* { path: 'dashboard', component: ECommerceComponent }, */
       { path: 'school', component: SchoolListComponent },
       { path: 'student', component: StudentListComponent },
       { path: 'performancedata', component: PerformanceDataComponent },
