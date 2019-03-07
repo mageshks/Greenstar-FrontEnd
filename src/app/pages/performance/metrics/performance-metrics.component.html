@@ -9,7 +9,7 @@
                         <div class="col-sm-5">
                             <label for="schoolId" class="col-form-label required">School</label>
                             <div class="input-group required">
-                                <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" [ngClass]="displayFieldCss('schoolId')" (change)="loadClassDetailsBySchool($event.target.value)" required>
+                                <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" [ngClass]="displayFieldCss('schoolId')" (change)="loadIndividualClassDetailsBySchool($event.target.value)" required>
                                     <option value=''>Select</option>
                                     <option *ngFor="let school of schoolList" value={{school.id}}>
                                         {{school.schoolName}}
@@ -133,54 +133,50 @@
                     </div>
                 </nb-tab>
                 <nb-tab tabTitle="Class-wise Metrics" tabIcon="nb-compose" responsive>
-                    <div class='row pt-5'>
-                        <div class='col-md-2'>
-                            <label class='control-label'>City</label>
-                            <nb-select placeholder="Select" outline>
-                                <nb-option value="1">Coimbatore</nb-option>
-                                <nb-option value="2">Erode</nb-option>
-                            </nb-select>
+                    <form [formGroup]="classPerfMetricsForm" (ngSubmit)="viewClasswisePerformanceMetrics()">
+                        <div class='row pt-5'>
+                            <div class="col-sm-5">
+                                <label for="schoolId" class="col-form-label required">School</label>
+                                <div class="input-group required">
+                                    <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" [ngClass]="displayFieldCss('schoolId')" (change)="loadClasswiseClassDetailsBySchool($event.target.value)" required>
+                                        <option value=''>Select</option>
+                                        <option *ngFor="let school of schoolList" value={{school.id}}>
+                                            {{school.schoolName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+    
+                            <div class="col-sm-3">
+                                <label for="className" class="col-form-label required">Class & Section</label>
+                                <div class="input-group">
+                                    <select id="classId" name="classId" formControlName="classId" class="form-control form-control-sm" [ngClass]="displayFieldCss('classId')">
+                                        <option value=''>Select</option>
+                                        <option *ngFor="let class of classList" value={{class.id}}>
+                                            {{class.classAndSectionName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class='col-md-3'>
-                            <label class='control-label'>School Name</label>
-                            <nb-select placeholder="Select" outline>
-                                <nb-option value="1">Nikita Matriculation School</nb-option>
-                                <nb-option value="2">KV Matriculation School</nb-option>
-                                <nb-option value="3">SSVM Matriculation School</nb-option>
-                            </nb-select>
-                        </div>
-                        <div class='col-md-3'>
-                            <label class='control-label'>Class</label>
-                            <nb-select placeholder="Select" outline>
-                                <nb-option value="1">LKG</nb-option>
-                                <nb-option value="2">UKG</nb-option>
-                                <nb-option value="3">First</nb-option>
-                            </nb-select>
-                        </div>
-                        <div class='col-md-3'>
-                            <label class='control-label'>Section</label>
-                            <nb-select placeholder="Select" outline>
-                                <nb-option value="1">A</nb-option>
-                                <nb-option value="2">B</nb-option>
-                                <nb-option value="3">C</nb-option>
-                                <nb-option value="4">D</nb-option>
-                                <nb-option value="5">E</nb-option>
-                            </nb-select>
-                        </div>
-                    </div>
 
-                    <div class='row pt-3'>
-                        <div class='col-md-6'>
-                            <button nbButton status="primary">View Metrics</button>
+                    <div class="row pt-3">
+                            <div class="col-sm-3 text-left errormsg">
+                                <span style="color:red" *ngIf="isClasswiseSearchDataNotValid">All fields are mandatory!</span>
+                            </div>
                         </div>
-                        <div class='col-md-3'>
-                            
+                        <div class='row pt-3'>
+                            <div class="col-sm-3 text-left">
+                                <button class="btn btn-primary btn-sm" type="button" (click)="resetClasswisePerformanceSearch();">Reset</button>
+                            </div>
+                            <div class="col-sm-3 text-center">
+                                <button class="btn btn-primary btn-sm" type="submit">View Classwise Metrics</button>
+                            </div>
+                            <div class='col-sm-3 text-right'>
+                                <button class="btn btn-primary btn-sm" type="button" (click)="downloadExcelExport()">Excel Export</button> 
+                            </div>
                         </div>
-                        <div class='col-md-3'>
-                            
-                            <button nbButton status="primary" (click)="downloadExcelExport()">Excel Export</button> 
-                        </div>
-                    </div>
+                    </form>
     
                     <div class="row pt-3">
                         <div class="col-md-12">
@@ -214,54 +210,50 @@
                     </div>
                 </nb-tab>
                 <nb-tab tabTitle="Team-wise Metrics" tabIcon="nb-snowy-circled" responsive>
-                    <div class='row pt-5'>
-                        <div class='col-md-2'>
-                            <label class='control-label'>City</label>
-                            <nb-select placeholder="Select" outline>
-                                <nb-option value="1">Coimbatore</nb-option>
-                                <nb-option value="2">Erode</nb-option>
-                            </nb-select>
-                        </div>                        
-                        <div class='col-md-3'>
-                            <label class='control-label'>School Name</label>
-                            <nb-select placeholder="Select" outline>
-                                <nb-option value="1">Nikita Matriculation School</nb-option>
-                                <nb-option value="2">KV Matriculation School</nb-option>
-                                <nb-option value="3">SSVM Matriculation School</nb-option>
-                            </nb-select>
+                    <form [formGroup]="teamPerfMetricsForm" (ngSubmit)="viewTeamwisePerformanceMetrics()">
+                        <div class='row pt-5'>
+                            <div class="col-sm-5">
+                                <label for="schoolId" class="col-form-label required">School</label>
+                                <div class="input-group required">
+                                    <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" [ngClass]="displayFieldCss('schoolId')" (change)="loadTeamwiseClassDetailsBySchool($event.target.value)" required>
+                                        <option value=''>Select</option>
+                                        <option *ngFor="let school of schoolList" value={{school.id}}>
+                                            {{school.schoolName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+    
+                            <div class="col-sm-3">
+                                <label for="className" class="col-form-label required">Class & Section</label>
+                                <div class="input-group">
+                                    <select id="classId" name="classId" formControlName="classId" class="form-control form-control-sm" [ngClass]="displayFieldCss('classId')">
+                                        <option value=''>Select</option>
+                                        <option *ngFor="let class of classList" value={{class.id}}>
+                                            {{class.classAndSectionName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class='col-md-3'>
-                            <label class='control-label'>Class</label>
-                            <nb-select placeholder="Select" outline>
-                                <nb-option value="1">LKG</nb-option>
-                                <nb-option value="2">UKG</nb-option>
-                                <nb-option value="3">First</nb-option>
-                            </nb-select>
-                        </div>
-                        <div class='col-md-3'>
-                            <label class='control-label'>Section</label>
-                            <nb-select placeholder="Select" outline>
-                                <nb-option value="1">A</nb-option>
-                                <nb-option value="2">B</nb-option>
-                                <nb-option value="3">C</nb-option>
-                                <nb-option value="4">D</nb-option>
-                                <nb-option value="5">E</nb-option>
-                            </nb-select>
+
+                    <div class="row pt-3">
+                        <div class="col-sm-3 text-left errormsg">
+                            <span style="color:red" *ngIf="isTeamwiseSearchDataNotValid">All fields are mandatory!</span>
                         </div>
                     </div>
-                    
                     <div class='row pt-3'>
-                        <div class='col-md-6'>
-                            <button nbButton status="primary">View Metrics</button>
+                        <div class="col-sm-3 text-left">
+                            <button class="btn btn-primary btn-sm" type="button" (click)="resetTeamwisePerformanceSearch();">Reset</button>
                         </div>
-                        <div class='col-md-3'>
-                            
+                        <div class="col-sm-3 text-center">
+                            <button class="btn btn-primary btn-sm" type="submit">View Teamwise Metrics</button>
                         </div>
-                        <div class='col-md-3'>
-                            
-                            <button nbButton status="primary" (click)="downloadExcelExport()">Excel Export</button> 
+                        <div class='col-sm-3 text-right'>
+                            <button class="btn btn-primary btn-sm" type="button" (click)="downloadExcelExport()">Excel Export</button> 
                         </div>
                     </div>
+                </form>
     
                     <div class="row pt-3">
                         <div class="col-md-12">
@@ -298,14 +290,14 @@
                 <nb-tab tabTitle="Encouraging Metrics" tabIcon="nb-arrow-thin-up" responsive>
                   <div class='row pt-5'>
                         <div class='col-md-2'>
-                            <label class='control-label'>City</label>
+                            <label class='col-form-label required'>City</label>
                             <nb-select placeholder="Select" outline>
                                 <nb-option value="1">Coimbatore</nb-option>
                                 <nb-option value="2">Erode</nb-option>
                             </nb-select>
                         </div>
                         <div class='col-md-3'>
-                            <label class='control-label'>School Name</label>
+                            <label class='col-form-label required'>School Name</label>
                             <nb-select placeholder="Select" outline>
                                 <nb-option value="1">Nikita Matriculation School</nb-option>
                                 <nb-option value="2">KV Matriculation School</nb-option>
@@ -313,7 +305,7 @@
                             </nb-select>
                         </div>
                         <div class='col-md-3'>
-                            <label class='control-label'>Class</label>
+                            <label class='col-form-label required'>Class</label>
                             <nb-select placeholder="Select" outline>
                                 <nb-option value="1">LKG</nb-option>
                                 <nb-option value="2">UKG</nb-option>
@@ -323,7 +315,7 @@
                     </div>
                     <div class='row'>
                         <div class='col-md-2'>
-                            <label class='control-label'>Month 1</label>
+                            <label class='col-form-label required'>Month 1</label>
                             <nb-select placeholder="Select" outline>
                                 <nb-option value="1">January</nb-option>
                                 <nb-option value="2">February</nb-option>
@@ -340,7 +332,7 @@
                             </nb-select>
                         </div>
                         <div class='col-md-2'>
-                            <label class='control-label'>Month 2</label>
+                            <label class='col-form-label required'>Month 2</label>
                             <nb-select placeholder="Select" outline>
                                 <nb-option value="1">January</nb-option>
                                 <nb-option value="2">February</nb-option>

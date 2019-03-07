@@ -34,7 +34,7 @@ export class PerformanceStaticData {
 
         let dynamicTitle: IPerformanceHeader[] = [
             { title: 'HomeWork',  alais: 'HW', checkValue: false, subTitleList: [] },
-            { title: 'Disciplain', alais: 'DS', checkValue: false, subTitleList: [] },
+            { title: 'Discipline', alais: 'DS', checkValue: false, subTitleList: [] },
             { title: 'Attendance',  alais: 'AT', checkValue: false, subTitleList: [] }
         ];
         return dynamicTitle;

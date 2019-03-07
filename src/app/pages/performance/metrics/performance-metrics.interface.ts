@@ -1,4 +1,4 @@
-export interface ISearchPerformanceData {
+export interface ISearchPerformanceMetrics {
     schoolId: number;
     classId: string;
     className: string;
@@ -147,6 +147,7 @@ export interface IEncouragingMetrics {
     metricsType: string;
     classs: string;
     sectionData: ISection[];
+    monthName: String;
     averageRow: IAverageRow;
 }
 
