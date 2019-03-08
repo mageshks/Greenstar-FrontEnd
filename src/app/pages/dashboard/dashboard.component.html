@@ -30,35 +30,19 @@
       </ngx-charts-line-chart>
   </nb-card>
   <nb-card>
-<!--       <ngx-charts-line-chart
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="multi"
-            [gradient]="gradient"
-            [xAxis]="showXAxis"
-            [yAxis]="showYAxis"
-            [legend]="showLegend"
-            [showXAxisLabel]="showXAxisLabel"
-            [showYAxisLabel]="showYAxisLabel"
-            [xAxisLabel]="xAxisLabel"
-            [yAxisLabel]="yAxisLabel"
-            [autoScale]="autoScale"
-            [timeline]="timeline"
-            (select)="onSelect($event)">
-        </ngx-charts-line-chart> -->
-        <ngx-charts-gauge
-          [view]="view"
-          [scheme]="colorScheme"
-          [results]="single"
-          [min]="0"
-          [max]="100"
-          [legend]="showLegend"
-          [angleSpan]="240"
-          [startAngle]="-120"
-          [units]="'points'"
-          [bigSegments]="10"
-          [smallSegments]="5"
-          (select)="onSelect($event)">
-        </ngx-charts-gauge>
-    </nb-card>
+      <ngx-charts-gauge
+        [view]="view"
+        [scheme]="colorScheme"
+        [results]="single"
+        [min]="0"
+        [max]="100"
+        [legend]="showLegend"
+        [angleSpan]="240"
+        [startAngle]="-120"
+        [units]="'points'"
+        [bigSegments]="10"
+        [smallSegments]="5"
+        (select)="onSelect($event)">
+      </ngx-charts-gauge>
+  </nb-card>
 </div>
