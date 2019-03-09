@@ -185,21 +185,32 @@
                                     <thead>
                                         <!-- Top Header Row - Start -->
                                         <tr>
-                                            <ng-container *ngFor="let headerObj of classWiseMetricsSource.headers">
+                                            
                                                 <th scope="col" class="text-center">
-                                                    <label nbTooltip="{{headerObj.title}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{headerObj.title}}</label> &nbsp;
+                                                    <label nbTooltip="Class & Section" nbTooltipPlacement="top" nbTooltipStatus="info">Class & Section</label> &nbsp;
                                                 </th>
-                                            </ng-container>
+                                                <th scope="col" class="text-center">
+                                                    <label nbTooltip="{{classWiseMetricsSource.paramName1}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{classWiseMetricsSource.paramName1}}</label> &nbsp;
+                                                </th>
+                                                <th scope="col" class="text-center">
+                                                    <label nbTooltip="{{classWiseMetricsSource.paramName2}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{classWiseMetricsSource.paramName2}}</label> &nbsp;
+                                                </th>
+                                                <th scope="col" class="text-center">
+                                                    <label nbTooltip="{{classWiseMetricsSource.paramName3}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{classWiseMetricsSource.paramName3}}</label> &nbsp;
+                                                </th>
+                                                <th scope="col" class="text-center">
+                                                    <label nbTooltip="{{classWiseMetricsSource.totalTitle}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{classWiseMetricsSource.totalTitle}}</label> &nbsp;
+                                                </th>
                                         </tr>
                                         <!-- Top Header Row - End -->
                                     </thead>
                                     <tbody>
                                         <!-- Row content - Start -->
-                                        <tr class="text-center" *ngFor="let performanceRow of classWiseMetricsSource.performanceRows">
-                                            <td scope="col">{{ performanceRow.class }}</td>
-                                            <td scope="col">{{ performanceRow.attendance }}</td>
-                                            <td scope="col">{{ performanceRow.discipline }}</td>
-                                            <td scope="col">{{ performanceRow.homework }}</td>
+                                        <tr class="text-center" *ngFor="let performanceRow of classWiseMetricsSource.sectionData">
+                                            <td scope="col">{{ performanceRow.section }}</td>
+                                            <td scope="col">{{ performanceRow.param1Total }}</td>
+                                            <td scope="col">{{ performanceRow.param2Total }}</td>
+                                            <td scope="col">{{ performanceRow.param3Total }}</td>
                                             <td scope="col">{{ performanceRow.total }}</td>
                                         </tr>
                                         <!-- Row content - End -->
@@ -225,12 +236,12 @@
                             </div>
     
                             <div class="col-sm-3">
-                                <label for="className" class="col-form-label required">Class & Section</label>
+                                <label for="className" class="col-form-label required">Class</label>
                                 <div class="input-group">
-                                    <select id="classId" name="classId" formControlName="classId" class="form-control form-control-sm" [ngClass]="displayFieldCss('classId')">
+                                    <select [(ngModel)]="selectedClass" id="classId" name="classId" formControlName="classId" class="form-control form-control-sm" [ngClass]="displayFieldCss('classId')">
                                         <option value=''>Select</option>
-                                        <option *ngFor="let class of classList" value={{class.id}}>
-                                            {{class.classAndSectionName}}
+                                        <option *ngFor="let class of classList" [ngValue]="class">
+                                            {{class.className}}
                                         </option>
                                     </select>
                                 </div>
@@ -262,21 +273,32 @@
                                     <thead>
                                         <!-- Top Header Row - Start -->
                                         <tr>
-                                            <ng-container *ngFor="let headerObj of teamWiseMetricsSource.headers">
+                                            
                                                 <th scope="col" class="text-center">
-                                                    <label nbTooltip="{{headerObj.title}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{headerObj.title}}</label> &nbsp;
+                                                    <label nbTooltip="Team" nbTooltipPlacement="top" nbTooltipStatus="info">Team</label> &nbsp;
                                                 </th>
-                                            </ng-container>
+                                                <th scope="col" class="text-center">
+                                                    <label nbTooltip="{{teamWiseMetricsSource.paramName1}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{teamWiseMetricsSource.paramName1}}</label> &nbsp;
+                                                </th>
+                                                <th scope="col" class="text-center">
+                                                    <label nbTooltip="{{teamWiseMetricsSource.paramName2}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{teamWiseMetricsSource.paramName2}}</label> &nbsp;
+                                                </th>
+                                                <th scope="col" class="text-center">
+                                                    <label nbTooltip="{{teamWiseMetricsSource.paramName3}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{teamWiseMetricsSource.paramName3}}</label> &nbsp;
+                                                </th>
+                                                <th scope="col" class="text-center">
+                                                    <label nbTooltip="{{teamWiseMetricsSource.totalTitle}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{teamWiseMetricsSource.totalTitle}}</label> &nbsp;
+                                                </th>
                                         </tr>
                                         <!-- Top Header Row - End -->
                                     </thead>
                                     <tbody>
                                         <!-- Row content - Start -->
-                                        <tr class="text-center" *ngFor="let performanceRow of teamWiseMetricsSource.performanceRows">
-                                            <td scope="col">{{ performanceRow.team }}</td>
-                                            <td scope="col">{{ performanceRow.attendance }}</td>
-                                            <td scope="col">{{ performanceRow.discipline }}</td>
-                                            <td scope="col">{{ performanceRow.homework }}</td>
+                                        <tr class="text-center" *ngFor="let performanceRow of teamWiseMetricsSource.sectionData">
+                                            <td scope="col">{{ performanceRow.teamName }}</td>
+                                            <td scope="col">{{ performanceRow.param1Total }}</td>
+                                            <td scope="col">{{ performanceRow.param2Total }}</td>
+                                            <td scope="col">{{ performanceRow.param3Total }}</td>
                                             <td scope="col">{{ performanceRow.total }}</td>
                                         </tr>
                                         <!-- Row content - End -->

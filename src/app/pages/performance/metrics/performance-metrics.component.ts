@@ -54,8 +54,8 @@ export class PerformanceMetricsComponent implements OnInit {
 
     ngOnInit(): void {
         this.performanceMetricsSource = PerformanceStaticData.getPerformanceMetricsTableContent();
-        this.classWiseMetricsSource = PerformanceStaticData.getClassWiseTableContent();
-        this.teamWiseMetricsSource = PerformanceStaticData.getTeamWiseTableContent();
+       // this.classWiseMetricsSource = PerformanceStaticData.getClassWiseTableContent();
+       // this.teamWiseMetricsSource = PerformanceStaticData.getTeamWiseTableContent();
         this.encouragingMetricsSource = PerformanceStaticData.getEncouragingTableContent();
         this.initializeForm();
         this.initializeClasswiseForm();
@@ -222,7 +222,8 @@ export class PerformanceMetricsComponent implements OnInit {
         if (this.teamPerfMetricsForm.valid) {
             let searchPerformanceMetrics: ISearchPerformanceMetrics = {} as ISearchPerformanceMetrics;
             searchPerformanceMetrics.schoolId = this.teamPerfMetricsForm.getRawValue().schoolId;
-            searchPerformanceMetrics.classId = this.teamPerfMetricsForm.getRawValue().classId;
+            //searchPerformanceMetrics.classId = this.teamPerfMetricsForm.getRawValue().classId;
+            searchPerformanceMetrics.className = this.selectedClass.className;
             this.loadTeamwisePerformanceMetrics(searchPerformanceMetrics);
         } else {
             ValidatorUtil.validateAllFormFields(this.teamPerfMetricsForm);
