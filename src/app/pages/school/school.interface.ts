@@ -24,7 +24,7 @@ export class ISchoolDetail {
 
 export class ISchoolSearchData{
     public stateName: string;
-    public districts: string[];
+    public district: string;
 }
 
 export class IClass {

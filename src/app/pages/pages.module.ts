@@ -10,6 +10,7 @@ import { StudentModule } from './student/student.module';
 import { PerformanceModule } from './performance/performance.module';
 import { ECommerceModule } from './e-commerce/e-commerce.module';
 import { AdminModule } from './admin/admin.module';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 const PAGES_COMPONENTS = [
   PagesComponent
@@ -25,7 +26,8 @@ const PAGES_COMPONENTS = [
     StudentModule,
     PerformanceModule,
     ECommerceModule,
-    AdminModule
+    AdminModule,
+    Ng2SmartTableModule
   ],
   declarations: [
     ...PAGES_COMPONENTS,

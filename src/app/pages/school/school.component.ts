@@ -5,7 +5,6 @@ import { SchoolData } from './school.data';
 import { ISchoolDetail } from './school.interface';
 import { OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import {IState} from '../common/common.interface';
 import {CommonService} from '../common/common.service';
 import { SmartTableDatePickerComponent } from '../../@theme/components/smart-table-date-picker-component/smart-table-date-picker.components';
 
@@ -19,8 +18,6 @@ export class SchoolComponent implements OnInit {
   public title: string;
   public action: string
   public schoolId: number;
-
-  public stateList: IState[];
 
   public schoolDetail: ISchoolDetail;
 
@@ -50,8 +47,6 @@ export class SchoolComponent implements OnInit {
   }
 
   ngOnInit(): void {
-     this.loadStates();
-
     if (this.action === 'create') {
       this.schoolDetail = SchoolData.createSchoolDetailObject();
     } else if (this.action === 'edit') {
@@ -62,18 +57,6 @@ export class SchoolComponent implements OnInit {
 
     this.schoolHolidayDetail.load(this.schoolDetail.holidays);
     this.schoolWeekendWorkDetail.load(this.schoolDetail.weekendWorkingDayes);
-  }
-
-  private loadStates(){
-    this.commonService.getStates().subscribe(
-      (response) => {
-          console.log("Response ==> " + JSON.stringify(response));
-          this.stateList = response;
-      },
-      error => {
-          console.log("Http Server error", error);
-      }
-  );
   }
 
   public onChangeTab(event) {
