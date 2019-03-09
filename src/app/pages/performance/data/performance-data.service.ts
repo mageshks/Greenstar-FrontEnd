@@ -37,6 +37,10 @@ export class PerformanceDataService {
         return this.http.post(API_URL + '/perfdata/uploadbulkdata', formData, { headers: this.headerValue });
     }
 
+    public getWeekDaysByMonth(searchPerformanceData: ISearchPerformanceData): Observable<any> {
+        return this.http.post(API_URL + '/perfdata/weekdayes', searchPerformanceData, { headers: this.headerValue });
+    }
+
     private handleError(error: Response | any): any {
         console.log('API Service :: Handle Error' + error);
         return Observable.throw(error);

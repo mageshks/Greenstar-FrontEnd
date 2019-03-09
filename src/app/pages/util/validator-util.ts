@@ -15,6 +15,7 @@ export class ValidatorUtil {
             } else if (control instanceof FormGroup) {
                 this.validateAllFormFields(control);
             }
+   
         });
     }
 
@@ -40,4 +41,9 @@ export class ValidatorUtil {
             'is-invalid': this.isFieldValid(formGroup, field)
         };
     }
+
+    public static isEmpty(value: string) {
+        return (typeof value === 'undefined' || value === null || value === '' || value.length <= 0) ? true : false;
+    }
+
 }
