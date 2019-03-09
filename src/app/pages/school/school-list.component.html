@@ -1,114 +1,61 @@
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-sm-12">
         <nb-card>
             <nb-card-header>
                 School Maintance
             </nb-card-header>
 
             <nb-card-body>
+                <nb-card>
+                    <nb-card-body [nbSpinner]="searchLoading" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
+                        <div class='row'>
+                            <div class='col-sm-6'>
+                                <label for="state" class="col-form-label">State</label>
+                                <div class="input-group">
+                                    <select id="state" name="state" class="form-control form-control-sm"
+                                        [(ngModel)]="schoolSearchData.stateName" (change)="onStateChange($event)">
+                                        <option value="--Select State--">--Select State--</option>
+                                        <option *ngFor="let state of stateList" value={{state.stateName}}>
+                                            {{state.stateName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class='col-sm-6'>
+                                <label for="district" class="col-form-label">District</label>
+                                <div class="input-group">
+                                    <select id="district" name="district" class="form-control form-control-sm"
+                                        [(ngModel)]="schoolSearchData.district">
+                                        <option value="--Select District--">--Select District--</option>
+                                        <option *ngFor="let district of districtList" value={{district}}>
+                                            {{district}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
-                <div class='row'>
-                    <div class='col-md-6'>
-                        <label class='control-label'>School Name</label>
-                        <nb-select placeholder="Select" outline>
-                            <nb-option value="1">Nikita Matriculation School</nb-option>
-                            <nb-option value="2">KV Matriculation School</nb-option>
-                            <nb-option value="3">SSVM Matriculation School</nb-option>
-                        </nb-select>
-                    </div>
-                    <div class='col-md-6'>
-                        <label class='control-label'>City</label>
-                        <nb-select placeholder="Select" outline>
-                            <nb-option value="1">Coimbatore</nb-option>
-                            <nb-option value="2">Erode</nb-option>
-                        </nb-select>
-                    </div>
-                </div>
-
-                <div class='row pt-3 text-right'>
-                    <div class='col-md-6'></div>
-                    <div class='col-md-6'>
-                        <button nbButton status="primary">Search</button>
-                    </div>
-                </div>
-
-                <div class='row'>
-                    <div class='col-md-6'>
-                        <button nbButton status="primary" (click)="createSchool()">Add School</button>
-                    </div>
-                    <div class='col-md-6'></div>
-                </div>
-
-                <div class='row pt-3'>
-                    <div class='col-md-12'>
-                        <table class='table table-bordered'>
-                            <thead>
-                                <tr>
-                                    <th width='30%'>School Name</th>
-                                    <th width='20%'>City</th>
-                                    <th width='25%' class='text-center'>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Nikita Matriculation School</td>
-                                    <td>Coimbatore</td>
-                                    <td>
-                                        <div class='row'>
-                                            <div class='col-md-4'>
-                                                <button nbButton size="xsmall">View</button>
-                                            </div>
-                                            <div class='col-md-4'>
-                                                <button nbButton size="xsmall">Edit</button>
-                                            </div>
-                                            <div class='col-md-4'>
-                                                <button nbButton size="xsmall">Delete</button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>KV Matriculation School</td>
-                                    <td>Coimbatore</td>
-                                    <td>
-                                        <div class='row'>
-                                            <div class='col-md-4'>
-                                                <button nbButton size="xsmall">View</button>
-                                            </div>
-                                            <div class='col-md-4'>
-                                                <button nbButton size="xsmall">Edit</button>
-                                            </div>
-                                            <div class='col-md-4'>
-                                                <button nbButton size="xsmall">Delete</button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>SSVM Matriculation School</td>
-                                    <td>Coimbatore</td>
-                                    <td>
-                                        <div class='row'>
-                                            <div class='col-md-4'>
-                                                <button nbButton size="xsmall">View</button>
-                                            </div>
-                                            <div class='col-md-4'>
-                                                <button nbButton size="xsmall">Edit</button>
-                                            </div>
-                                            <div class='col-md-4'>
-                                                <button nbButton size="xsmall">Delete</button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-
+                        <div class='row pt-3'>
+                            <div class='col-sm-6 text-left'>
+                                <button nbButton status="primary" (click)="createSchool()">Add School</button>
+                            </div>
+                            <div class='col-sm-6 text-right'>
+                                <button nbButton status="primary" (click)="onSearch()">Search</button>
+                            </div>
+                        </div>
+                    </nb-card-body>
+                </nb-card>
+                <nb-card *ngIf="true">
+                    <nb-card-body>
+                        <div class='row pt-3'>
+                            <div class='col-sm-12'>
+                                <ng2-smart-table [settings]="schoolTableParamSetting" (edit)="editSchool($event)" (delete)="viewSchool($event)" [source]="schoolTableData">
+                                </ng2-smart-table>
+                            </div>
+                        </div>
+                    </nb-card-body>
+                </nb-card>
             </nb-card-body>
-
         </nb-card>
     </div>
 </div>

@@ -5,6 +5,7 @@ import { SchoolData } from './school.data';
 import { ISchoolDetail } from './school.interface';
 import { OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import {CommonService} from '../common/common.service';
 import { SmartTableDatePickerComponent } from '../../@theme/components/smart-table-date-picker-component/smart-table-date-picker.components';
 
 @Component({
@@ -40,7 +41,9 @@ export class SchoolComponent implements OnInit {
   public schoolWeekendWorkDetail: LocalDataSource = new LocalDataSource();
   public schoolWeekendWorkSetting: any = SchoolData.getSchoolWeekendWorkingSetting();
 
-  constructor(private activeModal: NgbActiveModal) {
+  constructor(private activeModal: NgbActiveModal,
+    private commonService: CommonService) {
+    
   }
 
   ngOnInit(): void {

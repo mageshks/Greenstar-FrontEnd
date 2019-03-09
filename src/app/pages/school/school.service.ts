@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
-import { ISchoolDetail } from "./school.interface";
+import { ISchoolDetail,ISchoolSearchData } from "./school.interface";
 
-const API_URL: string = 'http://localhost:9001/greenstarapp';
+const API_URL: string = 'http://localhost:2620';
 
 @Injectable()
 export class SchoolService {
@@ -13,12 +13,8 @@ export class SchoolService {
     constructor(private http: HttpClient) {
     }
 
-    public getAllStates(): Observable<any> {
-        return this.http.get(API_URL + 'states', { headers: this.headerValue });
-    }
-
-    public getDistrict(formData: FormData): Observable<any> {
-        return this.http.post(API_URL + 'district', formData, { headers: this.headerValue });
+    public getSchoolsForSearch(schoolSearchData: ISchoolSearchData): Observable<any> {
+        return this.http.post(API_URL+'/school/getSchoolsForSearch',schoolSearchData,{ headers: this.headerValue });
     }
 
     public getSchoolNames(): Observable<any> {

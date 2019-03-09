@@ -83,16 +83,18 @@ export class PerformanceStarComponent implements OnInit {
     public generatePerformanceStar() {
         if (!this.validateSearch()) {
             this.loading = true;
+            // Clear the existing data 
+            this.performanceStarData = {} as IPerformanceStarData;
             this.performanceGenerateStarService.getPerformanceStar(this.searchPerformanceStarData).subscribe(
                 (response) => {
-                    console.log(response);
+                    console.log("Response ==> " + JSON.stringify(response));
                     this.performanceStarData = response;
-                    if (this.performanceStarData.paramOneMonthColorCodes.length > 0) {
-                        this.isDataAvailable = true;
-                        this.isNoPerfData = false;
-                    } else {
+                    if (this.performanceStarData.paramOneMonthColorCodes == null) {
                         this.isDataAvailable = false;
                         this.isNoPerfData = true;
+                    }else if (this.performanceStarData.paramOneMonthColorCodes.length > 0) {
+                        this.isDataAvailable = true;
+                        this.isNoPerfData = false;
                     }
                     this.loading = false;
                 },

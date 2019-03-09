@@ -101,7 +101,7 @@
                                 <span *ngIf="isSearchDataNotValid">All fields are mandatory to generate star!</span>
                             </div>
                             <div class="col-sm-4 text-right">
-                                <button class="btn btn-primary btn-sm" (click)="generatePerformanceStar();">Generate Star</button>
+                                <button class="btn btn-success btn-sm" (click)="generatePerformanceStar();">Generate Star</button>
                             </div>
                         </div>
 
@@ -112,7 +112,7 @@
                     <nb-card-body>
                         <div class="row pb-2">
                             <div class="col-sm-12 text-left">
-                                <button class="btn btn-primary btn-sm" (click)="printStar();">Download Star</button>
+                                <button class="btn btn-success btn-sm" (click)="printStar();">Download Star</button>
                             </div>
                         </div>
                         <nb-stepper orientation="horizontal">
@@ -139,7 +139,7 @@
                                     </div>
                                 </div>
                                 <button nbButton disabled nbStepperNext>prev</button>
-                                <button nbButton nbStepperNext>next</button>
+                                <button nbButton nbStepperNext class="ml-2">next</button>
                             </nb-step>
                             <nb-step [label]="performanceStarData.paramTwo">
                                 <div name="starDisplayContent" id="paramTwoContent">
@@ -162,9 +162,9 @@
                                             <app-greenstar [perfStarMonthData]="performanceStarData.paramTwoMonthColorCodes"></app-greenstar>
                                         </div>
                                     </div>
-                                    <button nbButton nbStepperPrevious>prev</button>
-                                    <button nbButton nbStepperNext>next</button>
                                 </div>
+                                <button nbButton nbStepperPrevious>prev</button>
+                                <button nbButton nbStepperNext class="ml-2">next</button>
                             </nb-step>
                             <nb-step [label]="performanceStarData.paramThree">
                                 <div name="starDisplayContent" id="paramThreeContent">
@@ -187,9 +187,9 @@
                                             <app-greenstar [perfStarMonthData]="performanceStarData.paramThreeMonthColorCodes"></app-greenstar>
                                         </div>
                                     </div>
-                                    <button nbButton nbStepperPrevious>prev</button>
-                                    <button nbButton disabled nbStepperNext>next</button>
                                 </div>
+                                <button nbButton nbStepperPrevious >prev</button>
+                                <button nbButton disabled nbStepperNext class="ml-2">next</button>
                             </nb-step>
                         </nb-stepper>
                     </nb-card-body>
