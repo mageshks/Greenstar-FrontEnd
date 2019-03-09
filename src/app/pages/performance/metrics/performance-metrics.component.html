@@ -148,12 +148,12 @@
                             </div>
     
                             <div class="col-sm-3">
-                                <label for="className" class="col-form-label required">Class & Section</label>
+                                <label for="className" class="col-form-label required">Class</label>
                                 <div class="input-group">
-                                    <select id="classId" name="classId" formControlName="classId" class="form-control form-control-sm" [ngClass]="displayFieldCss('classId')">
+                                    <select [(ngModel)]="selectedClass" id="classId" name="classId" formControlName="classId" class="form-control form-control-sm" [ngClass]="displayFieldCss('classId')">
                                         <option value=''>Select</option>
-                                        <option *ngFor="let class of classList" value={{class.id}}>
-                                            {{class.classAndSectionName}}
+                                        <option *ngFor="let class of classList" [ngValue]="class">
+                                            {{class.className}}
                                         </option>
                                     </select>
                                 </div>

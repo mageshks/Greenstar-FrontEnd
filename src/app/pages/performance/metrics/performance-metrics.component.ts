@@ -41,6 +41,8 @@ export class PerformanceMetricsComponent implements OnInit {
     public schoolList: ISchoolDetail[];
     public classList: IClassSectionDetail[];
 
+    public selectedClass: IClassSectionDetail;
+
     constructor(
         private modalService: NgbModal,
         private formBuilder: FormBuilder,
@@ -191,7 +193,8 @@ export class PerformanceMetricsComponent implements OnInit {
         if (this.classPerfMetricsForm.valid) {
             let searchPerformanceMetrics: ISearchPerformanceMetrics = {} as ISearchPerformanceMetrics;
             searchPerformanceMetrics.schoolId = this.classPerfMetricsForm.getRawValue().schoolId;
-            searchPerformanceMetrics.classId = this.classPerfMetricsForm.getRawValue().classId;
+            //searchPerformanceMetrics.classId = this.classPerfMetricsForm.getRawValue().classId;
+            searchPerformanceMetrics.className = this.selectedClass.className;
             this.loadClasswisePerformanceMetrics(searchPerformanceMetrics);
         } else {
             ValidatorUtil.validateAllFormFields(this.classPerfMetricsForm);
@@ -240,4 +243,8 @@ export class PerformanceMetricsComponent implements OnInit {
             }
         );
     }
+
+    selected(){
+        alert(this.selectedClass.className)
+      }
 }
