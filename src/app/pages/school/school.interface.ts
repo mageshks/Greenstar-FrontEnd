@@ -22,6 +22,11 @@ export class ISchoolDetail {
     public weekendWorkingDayes: IWeekendWorkingDay[];
 }
 
+export class ISchoolSearchData{
+    public stateName: string;
+    public districts: string[];
+}
+
 export class IClass {
     public className: string;
     public sectionName: string;

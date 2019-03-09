@@ -3,7 +3,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SchoolComponent } from './school.component';
 import { NbDialogService } from '@nebular/theme';
-import { ISchoolDetail } from './school.interface';
+import { ISchoolDetail,ISchoolSearchData } from './school.interface';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -13,6 +13,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './school-list.component.html',
 })
 export class SchoolListComponent {
+
+  public schoolSearchData: ISchoolSearchData = {} as ISchoolSearchData;
 
   constructor(private modalService: NgbModal) {
   }

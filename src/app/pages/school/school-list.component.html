@@ -9,12 +9,13 @@
 
                 <div class='row'>
                     <div class='col-md-6'>
-                        <label class='control-label'>School Name</label>
-                        <nb-select placeholder="Select" outline>
-                            <nb-option value="1">Nikita Matriculation School</nb-option>
-                            <nb-option value="2">KV Matriculation School</nb-option>
-                            <nb-option value="3">SSVM Matriculation School</nb-option>
-                        </nb-select>
+                        <label class='control-label'>State</label>
+                        <select id="school" name="school" class="form-control form-control-sm" [(ngModel)]="searchPerformanceStarData.schoolId" (change)="onChangeSchoolChange($event)">
+                            <option value="0">--Select--</option>
+                            <option *ngFor="let school of schoolList" value={{schoolSearchData.}}>
+                                {{school.schoolName}}
+                            </option>
+                        </select>
                     </div>
                     <div class='col-md-6'>
                         <label class='control-label'>City</label>
@@ -25,84 +26,12 @@
                     </div>
                 </div>
 
-                <div class='row pt-3 text-right'>
-                    <div class='col-md-6'></div>
-                    <div class='col-md-6'>
-                        <button nbButton status="primary">Search</button>
-                    </div>
-                </div>
-
-                <div class='row'>
-                    <div class='col-md-6'>
+                <div class='row pt-3'>
+                    <div class='col-md-6 text-left'>
                         <button nbButton status="primary" (click)="createSchool()">Add School</button>
                     </div>
-                    <div class='col-md-6'></div>
-                </div>
-
-                <div class='row pt-3'>
-                    <div class='col-md-12'>
-                        <table class='table table-bordered'>
-                            <thead>
-                                <tr>
-                                    <th width='30%'>School Name</th>
-                                    <th width='20%'>City</th>
-                                    <th width='25%' class='text-center'>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Nikita Matriculation School</td>
-                                    <td>Coimbatore</td>
-                                    <td>
-                                        <div class='row'>
-                                            <div class='col-md-4'>
-                                                <button nbButton size="xsmall">View</button>
-                                            </div>
-                                            <div class='col-md-4'>
-                                                <button nbButton size="xsmall">Edit</button>
-                                            </div>
-                                            <div class='col-md-4'>
-                                                <button nbButton size="xsmall">Delete</button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>KV Matriculation School</td>
-                                    <td>Coimbatore</td>
-                                    <td>
-                                        <div class='row'>
-                                            <div class='col-md-4'>
-                                                <button nbButton size="xsmall">View</button>
-                                            </div>
-                                            <div class='col-md-4'>
-                                                <button nbButton size="xsmall">Edit</button>
-                                            </div>
-                                            <div class='col-md-4'>
-                                                <button nbButton size="xsmall">Delete</button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>SSVM Matriculation School</td>
-                                    <td>Coimbatore</td>
-                                    <td>
-                                        <div class='row'>
-                                            <div class='col-md-4'>
-                                                <button nbButton size="xsmall">View</button>
-                                            </div>
-                                            <div class='col-md-4'>
-                                                <button nbButton size="xsmall">Edit</button>
-                                            </div>
-                                            <div class='col-md-4'>
-                                                <button nbButton size="xsmall">Delete</button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class='col-md-6 text-right'>
+                        <button nbButton status="primary">Search</button>
                     </div>
                 </div>
 
@@ -110,5 +39,75 @@
             </nb-card-body>
 
         </nb-card>
+
+        <div class='row pt-3'>
+            <div class='col-md-12'>
+                <table class='table table-bordered'>
+                    <thead>
+                        <tr>
+                            <th width='30%'>School Name</th>
+                            <th width='20%'>City</th>
+                            <th width='25%' class='text-center'>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nikita Matriculation School</td>
+                            <td>Coimbatore</td>
+                            <td>
+                                <div class='row'>
+                                    <div class='col-md-4'>
+                                        <button nbButton size="xsmall">View</button>
+                                    </div>
+                                    <div class='col-md-4'>
+                                        <button nbButton size="xsmall">Edit</button>
+                                    </div>
+                                    <div class='col-md-4'>
+                                        <button nbButton size="xsmall">Delete</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>KV Matriculation School</td>
+                            <td>Coimbatore</td>
+                            <td>
+                                <div class='row'>
+                                    <div class='col-md-4'>
+                                        <button nbButton size="xsmall">View</button>
+                                    </div>
+                                    <div class='col-md-4'>
+                                        <button nbButton size="xsmall">Edit</button>
+                                    </div>
+                                    <div class='col-md-4'>
+                                        <button nbButton size="xsmall">Delete</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SSVM Matriculation School</td>
+                            <td>Coimbatore</td>
+                            <td>
+                                <div class='row'>
+                                    <div class='col-md-4'>
+                                        <button nbButton size="xsmall">View</button>
+                                    </div>
+                                    <div class='col-md-4'>
+                                        <button nbButton size="xsmall">Edit</button>
+                                    </div>
+                                    <div class='col-md-4'>
+                                        <button nbButton size="xsmall">Delete</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
     </div>
 </div>
