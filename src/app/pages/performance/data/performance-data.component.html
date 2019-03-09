@@ -35,7 +35,7 @@
                         <div class="col-sm-2">
                             <label for="month" class="col-form-label required">Month</label>
                             <div class="input-group">
-                                <select id="month" name="month" formControlName="month" class="form-control form-control-sm" [ngClass]="displayFieldCss('month')">
+                                <select id="month" name="month" formControlName="month" class="form-control form-control-sm" [ngClass]="displayFieldCss('month')" (change)="populateWeekWorkingDays($event.target.value)" required>
                                     <option value=''>--Select--</option>
                                     <option value='1'>Jan</option>
                                     <option value='2'>Feb</option>
@@ -58,11 +58,9 @@
                             <div class="input-group">
                                 <select id="week" name="week" formControlName="week" class="form-control form-control-sm" [ngClass]="displayFieldCss('week')">
                                     <option value=''>Select</option>
-                                    <option value='2019-02-01~2019-02-01'>Week-1</option>
-                                    <option value='2019-02-04~2019-02-08'>Week-2</option>
-                                    <option value='2019-02-11~2019-02-15'>Week-3</option>
-                                    <option value='2019-02-18~2019-02-22'>Week-4</option>
-                                    <option value='2019-02-25~2019-02-28'>Week-5</option>
+                                    <option *ngFor="let weekDay of weekDays | keyvalue" value={{weekDay.value}}>
+                                        {{weekDay.key}}
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -70,7 +68,7 @@
 
                     <div class="row pt-3">
                         <div class="col-sm-8 text-left errormsg">
-                            <span *ngIf="isSearchDataNotValid">All fields are mandatory!</span>
+                            <span *ngIf="isSearchDataNotValid"> {{searchDataErrorMsg}} </span>
                         </div>
                         <div class="col-sm-2 text-right">
                             <button class="btn btn-primary btn-sm" type="button" (click)="resetPerformanceSearch();">Reset</button>
