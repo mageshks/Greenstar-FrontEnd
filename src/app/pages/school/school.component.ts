@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { NbDialogRef } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
 import { SchoolData } from './school.data';
-import { ISchoolDetail } from './school.interface';
+import { ISchoolDetail, IClass } from './school.interface';
 import { OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import {CommonService} from '../common/common.service';
+import { CommonService } from '../common/common.service';
+import { IState } from '../common/common.interface';
+import { ShoolMessageModalContent } from './shoolMessageModalContent.component';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SmartTableDatePickerComponent } from '../../@theme/components/smart-table-date-picker-component/smart-table-date-picker.components';
 
 @Component({
@@ -20,6 +21,10 @@ export class SchoolComponent implements OnInit {
   public schoolId: number;
 
   public schoolDetail: ISchoolDetail;
+
+  public stateList: IState[];
+
+  public districtList: string[];
 
   // class table setting
   public classDetail: LocalDataSource = new LocalDataSource();
@@ -41,22 +46,50 @@ export class SchoolComponent implements OnInit {
   public schoolWeekendWorkDetail: LocalDataSource = new LocalDataSource();
   public schoolWeekendWorkSetting: any = SchoolData.getSchoolWeekendWorkingSetting();
 
-  constructor(private activeModal: NgbActiveModal,
-    private commonService: CommonService) {
-    
+  constructor(private commonService: CommonService,
+    public activeModal: NgbActiveModal,
+    private modalService: NgbModal) {
+
   }
 
   ngOnInit(): void {
     if (this.action === 'create') {
       this.schoolDetail = SchoolData.createSchoolDetailObject();
+      this.loadStateData();
     } else if (this.action === 'edit') {
       this.schoolDetail = SchoolData.getTempSchoolDetails();
+      this.loadStateData();
     } else {
       console.log('No Matches Found For Action');
     }
 
     this.schoolHolidayDetail.load(this.schoolDetail.holidays);
     this.schoolWeekendWorkDetail.load(this.schoolDetail.weekendWorkingDayes);
+  }
+
+  private loadStateData() {
+    this.commonService.getStates().subscribe(
+      (response) => {
+        this.stateList = response;
+      },
+      error => {
+        console.log("Http Server error", error);
+      }
+    );
+  }
+
+
+  // On change of state set corresponding district to the district dropdown
+  public onStateChange() {
+    if (this.schoolDetail.state == '--Select State--') {
+      this.districtList = [];
+    } else {
+      this.stateList.forEach((state) => {
+        if (state.stateName == this.schoolDetail.state) {
+          this.districtList = state.districts;
+        }
+      });
+    }
   }
 
   public onChangeTab(event) {
@@ -95,6 +128,21 @@ export class SchoolComponent implements OnInit {
   public onPostCallForClass(event): void {
     // todo: implement validation
     console.log(event);
+    event.confirm.resolve();
+  }
+
+  public onClassAdd(event): void {
+    // If school and section already exist then no need to add 
+    this.schoolDetail.classList.forEach((clazzDetail) => {
+      if (clazzDetail.className == event.newData.className &&
+        clazzDetail.sectionName == event.newData.sectionName) {
+        const modalRef = this.modalService.open(ShoolMessageModalContent);
+        modalRef.componentInstance.modalmessage = 'Already class available with same name and section';
+        modalRef.componentInstance.modalheadertext = 'Error';
+        event.confirm.reject();
+      }
+    });
+    this.schoolDetail.classList = event.source.data;
     event.confirm.resolve();
   }
 
@@ -151,10 +199,6 @@ export class SchoolComponent implements OnInit {
   public onSubmitChanges(): void {
     console.log(this.schoolDetail);
     alert('Submitted Successfully');
-  }
-
-  public dismiss() {
-    //this.nbDialogRef.close();
   }
 
   closeModal() {

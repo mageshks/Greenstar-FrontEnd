@@ -28,6 +28,7 @@ export class ISchoolSearchData{
 }
 
 export class IClass {
+    public id: number;
     public className: string;
     public sectionName: string;
 }

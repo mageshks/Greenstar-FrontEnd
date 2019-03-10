@@ -29,29 +29,14 @@ export class SchoolData {
             columns: {
                 className: {
                     title: 'Class',
-                    type: 'string',
-                    editor: {
-                        type: 'list',
-                        config: {
-                            selectText: 'Select',
-                            list: this.getClassFieldValue()
-                        },
-                    }
+                    type: 'string'
                 },
                 sectionName: {
                     title: 'Section',
-                    type: 'string',
-                    editor: {
-                        type: 'list',
-                        config: {
-                            selectText: 'Select',
-                            list: this.getSectionFieldValue()
-                        },
-                    }
+                    type: 'string'
                 }
             }
         };
-
         return settings;
     }
 
@@ -185,8 +170,10 @@ export class SchoolData {
         this.schoolDetail.schoolName = '';
         this.schoolDetail.address = '';
         this.schoolDetail.cityName = '';
-        this.schoolDetail.state = '';
-        this.schoolDetail.district = '';
+        this.schoolDetail.state = '--Select State--';
+        this.schoolDetail.district = '--Select District--';
+
+
 
         // class detail
         this.schoolDetail.classList = [];
@@ -226,13 +213,7 @@ export class SchoolData {
 
     public static getTempClassDetail(): IClass[] {
 
-        var classList: IClass[] = [
-            { className: 'LKG', sectionName: 'A' },
-            { className: 'LKG', sectionName: 'B' },
-            { className: 'UKG', sectionName: 'A' },
-            { className: 'First', sectionName: 'A' },
-            { className: 'First', sectionName: 'B' },
-        ];
+        var classList: IClass[] = [];
         return classList;
     }
 
