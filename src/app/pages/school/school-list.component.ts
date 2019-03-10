@@ -26,6 +26,8 @@ export class SchoolListComponent implements OnInit {
   public searchDropdownLoading: boolean;
   public searchDataLoading: boolean;
 
+  public isSearchError:boolean;
+
 
   // performance param table setting
   public schoolTableData: LocalDataSource = null;
@@ -38,59 +40,12 @@ export class SchoolListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isSearchError=false;
     this.searchDropdownLoading = false;
     this.searchDataLoading= false;
     this.loadSearchDropDowns();
     this.schoolSearchData.stateName = "--Select State--";
     this.schoolSearchData.district = "--Select District--";
-   // this.schoolTableData=
-
-    let data = [
-      {
-        id: 1,
-        schoolName: "SSVN school",
-        city: "gobi",
-        district: "erode"
-      },
-      {
-        id: 2,
-        schoolName: "SSVN school",
-        city: "gobi",
-        district: "erode"
-      },
-      {
-        id: 3,
-        schoolName: "SSVN school",
-        city: "gobi",
-        district: "erode"
-      },
-      {
-        id: 4,
-        schoolName: "SSVN school",
-        city: "gobi",
-        district: "erode"
-      },
-      {
-        id: 5,
-        schoolName: "SSVN school",
-        city: "gobi",
-        district: "erode"
-      },
-      {
-        id: 6,
-        schoolName: "SSVN school",
-        city: "gobi",
-        district: "erode"
-      },
-      {
-        id: 7,
-        schoolName: "SSVN school",
-        city: "gobi",
-        district: "erode"
-      }
-    ];
-
-   //this.schoolTableData =  new LocalDataSource(data);
   }
 
   private loadSearchDropDowns() {
@@ -145,6 +100,7 @@ export class SchoolListComponent implements OnInit {
     if (this.schoolSearchData.stateName == '--Select State--') {
       this.districtList = [];
     } else {
+      this.isSearchError=false;
       this.stateList.forEach((state) => {
         if (state.stateName == this.schoolSearchData.stateName) {
           this.districtList = state.districts;
@@ -155,18 +111,22 @@ export class SchoolListComponent implements OnInit {
   }
 
   public onSearch(){
-    this.searchDataLoading = false;
-    this.schoolService.getSchoolsForSearch(this.schoolSearchData).subscribe(
-      (response) => {
-        console.log(JSON.stringify(response));
-        this.schoolTableData =  new LocalDataSource(response);
-        this.searchDataLoading = false;
-      },
-      error => {
-        console.log("Http Server error", error);
-        this.searchDataLoading = false;
-      }
-    );
+    this.searchDataLoading = true;
+    if (this.schoolSearchData.stateName == '--Select State--') {
+      this.isSearchError=true;
+    } else{
+      this.schoolService.getSchoolsForSearch(this.schoolSearchData).subscribe(
+        (response) => {
+          console.log(JSON.stringify(response));
+          this.schoolTableData =  new LocalDataSource(response);
+          this.searchDataLoading = false;
+        },
+        error => {
+          console.log("Http Server error", error);
+          this.searchDataLoading = false;
+        }
+      );
+    }
   }
 
   public editSchool($event){
