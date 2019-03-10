@@ -111,10 +111,10 @@ export class SchoolListComponent implements OnInit {
   }
 
   public onSearch(){
-    this.searchDataLoading = true;
     if (this.schoolSearchData.stateName == '--Select State--') {
       this.isSearchError=true;
     } else{
+      this.searchDataLoading = true;
       this.schoolService.getSchoolsForSearch(this.schoolSearchData).subscribe(
         (response) => {
           console.log(JSON.stringify(response));
@@ -122,6 +122,7 @@ export class SchoolListComponent implements OnInit {
           this.searchDataLoading = false;
         },
         error => {
+          this.searchDataLoading = false;
           console.log("Http Server error", error);
           this.searchDataLoading = false;
         }
