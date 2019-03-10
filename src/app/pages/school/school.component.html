@@ -7,7 +7,7 @@
 
 <div class="modal-body">
     <nb-tabset (changeTab)="onChangeTab($event)">
-        <nb-tab tabTitle="School"  tabIcon="nb-home" responsive>
+        <nb-tab tabTitle="School" tabIcon="nb-home" responsive>
             <form class="form-horizontal">
                 <div class="row pt-5">
                     <div class="col-sm-10">
@@ -66,30 +66,17 @@
 
         <nb-tab tabTitle="Class" class="pt-3" tabIcon="nb-person" responsive>
             <ng2-smart-table [settings]="classTableSetting" [source]="classDetail" (createConfirm)="onClassAdd($event)"
-                (editConfirm)="onPostCallForClass($event)" (deleteConfirm)="onDeleteConfirmForClass($event)">
+                (editConfirm)="onClassEdit($event)" (deleteConfirm)="onClassDeleteConfirm($event)">
             </ng2-smart-table>
         </nb-tab>
 
         <nb-tab tabTitle="Performance Parameter" class="pt-3" tabIcon="nb-bar-chart" responsive>
-            <nb-radio-group [(value)]="schoolDetail.perfParamType" (click)="onChangePerfParamType($event)">
-                <nb-radio [value]="'DEFAULT'"> Default </nb-radio>
-                <nb-radio [value]="'CUSTOMIZED'"> Customized </nb-radio>
-            </nb-radio-group>
-
-            <span *ngIf="schoolDetail.perfParamType == 'DEFAULT'">
-                <ng2-smart-table [settings]="perfParamSetting" [source]="perfParamDetail">
-                </ng2-smart-table>
-            </span>
-            <span *ngIf="schoolDetail.perfParamType == 'CUSTOMIZED'">
-                <ng2-smart-table [settings]="perfParamDynamicSetting" [source]="perfParamDynamicDetail"
-                    (createConfirm)="onPostCallForPerfParam($event)" (editConfirm)="onPostCallForPerfParam($event)"
-                    (deleteConfirm)="onDeleteConfirmForPerfParam($event)">
-                </ng2-smart-table>
-            </span>
+            <ng2-smart-table [settings]="perfParamDynamicSetting" [source]="perfParamDynamicDetail"
+               (editConfirm)="onParameterEdit($event)">
+            </ng2-smart-table>
         </nb-tab>
 
         <nb-tab tabTitle="Holidays" class="pt-3" tabIcon="nb-volume-high" responsive>
-
             <nb-accordion>
                 <nb-accordion-item>
                     <nb-accordion-item-header>

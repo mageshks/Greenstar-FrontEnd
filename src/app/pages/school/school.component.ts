@@ -31,12 +31,8 @@ export class SchoolComponent implements OnInit {
   public classTableSetting: any = SchoolData.getClassTableSetting();
 
   // performance param table setting
-  public perfParamDetail: LocalDataSource = new LocalDataSource();
-  public perfParamSetting: any = SchoolData.getPerfParamTableSettingWithNoAction();
-
-  // performance param dynamic table setting
   public perfParamDynamicDetail: LocalDataSource = new LocalDataSource();
-  public perfParamDynamicSetting: any = SchoolData.getPerfParamTableSetting();
+  public perfParamDynamicSetting: any=SchoolData.getPerfParamTableSetting();;
 
   // school holiday table setting
   public schoolHolidayDetail: LocalDataSource = new LocalDataSource();
@@ -55,6 +51,8 @@ export class SchoolComponent implements OnInit {
   ngOnInit(): void {
     if (this.action === 'create') {
       this.schoolDetail = SchoolData.createSchoolDetailObject();
+      //Load deafult parameter values
+      this.perfParamDynamicDetail.load(SchoolData.getDefaultPerfParamDetail());
       this.loadStateData();
     } else if (this.action === 'edit') {
       this.schoolDetail = SchoolData.getTempSchoolDetails();
@@ -98,8 +96,6 @@ export class SchoolComponent implements OnInit {
     } if (event.tabTitle === 'Performance Parameter') {
       if (this.schoolDetail.perfParamType === SchoolData.PERF_PARAM_DEFAULT) {
         this.schoolDetail.perfParamList = SchoolData.getDefaultPerfParamDetail();
-        this.perfParamSetting = SchoolData.getPerfParamTableSettingWithNoAction();
-        this.perfParamDetail.load(this.schoolDetail.perfParamList);
       } else if (this.schoolDetail.perfParamType === SchoolData.PERF_PARAM_CUSTOM) {
         this.perfParamDynamicSetting = SchoolData.getPerfParamTableSetting();
         this.perfParamDynamicDetail.load(this.schoolDetail.perfParamList);
@@ -115,8 +111,6 @@ export class SchoolComponent implements OnInit {
   public onChangePerfParamType(event): void {
 
     if (this.schoolDetail.perfParamType === SchoolData.PERF_PARAM_DEFAULT) {
-      this.perfParamSetting = SchoolData.getPerfParamTableSettingWithNoAction();
-      this.perfParamDetail.load(SchoolData.getDefaultPerfParamDetail());
     } else if (this.schoolDetail.perfParamType === SchoolData.PERF_PARAM_CUSTOM) {
       this.perfParamDynamicSetting = SchoolData.getPerfParamTableSetting();
       this.perfParamDynamicDetail.load(this.schoolDetail.perfParamList);
@@ -144,32 +138,31 @@ export class SchoolComponent implements OnInit {
     });
     this.schoolDetail.classList = event.source.data;
     event.confirm.resolve();
+    console.log(this.schoolDetail.classList);
   }
 
-  public onDeleteConfirmForClass(event): void {
-    if (window.confirm('Are you sure you want to delete?')) {
+  public onClassEdit(event): void {
+    this.schoolDetail.classList = event.source.data;
+    event.confirm.resolve();
+    console.log(this.schoolDetail.classList);
+  }
+
+  public onClassDeleteConfirm(event): void {
+    if (window.confirm('Are you sure you want to delete class? Performance data cannot be recovered')) {
+      this.schoolDetail.classList = event.source.data;
       event.confirm.resolve();
     } else {
       event.confirm.reject();
     }
+    console.log(this.schoolDetail.classList);
   }
 
-  public onPostCallForPerfParam(event): void {
-    // todo: implement validation
-    console.log(event);
+  public onParameterEdit(event): void {
+    this.schoolDetail.perfParamList = event.newData;
     event.confirm.resolve();
   }
 
-  public onDeleteConfirmForPerfParam(event): void {
-    if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
-    }
-  }
-
   public onPostCallForHoliday(event): void {
-    // todo: implement validation
     console.log(event);
     event.confirm.resolve();
   }

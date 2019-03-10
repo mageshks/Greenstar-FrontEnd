@@ -42,40 +42,14 @@ export class SchoolData {
 
     public static getPerfParamTableSetting(): any {
         let settings: any = {
-            add: {
-                addButtonContent: '<i class="nb-plus"></i>',
-                createButtonContent: '<i class="nb-checkmark"></i>',
-                cancelButtonContent: '<i class="nb-close"></i>',
-                confirmCreate: true
-            },
             edit: {
-                editButtonContent: '<i class="nb-edit"></i>',
+                editButtonContent: '<i class="ion-edit"></i>',
                 saveButtonContent: '<i class="nb-checkmark"></i>',
                 cancelButtonContent: '<i class="nb-close"></i>',
                 confirmSave: true
-            },
-            delete: {
-                deleteButtonContent: '<i class="nb-trash"></i>',
-                confirmDelete: true,
-            },
-            columns: {
-                paramTitle: {
-                    title: 'Parameter Title',
-                    type: 'string',
-                },
-                paramDesc: {
-                    title: 'Parameter Description',
-                    type: 'string',
-                }
-            }
-        };
-
-        return settings;
-    }
-
-    public static getPerfParamTableSettingWithNoAction(): any {
-        let settings: any = {
-            actions: false,
+              },
+            actions: {delete:false},
+            hideSubHeader: true,
             columns: {
                 paramTitle: {
                     title: 'Parameter Title',
@@ -219,12 +193,12 @@ export class SchoolData {
 
     public static getDefaultPerfParamDetail(): IPerformanceParam[] {
 
-        var classList: IPerformanceParam[] = [
-            { paramTitle: 'Attendance', paramDesc: 'Attendance Performance' },
-            { paramTitle: 'Disciplain', paramDesc: 'Disciplain Performance' },
-            { paramTitle: 'Homework', paramDesc: 'Homework Performance' }
+        var parameterList: IPerformanceParam[] = [
+            {id:null, paramTitle: 'Attendance', paramDesc: 'Attendance Performance' },
+            {id:null,  paramTitle: 'Discipline', paramDesc: 'Discipline Performance' },
+            {id:null, paramTitle: 'Homework', paramDesc: 'Homework Performance' }
         ];
-        return classList;
+        return parameterList;
     }
 
     public static getClassFieldValue(): any {

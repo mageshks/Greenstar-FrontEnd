@@ -34,6 +34,7 @@ export class IClass {
 }
 
 export class IPerformanceParam {
+    public id:number;
     public paramTitle: string;
     public paramDesc: string;
 }
