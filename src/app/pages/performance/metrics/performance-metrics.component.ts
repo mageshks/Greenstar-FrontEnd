@@ -37,29 +37,36 @@ export class PerformanceMetricsComponent implements OnInit {
     public perfMetricsForm: FormGroup;
     public classPerfMetricsForm: FormGroup;
     public teamPerfMetricsForm: FormGroup;
+    public encouragingPerfMetricsForm: FormGroup;
 
     public schoolList: ISchoolDetail[];
     public classList: IClassSectionDetail[];
+    public monthList: Array<any>;
 
     public selectedClass: IClassSectionDetail;
+    public selectedMonth1: string;
+    public selectedMonth2: string;
 
     constructor(
         private modalService: NgbModal,
         private formBuilder: FormBuilder,
         private classFormBuilder: FormBuilder,
         private teamFormBuilder: FormBuilder,
+        private encouragingFormBuilder: FormBuilder,
         private performanceMetricsService: PerformanceMetricsService,
         private performanceStarService: PerformanceStarService) {
     }
 
     ngOnInit(): void {
+        this.monthList = PerformanceStaticData.monthList;
         this.performanceMetricsSource = PerformanceStaticData.getPerformanceMetricsTableContent();
        // this.classWiseMetricsSource = PerformanceStaticData.getClassWiseTableContent();
        // this.teamWiseMetricsSource = PerformanceStaticData.getTeamWiseTableContent();
-        this.encouragingMetricsSource = PerformanceStaticData.getEncouragingTableContent();
+       // this.encouragingMetricsSource = PerformanceStaticData.getEncouragingTableContent();
         this.initializeForm();
         this.initializeClasswiseForm();
         this.initializeTeamwiseForm();
+        this.initializeEncouragingForm();
         this.loadSchoolDetails();
     }
 
@@ -84,6 +91,15 @@ export class PerformanceMetricsComponent implements OnInit {
             schoolId: ['', Validators.required],
             classId: ['', Validators.required]
         });
+    }
+
+    private initializeEncouragingForm(): void{
+        this.encouragingPerfMetricsForm = this.encouragingFormBuilder.group({
+            schoolId: ['',Validators.required],
+            classId: [''],
+            month1: ['', Validators.required],
+            month2: ['', Validators.required]
+        })
     }
 
     public resetPerformanceSearch(): void {
@@ -142,6 +158,16 @@ export class PerformanceMetricsComponent implements OnInit {
             this.isSpinner = true;
             let schoolDetail: ISchoolDetail = {} as ISchoolDetail;
             schoolDetail.id = this.teamPerfMetricsForm.getRawValue().schoolId;
+            this.loadClassDetailsBySchoolId(schoolDetail);
+        }
+    }
+
+
+    public loadEncouragingClassDetailsBySchool($event) : void {
+        if (this.encouragingPerfMetricsForm.getRawValue().schoolId != 0) {
+            this.isSpinner = true;
+            let schoolDetail: ISchoolDetail = {} as ISchoolDetail;
+            schoolDetail.id = this.encouragingPerfMetricsForm.getRawValue().schoolId;
             this.loadClassDetailsBySchoolId(schoolDetail);
         }
     }
@@ -237,6 +263,38 @@ export class PerformanceMetricsComponent implements OnInit {
             (response) => {
                 this.isSpinner = false;
                 this.teamWiseMetricsSource = response.result;
+            },
+            error => {
+                this.isSpinner = false;
+                console.log("Http Server error", error);
+            }
+        );
+    }
+
+    public viewEncouragingPerformanceMetrics(): void {
+
+        this.isTeamwiseSearchDataNotValid = false;
+        if (this.encouragingPerfMetricsForm.valid) {
+            let searchPerformanceMetrics: ISearchPerformanceMetrics = {} as ISearchPerformanceMetrics;
+            searchPerformanceMetrics.schoolId = this.encouragingPerfMetricsForm.getRawValue().schoolId;
+            //searchPerformanceMetrics.classId = this.teamPerfMetricsForm.getRawValue().classId;
+            searchPerformanceMetrics.className = this.selectedClass.className;
+            searchPerformanceMetrics.month1 = this.selectedMonth1;
+            searchPerformanceMetrics.month2 = this.selectedMonth2;
+
+            this.loadEncouragingPerformanceMetrics(searchPerformanceMetrics);
+        } else {
+            ValidatorUtil.validateAllFormFields(this.teamPerfMetricsForm);
+            this.isTeamwiseSearchDataNotValid = true;
+        }
+    }
+
+    public loadEncouragingPerformanceMetrics(searchPerformanceMetrics: ISearchPerformanceMetrics): void {
+        this.isSpinner = true;
+        this.performanceMetricsService.getEncouragingPerformanceMetrics(searchPerformanceMetrics).subscribe(
+            (response) => {
+                this.isSpinner = false;
+                this.encouragingMetricsSource.metrics = response.result;
             },
             error => {
                 this.isSpinner = false;

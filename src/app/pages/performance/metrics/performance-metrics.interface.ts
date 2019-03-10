@@ -4,6 +4,8 @@ export interface ISearchPerformanceMetrics {
     className: string;
     sectionName: string;
     month: number;
+    month1: string;
+    month2: string;
     week: string;    
 }
 
@@ -159,9 +161,13 @@ export interface IEncouragingMetricsDataTable {
 
 export interface IEncouragingMetrics {
     metricsType: string;
-    classs: string;
+    classId: string;
+    className: string;
     sectionData: ISection[];
-    monthName: String;
+    month1: number;
+    monthName1: String;
+    month2: number;
+    monthName2: String;
     averageRow: IAverageRow;
 }
 
@@ -169,11 +175,11 @@ export interface ISection {
     section: string;
     month1percentage: string;
     month2percentage: string;
-    changeinpercentage: string;
+    increasePercentage: string;
 }
 
 export interface IAverageRow {
     month1average: string;
     month2average: string;
-    changeinaverage: string;
+    changeinAverage: string;
 }
