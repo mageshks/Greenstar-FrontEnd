@@ -106,17 +106,24 @@ export interface IClassWiseHeader {
 }
 
 export interface IClassWiseMetricsDataTable {
-    headers: IClassWiseHeader[];
-    performanceRows: IClassWiseMetricsRow[];
+    className: string;
+    paramName1: string,
+    paramName2: string,
+    paramName3: string,
+    totalTitle: string,
+    sectionData: IClassWiseMetricsRow[];
 }
 
 
 export interface IClassWiseMetricsRow {
-    class: string;
-    attendance: number;
-    discipline: number;
-    homework: number;
-    total: number;
+        teamName: string,
+        section: string,
+        param1Title: string,
+        param1Total: number,
+        param2Title: string,
+        param2Total: number,
+        param3Title: string,
+        param3Total: number
 }
 
 
@@ -126,17 +133,24 @@ export interface ITeamWiseHeader {
 }
 
 export interface ITeamWiseMetricsDataTable {
-    headers: ITeamWiseHeader[];
-    performanceRows: ITeamWiseMetricsRow[];
+    className: string;
+    paramName1: string,
+    paramName2: string,
+    paramName3: string,
+    totalTitle: string,
+    sectionData: ITeamWiseMetricsRow[];
 }
 
 
 export interface ITeamWiseMetricsRow {
-    team: string;
-    attendance: number;
-    discipline: number;
-    homework: number;
-    total: number;
+        teamName: string,
+        section: string,
+        param1Title: string,
+        param1Total: number,
+        param2Title: string,
+        param2Total: number,
+        param3Title: string,
+        param3Total: number
 }
 
 export interface IEncouragingMetricsDataTable {

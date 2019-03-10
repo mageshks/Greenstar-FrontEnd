@@ -213,7 +213,7 @@ export class PerformanceStaticData {
                 return performanceMetricsDataArray;
             }
 
-            public static getClassWiseTableContent(): IClassWiseMetricsDataTable {
+/*             public static getClassWiseTableContent(): IClassWiseMetricsDataTable {
         
                 // class wise dynamic headers - start
                 let classwiseHeaders: IClassWiseHeader[] = [
@@ -286,7 +286,7 @@ export class PerformanceStaticData {
                 classwiseMetricsData.total=144;
                 
                 return classwiseMetricsData;
-            }
+            } 
 
             public static getTeamWiseTableContent(): ITeamWiseMetricsDataTable {
                 
@@ -360,7 +360,7 @@ export class PerformanceStaticData {
                         teamwiseMetricsData.total=144;
                         
                         return teamwiseMetricsData;
-                    }            
+                    }*/            
 
                     public static getEncouragingTableContent(): IEncouragingMetricsDataTable {
                 
