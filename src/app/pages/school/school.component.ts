@@ -21,7 +21,7 @@ export class SchoolComponent implements OnInit {
   public action: string
   public schoolId: number;
 
-  public schoolDetail: ISchoolDetail;
+  public schoolDetail: ISchoolDetail = new ISchoolDetail();
 
   public stateList: IState[];
 
@@ -50,19 +50,39 @@ export class SchoolComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("this.action==> "+this.action);
     if (this.action === 'create') {
       this.schoolDetail = SchoolData.createSchoolDetailObject();
-      //Load deafult parameter values
-      this.perfParamDynamicDetail.load(SchoolData.getDefaultPerfParamDetail());
       this.loadStateData();
     } else if (this.action === 'edit') {
-      this.schoolDetail = SchoolData.getTempSchoolDetails();
+      // retrieve and load school data
+      this.retrieveSchool();
       this.loadStateData();
-    } else {
-      console.log('No Matches Found For Action');
+    } else if (this.action === 'view') {
+      this.retrieveSchool();
+      this.loadStateData();
     }
-    this.schoolHolidayDetail.load(this.schoolDetail.holidays);
-    this.schoolWeekendWorkDetail.load(this.schoolDetail.weekendWorkingDays);
+  }
+
+  private retrieveSchool(){
+    this.schoolService.retrieveSchool(this.schoolId).subscribe(
+      (response) => {
+        this.schoolDetail = response;
+        // Load datasource with the data froms erver
+        this.classDetail.load(this.schoolDetail.classList);
+        this.perfParamDynamicDetail.load(this.schoolDetail.perfParamList);
+        this.schoolHolidayDetail.load(this.schoolDetail.holidays);
+        this.schoolWeekendWorkDetail.load(this.schoolDetail.weekendWorkingDays);
+        //Load the district drop down for retrieved state
+        this.onStateChange();
+        console.log("Retrieved school Detail Response ==> " + response);
+        console.log("Retrieved school Detail ==> " + JSON.stringify(this.schoolDetail));
+      },
+      error => {
+        this.openModal('Error Occured', "Error occured while retrieving school");
+        console.log("Http Server error", error);
+      }
+    );
   }
 
   private loadStateData() {
@@ -88,13 +108,9 @@ export class SchoolComponent implements OnInit {
       });
     }
   }
-
-  public onChangeTab(event) {
-
-  }
+  public onChangeTab(event) {  }
 
   public onClassAdd(event): void {
-
     this.schoolDetail.classList.forEach((clazzDetail) => {
       // If school and section already exist then no need to add 
       if (clazzDetail.className == event.newData.className &&

@@ -21,8 +21,8 @@ export class SchoolService {
         return this.http.post(API_URL + '/school/createSchool', schoolDetail, { headers: this.headerValue });
     }
 
-    public getSchoolNames(): Observable<any> {
-        return this.http.get(API_URL + 'schools', { headers: this.headerValue });
+    public retrieveSchool(schoolId: number): Observable<any> {
+        return this.http.post(API_URL + '/school/getschooldetail', schoolId, { headers: this.headerValue });
     }
 
     public getSchoolData(formData: FormData): Observable<any> {

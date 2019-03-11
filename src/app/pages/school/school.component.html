@@ -107,6 +107,6 @@
     </nb-tabset>
 </div>
 
-<div class="modal-footer">
+<div class="modal-footer" *ngIf="this.action != 'view'">
     <button nbButton status="primary" (click)="onSubmitChanges()" class='text-right'>Submit</button>
 </div>
