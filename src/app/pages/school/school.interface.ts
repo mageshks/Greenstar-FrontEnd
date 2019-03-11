@@ -8,6 +8,8 @@ export class ISchoolDetail {
     public state: string;
     public district: string;
 
+    public userId: string;
+    public action: string;
     // class 
     public classList: IClass[];
 

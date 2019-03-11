@@ -130,27 +130,27 @@ export class SchoolListComponent implements OnInit {
     }
   }
 
-  public editSchool($event){
-    console.log($event.data);
-    this.createSchool();
+  public editSchool(event){
+    console.log(event.newData);
+    console.log("Editing school Id ==> "+event.newData.id);
+    const activeModal = this.modalService.open(SchoolComponent, { size: 'lg', container: 'nb-layout' });
+    activeModal.componentInstance.title = 'Edit School Detail';
+    activeModal.componentInstance.action = 'edit';
+    activeModal.componentInstance.schoolId = event.newData.id;
   }
 
-  public viewSchool($event){
-    console.log($event.data);
-    this.createSchool();
+  public viewSchool(event){
+    console.log(event.newData);
+    console.log("Viewing school Id ==> "+event.newData.id);
+    const activeModal = this.modalService.open(SchoolComponent, { size: 'lg', container: 'nb-layout' });
+    activeModal.componentInstance.title = 'View School Detail';
+    activeModal.componentInstance.action = 'view';
+    activeModal.componentInstance.schoolId = event.newData.id;
   }
 
   public createSchool(): void {
     const activeModal = this.modalService.open(SchoolComponent, { size: 'lg', container: 'nb-layout' });
-    activeModal.componentInstance.title = 'Add School & Class';
+    activeModal.componentInstance.title = 'Add School Detail';
     activeModal.componentInstance.action = 'create';
   }
-
-  public editSchool1(schoolDetail: ISchoolDetail): void {
-    const activeModal = this.modalService.open(SchoolComponent, { size: 'lg', container: 'nb-layout' });
-    activeModal.componentInstance.title = 'Edit School & Class';
-    activeModal.componentInstance.action = 'edit';
-    activeModal.componentInstance.schoolId = schoolDetail.id;
-  }
-
 }

@@ -6,7 +6,7 @@ import { OnInit } from '@angular/core';
 import { CommonService } from '../common/common.service';
 import { SchoolService } from './school.service';
 import { IState } from '../common/common.interface';
-import { SchoolMessageModalContent } from './shoolMessageModalContent.component';
+import { SchoolMessageModalContent } from './schoolMessageModalContent.component';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SmartTableDatePickerComponent } from '../../@theme/components/smart-table-date-picker-component/smart-table-date-picker.components';
 
@@ -94,25 +94,39 @@ export class SchoolComponent implements OnInit {
   }
 
   public onClassAdd(event): void {
-    // If school and section already exist then no need to add 
+
     this.schoolDetail.classList.forEach((clazzDetail) => {
+      // If school and section already exist then no need to add 
       if (clazzDetail.className == event.newData.className &&
         clazzDetail.sectionName == event.newData.sectionName) {
-        const modalRef = this.modalService.open(SchoolMessageModalContent);
-        modalRef.componentInstance.modalmessage = 'Already class available with same name and section';
-        modalRef.componentInstance.modalheadertext = 'Error';
+        this.openModal('Validation Message', 'Already class available with same name and section');
         event.confirm.reject();
       }
     });
-    this.schoolDetail.classList = event.source.data;
-    event.confirm.resolve();
-    console.log(this.schoolDetail.classList);
+
+    // If any of the feilds are left blank 
+    if (event.newData.className == null || event.newData.className == '' ||
+      event.newData.sectionName == null || event.newData.sectionName == '') {
+      this.openModal('Validation Message', 'Both the fieilds are mandatory to add a class!');
+      event.confirm.reject();
+    } else {
+      this.schoolDetail.classList = event.source.data;
+      event.confirm.resolve();
+      console.log(this.schoolDetail.classList);
+    }
   }
 
   public onClassEdit(event): void {
-    this.schoolDetail.classList = event.source.data;
-    event.confirm.resolve();
-    console.log(this.schoolDetail.classList);
+    // If any of the feilds are left blank 
+    if (event.newData.className == null || event.newData.className == '' ||
+      event.newData.sectionName == null || event.newData.sectionName == '') {
+      this.openModal('Validation Message', 'Both the fieilds are mandatory to edit a class!');
+      event.confirm.reject();
+    } else {
+      this.schoolDetail.classList = event.source.data;
+      event.confirm.resolve();
+      console.log(this.schoolDetail.classList);
+    }
   }
 
   public onClassDeleteConfirm(event): void {
@@ -126,8 +140,15 @@ export class SchoolComponent implements OnInit {
   }
 
   public onParameterEdit(event): void {
-    this.schoolDetail.perfParamList = event.source.data;
-    event.confirm.resolve();
+    // If any of the feilds are left blank 
+    if (event.newData.paramTitle == null || event.newData.paramTitle == '' ||
+      event.newData.paramDesc == null || event.newData.paramDesc == '') {
+      this.openModal('Validation Message', 'All fieilds are mandatory to add a performance parameter!');
+      event.confirm.reject();
+    } else {
+      this.schoolDetail.perfParamList = event.source.data;
+      event.confirm.resolve();
+    }
   }
 
   public onCreateForHoliday(event): void {
@@ -135,11 +156,9 @@ export class SchoolComponent implements OnInit {
     if (event.newData.fromDate == null || event.newData.fromDate == '' ||
       event.newData.toDate == null || event.newData.toDate == '' ||
       event.newData.description == null || event.newData.description == '') {
-      const modalRef = this.modalService.open(SchoolMessageModalContent);
-      modalRef.componentInstance.modalmessage = 'All fieilds are mandatory to add a holiday!';
-      modalRef.componentInstance.modalheadertext = 'Error';
+      this.openModal('Validation Message', 'All fieilds are mandatory to add a holiday!');
       event.confirm.reject();
-    }else{
+    } else {
       this.schoolDetail.holidays = event.source.data;
       event.confirm.resolve();
     }
@@ -170,11 +189,9 @@ export class SchoolComponent implements OnInit {
     // If any of the feilds are left blank 
     if (event.newData.workingDate == null || event.newData.workingDate == '' ||
       event.newData.reason == null || event.newData.reason == '') {
-      const modalRef = this.modalService.open(SchoolMessageModalContent);
-      modalRef.componentInstance.modalmessage = 'All fieilds are mandatory to add a weekend working day!';
-      modalRef.componentInstance.modalheadertext = 'Error';
+      this.openModal('Validation Message', 'Both the fieilds are mandatory to add a weekend working day!');
       event.confirm.reject();
-    }else{
+    } else {
       this.schoolDetail.weekendWorkingDays = event.source.data;
       event.confirm.resolve();
     }
@@ -196,31 +213,32 @@ export class SchoolComponent implements OnInit {
     let errorMessage = this.validateSubmit();
     console.log('errorMessage ==> ' + errorMessage);
     if (errorMessage != '') {
-      const modalRef = this.modalService.open(SchoolMessageModalContent);
-      modalRef.componentInstance.modalmessage = errorMessage;
-      modalRef.componentInstance.modalheadertext = 'Validation Error';
+      this.openModal('Validation Error', errorMessage);
     } else {
       console.log("Validation Success ==> " + JSON.stringify(this.schoolDetail));
+      this.schoolDetail.userId = "Magesh";
+      this.schoolDetail.action=this.action;
       this.schoolService.saveSchool(this.schoolDetail).subscribe(
         (response) => {
-          const modalRef = this.modalService.open(SchoolMessageModalContent);
-          modalRef.componentInstance.modalmessage = "School information saved successfully";
+          this.openModal('Message', 'School information saved successfully');
           this.schoolDetail = response;
-          modalRef.componentInstance.modalheadertext = 'Message';
         },
         error => {
-          const modalRef = this.modalService.open(SchoolMessageModalContent);
-          modalRef.componentInstance.modalmessage = error;
-          modalRef.componentInstance.modalheadertext = 'Error Occured';
+          this.openModal('Error Occured', "Error occured while saving school");
           console.log("Http Server error", error);
         }
       );
-
     }
   }
 
   closeModal() {
     this.activeModal.close();
+  }
+
+  private openModal(modalheadertext, modalmessage) {
+    const modalRef = this.modalService.open(SchoolMessageModalContent);
+    modalRef.componentInstance.modalmessage = modalmessage;
+    modalRef.componentInstance.modalheadertext = modalheadertext;
   }
 
   private validateSubmit() {

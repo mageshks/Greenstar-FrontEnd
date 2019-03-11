@@ -5,7 +5,7 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { SchoolListComponent } from './school-list.component';
 import { SchoolComponent } from './school.component';
 import { NbDialogModule } from '@nebular/theme';
-import { SchoolMessageModalContent } from './shoolMessageModalContent.component';
+import { SchoolMessageModalContent } from './schoolMessageModalContent.component';
 import { SmartTableDatePickerComponent } from '../../@theme/components/smart-table-date-picker-component/smart-table-date-picker.components';
 import { SchoolService } from './school.service';
 
