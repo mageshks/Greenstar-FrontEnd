@@ -10,6 +10,21 @@ export class PerformanceStaticData {
 
     public static encouragingMetricsSource: IEncouragingMetricsDataTable = {} as IEncouragingMetricsDataTable;
 
+    public static monthList: Array<any> = [
+        { value: 0, label: 'January' },
+        { value: 1, label: 'February' },
+        { value: 2, label: 'March' },
+        { value: 3, label: 'April' },
+        { value: 4, label: 'May' },
+        { value: 5, label: 'June' },
+        { value: 6, label: 'July' },
+        { value: 7, label: 'August' },
+        { value: 8, label: 'September' },
+        { value: 9, label: 'October' },
+        { value: 10, label: 'November' },
+        { value: 11, label: 'December' }
+      ];
+
     public static getPerformanceMetricsTableContent(): IPerformanceMetricsDataTable {
         
                 // table dynamic headers - start
@@ -382,7 +397,7 @@ export class PerformanceStaticData {
                         
 
                         encouragingMetricsData.metricsType="Attendance";
-                        encouragingMetricsData.classs="5th";
+                        encouragingMetricsData.classId="5th";
                         encouragingMetricsData.sectionData=this.getMetricsSectionArray();
                         encouragingMetricsData.averageRow= this.getMetricsAverageRow();
                         
@@ -395,31 +410,31 @@ export class PerformanceStaticData {
                         section1.section="A";
                         section1.month1percentage="52%";
                         section1.month2percentage="59%";
-                        section1.changeinpercentage="7%";
+                        section1.increasePercentage="7%";
                         sectionArray.push(section1);
                         let section2 : ISection = {} as ISection;
                         section2.section="B";
                         section2.month1percentage="51%";
                         section2.month2percentage="54%";
-                        section2.changeinpercentage="3%";
+                        section2.increasePercentage="3%";
                         sectionArray.push(section2);
                         let section3 : ISection = {} as ISection;
                         section3.section="C";
                         section3.month1percentage="51%";
                         section3.month2percentage="52%";
-                        section3.changeinpercentage="1%";
+                        section3.increasePercentage="1%";
                         sectionArray.push(section3);
                         let section4 : ISection = {} as ISection;
                         section4.section="D";
                         section4.month1percentage="42%";
                         section4.month2percentage="54%";
-                        section4.changeinpercentage="12%";
+                        section4.increasePercentage="12%";
                         sectionArray.push(section4);
                         let section5 : ISection = {} as ISection;
                         section5.section="E";
                         section5.month1percentage="29%";
                         section5.month2percentage="38%";
-                        section5.changeinpercentage="9%";
+                        section5.increasePercentage="9%";
                         sectionArray.push(section5);
                         return sectionArray;
                     }
@@ -428,7 +443,7 @@ export class PerformanceStaticData {
                         let averageRow : IAverageRow = {} as IAverageRow;
                         averageRow.month1average = "50%";
                         averageRow.month2average = "56%";
-                        averageRow.changeinaverage = "6%"
+                        averageRow.changeinAverage = "6%"
                         return averageRow;
                     }
         
@@ -437,7 +452,7 @@ export class PerformanceStaticData {
                         
 
                         encouragingMetricsData.metricsType="Homework";
-                        encouragingMetricsData.classs="5th";
+                        encouragingMetricsData.classId="5th";
                         encouragingMetricsData.sectionData=this.getMetricsSectionArray();
                         encouragingMetricsData.averageRow= this.getMetricsAverageRow();
                         
@@ -448,7 +463,7 @@ export class PerformanceStaticData {
                         
 
                         encouragingMetricsData.metricsType="Discipline";
-                        encouragingMetricsData.classs="5th";
+                        encouragingMetricsData.classId="5th";
                         encouragingMetricsData.sectionData=this.getMetricsSectionArray();
                         encouragingMetricsData.averageRow= this.getMetricsAverageRow();
                         

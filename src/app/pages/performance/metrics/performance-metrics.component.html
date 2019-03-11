@@ -310,65 +310,70 @@
 
                   </nb-tab>
                 <nb-tab tabTitle="Encouraging Metrics" tabIcon="nb-arrow-thin-up" responsive>
+                <form [formGroup]="encouragingPerfMetricsForm" (ngSubmit)="viewEncouragingPerformanceMetrics()">
                   <div class='row pt-5'>
-                        <div class='col-md-2'>
-                            <label class='col-form-label required'>City</label>
-                            <nb-select placeholder="Select" outline>
-                                <nb-option value="1">Coimbatore</nb-option>
-                                <nb-option value="2">Erode</nb-option>
-                            </nb-select>
-                        </div>
-                        <div class='col-md-3'>
-                            <label class='col-form-label required'>School Name</label>
-                            <nb-select placeholder="Select" outline>
-                                <nb-option value="1">Nikita Matriculation School</nb-option>
-                                <nb-option value="2">KV Matriculation School</nb-option>
-                                <nb-option value="3">SSVM Matriculation School</nb-option>
-                            </nb-select>
-                        </div>
-                        <div class='col-md-3'>
-                            <label class='col-form-label required'>Class</label>
-                            <nb-select placeholder="Select" outline>
-                                <nb-option value="1">LKG</nb-option>
-                                <nb-option value="2">UKG</nb-option>
-                                <nb-option value="3">First</nb-option>
-                            </nb-select>
-                        </div>
+                    <div class="col-sm-5">
+                    <label for="schoolId" class="col-form-label required">School</label>
+                    <div class="input-group required">
+                        <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" [ngClass]="displayFieldCss('schoolId')" (change)="loadEncouragingClassDetailsBySchool($event.target.value)" required>
+                            <option value=''>Select</option>
+                            <option *ngFor="let school of schoolList" value={{school.id}}>
+                                {{school.schoolName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <label for="className" class="col-form-label required">Class</label>
+                    <div class="input-group">
+                        <select [(ngModel)]="selectedClass" id="classId" name="classId" formControlName="classId" class="form-control form-control-sm" [ngClass]="displayFieldCss('classId')">
+                            <option value=''>Select</option>
+                            <option *ngFor="let class of classList" [ngValue]="class">
+                                {{class.className}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
                     </div>
                     <div class='row'>
-                        <div class='col-md-2'>
-                            <label class='col-form-label required'>Month 1</label>
-                            <nb-select placeholder="Select" outline>
-                                <nb-option value="1">January</nb-option>
-                                <nb-option value="2">February</nb-option>
-                                <nb-option value="3">March</nb-option>
-                                <nb-option value="4">April</nb-option>
-                                <nb-option value="5">May</nb-option>
-                                <nb-option value="6">June</nb-option>
-                                <nb-option value="7">July</nb-option>
-                                <nb-option value="8">August</nb-option>
-                                <nb-option value="9">September</nb-option>
-                                <nb-option value="10">October</nb-option>
-                                <nb-option value="11">November</nb-option>
-                                <nb-option value="12">December</nb-option>
-                            </nb-select>
+                        <div class='col-sm-3'>
+                            <label for="month1" class='col-form-label required'>Month 1</label>
+                            <div class="input-group">
+                            <select [(ngModel)]="selectedMonth1" id="month1" name="month1" formControlName="month1" placeholder="Select" outline>
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                            </div>
                         </div>
-                        <div class='col-md-2'>
-                            <label class='col-form-label required'>Month 2</label>
-                            <nb-select placeholder="Select" outline>
-                                <nb-option value="1">January</nb-option>
-                                <nb-option value="2">February</nb-option>
-                                <nb-option value="3">March</nb-option>
-                                <nb-option value="4">April</nb-option>
-                                <nb-option value="5">May</nb-option>
-                                <nb-option value="6">June</nb-option>
-                                <nb-option value="7">July</nb-option>
-                                <nb-option value="8">August</nb-option>
-                                <nb-option value="9">September</nb-option>
-                                <nb-option value="10">October</nb-option>
-                                <nb-option value="11">November</nb-option>
-                                <nb-option value="12">December</nb-option>
-                            </nb-select>
+                        <div class='col-sm-3'>
+                            <label for="month2" class='col-form-label required'>Month 2</label>
+                            <div class="input-group">
+                            <select [(ngModel)]="selectedMonth2" id="month2" name="month2" formControlName="month2" placeholder="Select" outline>
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
                         </div>
                     </div>
                     <div class='row pt-3'>
@@ -383,7 +388,7 @@
                             <button nbButton status="primary" (click)="downloadExcelExport()">Excel Export</button> 
                         </div>
                     </div>
-    
+                </form>
                     <div class="row pt-3">
                         <div class="col-md-12">
                             <div class="table-responsive">
@@ -400,8 +405,8 @@
                                             <tr class="text-center">
                                                 <td scope="col">Class</td>
                                                 <td scope="col">Section</td>
-                                                <td scope="col">Month 1</td>
-                                                <td scope="col">Month 2</td>
+                                                <td scope="col">{{monthList[encouragingMetrics.month1].label}}</td>
+                                                <td scope="col">{{monthList[encouragingMetrics.month2].label}}</td>
                                                 <td scope="col">Increase %</td>
                                             </tr>
                                             <!-- Top Header Row - End -->
@@ -409,23 +414,23 @@
                                         <tbody>
                                             <!-- Row content - Start -->
                                             <tr class="text-center">
-                                                <td  [attr.rowspan]="encouragingMetrics.sectionData.length+1" scope="col">{{ encouragingMetrics.classs }}</td>
+                                                <td  [attr.rowspan]="encouragingMetrics.sectionData.length+1" scope="col">{{ encouragingMetrics.className }}</td>
                                             </tr>
                                             <ng-container *ngFor="let sectionData of encouragingMetrics.sectionData">
                                                 <tr class="text-center">
                                                     <td  scope="col">{{ sectionData.section }}</td>
                                                     <td scope="col">{{ sectionData.month1percentage }}</td>
                                                     <td scope="col">{{ sectionData.month2percentage }}</td>
-                                                    <td scope="col">{{ sectionData.changeinpercentage }}</td>
+                                                    <td scope="col">{{ sectionData.increasePercentage }}</td>
                                                 </tr>
                                             </ng-container>
                                             
                                             <tr class="text-center">
                                                 <td  scope="col"> </td>
                                                 <td  scope="col">Average</td>
-                                                <td  scope="col">{{ encouragingMetrics.averageRow.month1average }}</td>
-                                                <td  scope="col">{{ encouragingMetrics.averageRow.month2average }}</td>
-                                                <td scope="col">{{ encouragingMetrics.averageRow.changeinaverage }}</td>
+                                                <td  scope="col">{{ encouragingMetrics.averageRow.month1Average }}</td>
+                                                <td  scope="col">{{ encouragingMetrics.averageRow.month2Average }}</td>
+                                                <td scope="col">{{ encouragingMetrics.averageRow.changeinAverage }}</td>
                                             </tr>
                                             <!-- Row content - End -->
                                         </tbody>
