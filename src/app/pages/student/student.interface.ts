@@ -14,11 +14,11 @@ export class IClassSectionDetail {
     public className: string;
     public sectionName: string;
     public classAndSectionName: string;
-    public studentList: IStudent[] = [];
+    public studentList: IStudentDetail[] = [];
     public teamList: string[];
 }
 
-export class IStudent {
+export class IStudentDetail {
     public id: number;
     public associationId: number;
     public classId: number;

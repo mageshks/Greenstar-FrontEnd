@@ -3,7 +3,7 @@ import { Ng2SmartTableModule, LocalDataSource } from 'ng2-smart-table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OnInit } from '@angular/core';
 import { SchoolMessageModalContent } from '../school/schoolMessageModalContent.component';
-import { IClassSectionDetail, ISchoolDetail, IStudent, IStudentSearchData } from './student.interface';
+import { IClassSectionDetail, ISchoolDetail, IStudentDetail, IStudentSearchData } from './student.interface';
 import { StudentBulkUploadModalComponent } from './student-bulk-upload.component.modal';
 import { StudentService } from './student.service';
 
