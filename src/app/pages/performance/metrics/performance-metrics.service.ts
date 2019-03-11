@@ -13,31 +13,35 @@ export class PerformanceMetricsService {
     constructor(private http: HttpClient) {
     }
 
-    public getIndividualPerformanceMetrics(searchPerformanceData: ISearchPerformanceMetrics): Observable<any> {
-        return this.http.post(API_URL+'/perfdata/existingmetricdatas', searchPerformanceData, { headers: this.headerValue });
+    public getWeekDaysByMonth(searchPerformanceMetrics: ISearchPerformanceMetrics): Observable<any> {
+        return this.http.post(API_URL + '/perfdata/weekdayes', searchPerformanceMetrics, { headers: this.headerValue });
     }
 
-    public getTeamwisePerformanceMetrics(searchPerformanceData: ISearchPerformanceMetrics): Observable<any> {
-        return this.http.post(API_URL+'/perfmetrics/teamwise', searchPerformanceData, { headers: this.headerValue });
+    public getIndividualPerformanceMetrics(searchPerformanceMetrics: ISearchPerformanceMetrics): Observable<any> {
+        return this.http.post(API_URL+'/perfdata/existingmetricdatas', searchPerformanceMetrics, { headers: this.headerValue });
     }
 
-    public getClasswisePerformanceMetrics(searchPerformanceData: ISearchPerformanceMetrics): Observable<any> {
-        return this.http.post(API_URL+'/perfmetrics/classwise', searchPerformanceData, { headers: this.headerValue });
+    public getTeamwisePerformanceMetrics(searchPerformanceMetrics: ISearchPerformanceMetrics): Observable<any> {
+        return this.http.post(API_URL+'/perfmetrics/teamwise', searchPerformanceMetrics, { headers: this.headerValue });
     }
 
-    public getEncouragingPerformanceMetrics(searchPerformanceData: ISearchPerformanceMetrics): Observable<any> {
-        return this.http.post(API_URL+'/perfmetrics/encouraging', searchPerformanceData, { headers: this.headerValue });
-    }
-    public exportIndividualPerformanceMetrics(searchPerformanceData: ISearchPerformanceMetrics): Observable<any> {
-        return this.http.post(API_URL + '/perfmetrics/downloadIndividualdata', searchPerformanceData, { responseType: 'blob' });
+    public getClasswisePerformanceMetrics(searchPerformanceMetrics: ISearchPerformanceMetrics): Observable<any> {
+        return this.http.post(API_URL+'/perfmetrics/classwise', searchPerformanceMetrics, { headers: this.headerValue });
     }
 
-    public exportTeamwisePerformanceMetrics(searchPerformanceData: ISearchPerformanceMetrics): Observable<any> {
-        return this.http.post(API_URL + '/perfmetrics/downloadTeamwisedata', searchPerformanceData, { responseType: 'blob' });
+    public getEncouragingPerformanceMetrics(searchPerformanceMetrics: ISearchPerformanceMetrics): Observable<any> {
+        return this.http.post(API_URL+'/perfmetrics/encouraging', searchPerformanceMetrics, { headers: this.headerValue });
+    }
+    public exportIndividualPerformanceMetrics(searchPerformanceMetrics: ISearchPerformanceMetrics): Observable<any> {
+        return this.http.post(API_URL + '/perfmetrics/downloadIndividualdata', searchPerformanceMetrics, { responseType: 'blob' });
     }
 
-    public exportClasswisePerformanceMetrics(searchPerformanceData: ISearchPerformanceMetrics): Observable<any> {
-        return this.http.post(API_URL + '/perfmetrics/downloadClasswisedata', searchPerformanceData, { responseType: 'blob' });
+    public exportTeamwisePerformanceMetrics(searchPerformanceMetrics: ISearchPerformanceMetrics): Observable<any> {
+        return this.http.post(API_URL + '/perfmetrics/downloadTeamwisedata', searchPerformanceMetrics, { responseType: 'blob' });
+    }
+
+    public exportClasswisePerformanceMetrics(searchPerformanceMetrics: ISearchPerformanceMetrics): Observable<any> {
+        return this.http.post(API_URL + '/perfmetrics/downloadClasswisedata', searchPerformanceMetrics, { responseType: 'blob' });
     }
 
     private handleError(error: Response | any): any {
