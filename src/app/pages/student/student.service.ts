@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
-import { ISchoolDetail,IStudent,IClassSectionDetail } from "./student.interface";
+import { ISchoolDetail,IStudentDetail,IClassSectionDetail } from "./student.interface";
 
 const API_URL: string = 'http://localhost:2620';
 
@@ -25,11 +25,11 @@ export class StudentService {
         return this.http.post(API_URL+'/school/getClassDetail',classInfo,{ headers: this.headerValue });
     }
 
-    public updateStudent(studentDetail: IStudent): Observable<any> {
+    public updateStudent(studentDetail: IStudentDetail): Observable<any> {
         return this.http.post(API_URL + 'student', studentDetail, { headers: this.headerValue });
     }
 
-    public deleteStudent(studentDetail: IStudent): Observable<any> {
+    public deleteStudent(studentDetail: IStudentDetail): Observable<any> {
         return this.http.post(API_URL + 'student', studentDetail, { headers: this.headerValue });
     }
 
