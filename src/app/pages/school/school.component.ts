@@ -21,7 +21,7 @@ export class SchoolComponent implements OnInit {
   public action: string
   public schoolId: number;
 
-  public schoolDetail: ISchoolDetail;
+  public schoolDetail: ISchoolDetail = new ISchoolDetail();
 
   public stateList: IState[];
 
@@ -29,19 +29,19 @@ export class SchoolComponent implements OnInit {
 
   // class table setting
   public classDetail: LocalDataSource = new LocalDataSource();
-  public classTableSetting: any = SchoolData.getClassTableSetting();
+  public classTableSetting: any;
 
   // performance param table setting
   public perfParamDynamicDetail: LocalDataSource = new LocalDataSource();
-  public perfParamDynamicSetting: any = SchoolData.getPerfParamTableSetting();;
+  public perfParamDynamicSetting: any;
 
   // school holiday table setting
   public schoolHolidayDetail: LocalDataSource = new LocalDataSource();
-  public schoolHolidaySetting: any = SchoolData.getSchoolHolidaySetting();
+  public schoolHolidaySetting: any;
 
   // weekend working day table setting
   public schoolWeekendWorkDetail: LocalDataSource = new LocalDataSource();
-  public schoolWeekendWorkSetting: any = SchoolData.getSchoolWeekendWorkingSetting();
+  public schoolWeekendWorkSetting: any = SchoolData.getSchoolWeekendWorkingSetting(this.action);
 
   constructor(private commonService: CommonService,
     public activeModal: NgbActiveModal,
@@ -50,27 +50,39 @@ export class SchoolComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("this.action==> " + this.action);
+    this.loadTableSettings();
     if (this.action === 'create') {
       this.schoolDetail = SchoolData.createSchoolDetailObject();
-      //Load deafult parameter values
-      this.perfParamDynamicDetail.load(SchoolData.getDefaultPerfParamDetail());
-      this.loadStateData();
-    } else if (this.action === 'edit') {
-      this.schoolDetail = SchoolData.getTempSchoolDetails();
-      this.loadStateData();
-    } else {
-      console.log('No Matches Found For Action');
+      this.perfParamDynamicDetail.load(this.schoolDetail.perfParamList);
+    } else if (this.action === 'edit' || this.action === 'view') {
+      // retrieve and load school data
+      this.retrieveSchool();
     }
-    this.schoolHolidayDetail.load(this.schoolDetail.holidays);
-    this.schoolWeekendWorkDetail.load(this.schoolDetail.weekendWorkingDays);
   }
 
-  private loadStateData() {
-    this.commonService.getStates().subscribe(
+  private loadTableSettings() {
+    this.classTableSetting = SchoolData.getClassTableSetting(this.action);
+    this.perfParamDynamicSetting = SchoolData.getPerfParamTableSetting(this.action);
+    this.schoolHolidaySetting = SchoolData.getSchoolHolidaySetting(this.action);
+    this.schoolWeekendWorkSetting = SchoolData.getSchoolWeekendWorkingSetting(this.action);
+  }
+
+  private retrieveSchool() {
+    this.schoolService.retrieveSchool(this.schoolId).subscribe(
       (response) => {
-        this.stateList = response;
+        this.schoolDetail = response;
+        // Load datasource with the data froms erver
+        this.classDetail.load(this.schoolDetail.classList);
+        this.perfParamDynamicDetail.load(this.schoolDetail.perfParamList);
+        this.schoolHolidayDetail.load(this.schoolDetail.holidays);
+        this.schoolWeekendWorkDetail.load(this.schoolDetail.weekendWorkingDays);
+        //Load district list
+        this.onStateChange();
+        console.log("Retrieved school Detail Response ==> " + response);
       },
       error => {
+        this.openModal('Error Occured', "Error occured while retrieving school");
         console.log("Http Server error", error);
       }
     );
@@ -78,23 +90,23 @@ export class SchoolComponent implements OnInit {
 
   // On change of state set corresponding district to the district dropdown
   public onStateChange() {
+    console.log('this.schoolDetail.state' + this.schoolDetail.state);
+    console.log('this.stateList' + this.stateList);
     if (this.schoolDetail.state == '--Select State--') {
+      console.log('I am in no district');
       this.districtList = [];
     } else {
       this.stateList.forEach((state) => {
         if (state.stateName == this.schoolDetail.state) {
           this.districtList = state.districts;
+          console.log('I am in  district');
         }
       });
     }
   }
-
-  public onChangeTab(event) {
-
-  }
+  public onChangeTab(event) { }
 
   public onClassAdd(event): void {
-
     this.schoolDetail.classList.forEach((clazzDetail) => {
       // If school and section already exist then no need to add 
       if (clazzDetail.className == event.newData.className &&
@@ -130,10 +142,17 @@ export class SchoolComponent implements OnInit {
   }
 
   public onClassDeleteConfirm(event): void {
-    if (window.confirm('Are you sure you want to delete class? Performance data cannot be recovered')) {
-      this.schoolDetail.classList = event.source.data;
-      event.confirm.resolve();
+    // Only can delete the newly added class. Exisitng class cannot be deleted due to data loss
+    console.log(event);
+    if (event.data.id == undefined) {
+      if (window.confirm('Are you sure you want to delete class?')) {
+        this.schoolDetail.classList = event.source.data;
+        event.confirm.resolve();
+      } else {
+        event.confirm.reject();
+      }
     } else {
+      this.openModal('Message', 'Existing class in DB cannot be deleted it will erase entire performance data for the class. You can rename it!');
       event.confirm.reject();
     }
     console.log(this.schoolDetail.classList);
@@ -217,14 +236,24 @@ export class SchoolComponent implements OnInit {
     } else {
       console.log("Validation Success ==> " + JSON.stringify(this.schoolDetail));
       this.schoolDetail.userId = "Magesh";
-      this.schoolDetail.action=this.action;
-      this.schoolService.saveSchool(this.schoolDetail).subscribe(
+      this.schoolDetail.action = this.action;
+      this.schoolService.submitSchool(this.schoolDetail).subscribe(
         (response) => {
-          this.openModal('Message', 'School information saved successfully');
+          if (this.action == 'create') {
+            this.openModal('Message', 'School information saved successfully');
+          } else {
+            //Edit flow
+            this.openModal('Message', 'School information updated successfully');
+          }
           this.schoolDetail = response;
         },
         error => {
-          this.openModal('Error Occured', "Error occured while saving school");
+          if (this.action == 'create') {
+            this.openModal('Error Occured', "Error occured while saving school");
+          } else {
+            //Edit flow
+            this.openModal('Error Occured', "Error occured while updating school");
+          }
           console.log("Http Server error", error);
         }
       );

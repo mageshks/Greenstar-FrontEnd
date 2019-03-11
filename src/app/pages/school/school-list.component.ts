@@ -30,7 +30,7 @@ export class SchoolListComponent implements OnInit {
 
 
   // performance param table setting
-  public schoolTableData: LocalDataSource = null;
+  public schoolTableData: LocalDataSource = new LocalDataSource();
   public schoolTableParamSetting: any = this.getSchoolTableSetting();
 
   constructor(private modalService: NgbModal,
@@ -131,26 +131,30 @@ export class SchoolListComponent implements OnInit {
   }
 
   public editSchool(event){
-    console.log(event.newData);
-    console.log("Editing school Id ==> "+event.newData.id);
+    console.log(event.data);
+    
+    console.log("Editing school Id ==> "+event.data.id);
     const activeModal = this.modalService.open(SchoolComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.title = 'Edit School Detail';
     activeModal.componentInstance.action = 'edit';
-    activeModal.componentInstance.schoolId = event.newData.id;
+    activeModal.componentInstance.schoolId = event.data.id;
+    activeModal.componentInstance.stateList = this.stateList;
   }
 
   public viewSchool(event){
-    console.log(event.newData);
-    console.log("Viewing school Id ==> "+event.newData.id);
+    console.log(event.data);
+    console.log("Viewing school Id ==> "+event.data.id);
     const activeModal = this.modalService.open(SchoolComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.title = 'View School Detail';
     activeModal.componentInstance.action = 'view';
-    activeModal.componentInstance.schoolId = event.newData.id;
+    activeModal.componentInstance.schoolId = event.data.id;
+    activeModal.componentInstance.stateList = this.stateList;
   }
 
   public createSchool(): void {
     const activeModal = this.modalService.open(SchoolComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.title = 'Add School Detail';
     activeModal.componentInstance.action = 'create';
+    activeModal.componentInstance.stateList = this.stateList;
   }
 }
