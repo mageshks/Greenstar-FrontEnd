@@ -142,10 +142,17 @@ export class SchoolComponent implements OnInit {
   }
 
   public onClassDeleteConfirm(event): void {
-    if (window.confirm('Are you sure you want to delete class? Performance data cannot be recovered')) {
-      this.schoolDetail.classList = event.source.data;
-      event.confirm.resolve();
+    // Only can delete the newly added class. Exisitng class cannot be deleted due to data loss
+    console.log(event);
+    if (event.data.id == undefined) {
+      if (window.confirm('Are you sure you want to delete class?')) {
+        this.schoolDetail.classList = event.source.data;
+        event.confirm.resolve();
+      } else {
+        event.confirm.reject();
+      }
     } else {
+      this.openModal('Message', 'Existing class in DB cannot be deleted it will erase entire performance data for the class. You can rename it!');
       event.confirm.reject();
     }
     console.log(this.schoolDetail.classList);
@@ -232,18 +239,18 @@ export class SchoolComponent implements OnInit {
       this.schoolDetail.action = this.action;
       this.schoolService.submitSchool(this.schoolDetail).subscribe(
         (response) => {
-          if(this.action == 'create'){
+          if (this.action == 'create') {
             this.openModal('Message', 'School information saved successfully');
-          }else{
-             //Edit flow
+          } else {
+            //Edit flow
             this.openModal('Message', 'School information updated successfully');
           }
           this.schoolDetail = response;
         },
         error => {
-          if(this.action == 'create'){
+          if (this.action == 'create') {
             this.openModal('Error Occured', "Error occured while saving school");
-          }else{
+          } else {
             //Edit flow
             this.openModal('Error Occured', "Error occured while updating school");
           }
