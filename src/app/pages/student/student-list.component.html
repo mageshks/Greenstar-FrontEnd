@@ -2,33 +2,69 @@
     <div class="col-md-12">
         <nb-card>
             <nb-card-header>
-                <div class='row'>
-                    <div class='col-md-6'>
-                        Student Maintance
-                    </div>
-                    <div class='col-md-6 text-right'><span class="nb-help"></span></div>
-                    </div>
+                Student Maintenance
             </nb-card-header>
-
             <nb-card-body>
-                <div class='row'>
-                    <div class='col-md-6'>
-                        <button nbButton status="primary" (click)="openBulkUploadDialog()">Bulk Upload</button>
-                    </div>
-                    <div class='col-md-6 text-right'>
-                        <button nbButton status="primary" (click)="downloadExcelExport()">Excel Export</button>
-                    </div>
-                </div>
+                <nb-card>
+                    <nb-card-body [nbSpinner]="loadingDropdown" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
+                        <div class="row">
 
-                <div class='row pt-3'>
-                    <div class='col-md-12'>
-                        <ng2-smart-table [settings]="tableSetting" [source]="studentSource" (createConfirm)="onPostCall($event)" (editConfirm)="onPostCall($event)"
-                            (deleteConfirm)="onDeleteConfirm($event)">
-                        </ng2-smart-table>
-                    </div>
-                </div>
+                            <div class="col-sm-5">
+                                <label for="school" class="col-form-label required">School</label>
+                                <div class="input-group">
+                                    <select id="school" name="school" class="form-control form-control-sm"
+                                        [(ngModel)]="studentSearchData.schoolId"
+                                        (change)="onChangeSchoolChange($event)">
+                                        <option value="0">--Select--</option>
+                                        <option *ngFor="let school of schoolList" value={{school.id}}>
+                                            {{school.schoolName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <label for="className" class="col-form-label required">Class</label>
+                                <div class="input-group">
+                                    <select id="className" name="className" class="form-control form-control-sm"
+                                        [(ngModel)]="studentSearchData.classId" (change)="onChangeClass()">
+                                        <option value="0">--Select--</option>
+                                        <option *ngFor="let class of classSectionList" value={{class.id}}>
+                                            {{class.classAndSectionName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class='col-md-4 text-right'>
+                                <label for="searchbtn" class="col-form-label empty">*</label>
+                                <div class="input-group">
+                                    <button nbButton status="primary" id="searchbtn"
+                                        (click)="onSearch()">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="isSearchDataNotValid">
+                            <div class="col-sm-12 pt-2 text-left errormsg">
+                                <span>All fields are mandatory to search students!</span>
+                            </div>
+                        </div>
+                    </nb-card-body>
+                </nb-card>
+
+                <nb-card *ngIf="isStudentAvailable">
+                    <nb-card-body [nbSpinner]="loadingStudents" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
+                        <div class='row pt-3'>
+                            <div class='col-sm-12'>
+                                <ng2-smart-table [settings]="tableSetting" [source]="studentSource"
+                                    (createConfirm)="onStudentCreate($event)" (editConfirm)="onStudentEdit($event)"
+                                    (deleteConfirm)="onStudentDeleteConfirm($event)">
+
+                                </ng2-smart-table>
+                            </div>
+                        </div>
+                    </nb-card-body>
+                </nb-card>
             </nb-card-body>
-
         </nb-card>
     </div>
 </div>

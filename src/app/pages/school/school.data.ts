@@ -229,30 +229,7 @@ export class SchoolData {
         return this.schoolDetail;
     }
 
-    public static getTempSchoolDetails(): ISchoolDetail {
-
-        // school information
-        this.schoolDetail.schoolName = 'SSVM Matriculation';
-        this.schoolDetail.address = 'Coimbatore';
-        this.schoolDetail.cityName = 'Coimbatore';
-        this.schoolDetail.state = 'Tamil Nadu';
-        this.schoolDetail.district = 'Coimbatore';
-
-        // class detail
-        this.schoolDetail.classList = this.getTempClassDetail();
-
-        this.schoolDetail.perfParamList = [];
-
-        return this.schoolDetail;
-    }
-
-    public static getTempClassDetail(): IClass[] {
-
-        var classList: IClass[] = [];
-        return classList;
-    }
-
-    public static getDefaultPerfParamDetail(): IPerformanceParam[] {
+   public static getDefaultPerfParamDetail(): IPerformanceParam[] {
 
         var parameterList: IPerformanceParam[] = [
             { id: null, paramTitle: 'Attendance', paramDesc: 'Attendance Performance' },
@@ -261,49 +238,4 @@ export class SchoolData {
         ];
         return parameterList;
     }
-
-    public static getClassFieldValue(): any {
-
-        var classValues: any[] = [
-            { title: 'LKG', value: 'LKG' },
-            { title: 'UKG', value: 'UKG' },
-            { title: 'First', value: 'First' },
-            { title: 'Second', value: 'Second' },
-            { title: 'Third', value: 'Third' },
-            { title: 'Fourth', value: 'Fourth' },
-            { title: 'Fifth', value: 'Fifth' },
-            { title: 'Sixth', value: 'Sixth' },
-            { title: 'Seventh', value: 'Seventh' },
-            { title: 'Eighth', value: 'Eighth' },
-            { title: 'Ninth', value: 'Ninth' },
-            { title: 'Tenth', value: 'Tenth' },
-            { title: 'Eleventh', value: 'Eleventh' },
-            { title: 'Twelveth', value: 'Twelveth' }
-        ];
-        return classValues;
-    }
-
-    public static getSectionFieldValue(): any {
-
-        var sectionValues: any[] = [
-            { title: 'A', value: 'A' },
-            { title: 'B', value: 'B' },
-            { title: 'C', value: 'C' },
-            { title: 'D', value: 'D' },
-            { title: 'E', value: 'D' }
-        ];
-        return sectionValues;
-    }
-
-    public static getTempSchoolValue(): any {
-
-        var classValues: any[] = [
-            { title: 'SSVM Matriculation School', value: 'SSVM Matriculation School' },
-            { title: 'Nikita Matriculation School', value: 'Nikita Matriculation School' },
-            { title: 'KV Matriculation School', value: 'KV Matriculation School' },
-            { title: 'Govt.Her.Sec Matriculation School', value: 'Govt.Her.Sec Matriculation School' }
-        ];
-        return classValues;
-    }
-
 }

@@ -7,3 +7,15 @@
     height: calc(2rem + 8px) !important;
     padding: 0 10px !important;
   }
+
+.col-form-label.required:after { 
+    content:"*";
+    color:red;
+ }
+ .empty{
+  color:white;
+ }
+ .errormsg
+ {
+     color: red;
+ }

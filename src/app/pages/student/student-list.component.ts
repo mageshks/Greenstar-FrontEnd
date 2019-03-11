@@ -1,14 +1,10 @@
 import { Component } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
-import { DomSanitizer } from '@angular/platform-browser';
-import { NbDialogService } from '@nebular/theme';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Ng2SmartTableModule, LocalDataSource } from 'ng2-smart-table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OnInit } from '@angular/core';
-import { IStudentDetail } from './student.interface';
-import { SchoolData } from '../school/school.data';
+import { SchoolMessageModalContent } from '../school/schoolMessageModalContent.component';
+import { IClassSectionDetail, ISchoolDetail, IStudent, IStudentSearchData } from './student.interface';
 import { StudentBulkUploadModalComponent } from './student-bulk-upload.component.modal';
-import { SchoolService } from '../school/school.service';
 import { StudentService } from './student.service';
 
 @Component({
@@ -18,29 +14,150 @@ import { StudentService } from './student.service';
 })
 export class StudentListComponent implements OnInit {
 
-  public studentDetail: IStudentDetail = {} as IStudentDetail;
+  public schoolList: ISchoolDetail[];
 
-  public studentList: IStudentDetail[] = [];
+  public isStudentAvailable: boolean = false;
+
+  public studentSearchData: IStudentSearchData = new IStudentSearchData();
+
+  // Contains list of class to display in dropdown
+  public classSectionList: IClassSectionDetail[] = [];
+
+  // Contains all details of class
+  public classSectionDetail: IClassSectionDetail = new IClassSectionDetail();
+
+  public loadingDropdown: boolean = false;
+
+  public loadingStudents: boolean = false;
+
+  public isSearchDataNotValid: boolean = false;
 
   // class table setting
   public studentSource: LocalDataSource = new LocalDataSource();
-  public tableSetting: any = null;
+  public tableSetting: any = this.studentTableSetting();
 
   constructor(
     private modalService: NgbModal,
     private studentService: StudentService) {
-
   }
 
   ngOnInit(): void {
-    this.tableSetting = this.getTableSettings();
-    this.studentSource.load(this.studentList);
+    this.loadSchoolDropDown();
+    this.studentSearchData.schoolId = 0;
+    this.studentSearchData.classId = 0;
+    this.studentSource.load(this.classSectionDetail.studentList);
   }
 
-  private getTableSettings(): void {
+  private loadSchoolDropDown() {
+    this.studentService.getSchools().subscribe(
+      (response) => {
+        console.log(response);
+        this.schoolList = response;
+      },
+      error => {
+        console.log("Http Server error", error);
+      },
+    );
+  }
 
+  public onChangeClass() {
+    this.isSearchDataNotValid = false;
+  }
+
+  public onChangeSchoolChange() {
+    this.isSearchDataNotValid = false;
+    if (this.studentSearchData.schoolId == 0) {
+      this.classSectionList = [];
+      this.studentSearchData.classId = 0;
+    } else {
+      this.loadingDropdown = true;
+      let schoolDetail: ISchoolDetail = new ISchoolDetail();
+      schoolDetail.id = this.studentSearchData.schoolId;
+      this.studentService.getClassList(schoolDetail).subscribe(
+        (response) => {
+          console.log(response);
+          this.classSectionList = response;
+          this.loadingDropdown = false;
+        },
+        error => {
+          console.log("Http Server error", error);
+        },
+      );
+    }
+  }
+
+  public onSearch() {
+    if (this.studentSearchData.schoolId == 0 ||
+      this.studentSearchData.classId == 0) {
+      this.isSearchDataNotValid = true;
+    } else {
+      this.loadingStudents = true;
+      let classDetail: IClassSectionDetail = new IClassSectionDetail();
+      classDetail.id = this.studentSearchData.classId;
+      this.studentService.getClassDetail(classDetail).subscribe(
+        (response) => {
+          console.log(response);
+          this.classSectionDetail = response;
+          if (this.classSectionDetail.studentList.length == 0) {
+            this.isStudentAvailable = false;
+          } else {
+            this.isStudentAvailable = true;
+            this.studentSource.load(this.classSectionDetail.studentList);
+            this.loadingStudents = false;
+          }
+        },
+        error => {
+          console.log("Http Server error", error);
+        },
+      );
+    }
+  }
+
+  public openBulkUploadDialog(): void {
+    const activeModal = this.modalService.open(StudentBulkUploadModalComponent, { size: 'lg', container: 'nb-layout' });
+  }
+
+  public downloadExcelExport(): void {
+
+  }
+
+  public onStudentCreate(event): void {
+    console.log('create triggerred!');
+    // If any of the feilds are left blank 
+    if (event.newData.teamName == null || event.newData.teamName == '' ||
+      event.newData.studentName == null || event.newData.studentName == '') {
+      this.openModal('Validation Message', 'All fieilds are mandatory to add a Student!');
+      event.confirm.reject();
+    } else {
+      this.classSectionDetail.studentList = event.source.data;
+      event.confirm.resolve();
+    }
+  }
+
+  public onStudentEdit(event): void {
+    console.log('edit triggerred!');
+    if (event.newData.teamName == null || event.newData.teamName == '' ||
+      event.newData.studentName == null || event.newData.studentName == '') {
+      this.openModal('Validation Message', 'All fieilds are mandatory to edit a Student!');
+      event.confirm.reject();
+    } else {
+      this.classSectionDetail.studentList = event.source.data;
+      event.confirm.resolve();
+    }
+  }
+
+  public onStudentDeleteConfirm(event): void {
+    console.log('delete triggerred!');
+    if (window.confirm('Are you sure you want to delete?')) {
+      this.classSectionDetail.studentList = event.source.data;
+      event.confirm.resolve();
+    } else {
+      event.confirm.reject();
+    }
+  }
+
+  private studentTableSetting() {
     let settings: any = {
-
       add: {
         addButtonContent: '<i class="nb-plus"></i>',
         createButtonContent: '<i class="nb-checkmark"></i>',
@@ -57,101 +174,25 @@ export class StudentListComponent implements OnInit {
         deleteButtonContent: '<i class="nb-trash"></i>',
         confirmDelete: true
       },
-      actions: { position: 'right' },
+      pager: { display: true, perPage: 10 },
       columns: {
-        rollNo: {
-          title: 'Roll No',
-          type: 'string',
-        },
         studentName: {
           title: 'Student Name',
-          type: 'string',
+          type: 'string'
         },
-        school: {
-          title: 'School',
-          type: 'string',
-          filter: {
-            type: 'list',
-            config: {
-              selectText: 'Select...',
-              list: SchoolData.getTempSchoolValue()
-            },
-          },
-          editor: {
-            type: 'list',
-            config: {
-              selectText: 'Select',
-              list: SchoolData.getTempSchoolValue()
-            },
-          }
-        },
-        className: {
-          title: 'Class',
-          type: 'string',
-          filter: {
-            type: 'list',
-            config: {
-              selectText: 'Class...',
-              list: SchoolData.getClassFieldValue()
-            },
-          },
-          editor: {
-            type: 'list',
-            config: {
-              selectText: 'Select',
-              list: SchoolData.getClassFieldValue()
-            },
-          }
-        },
-        sectionName: {
-          title: 'Section',
-          type: 'string',
-          filter: {
-            type: 'list',
-            config: {
-              selectText: 'Section...',
-              list: SchoolData.getSectionFieldValue()
-            },
-          },
-          editor: {
-            type: 'list',
-            config: {
-              selectText: 'Select',
-              list: SchoolData.getSectionFieldValue()
-            },
-          }
-        },
-        team: {
-          title: 'Team',
+        teamName: {
+          title: 'Team Name',
           type: 'string'
         }
       }
     };
-
     return settings;
   }
 
-  public onPostCall(event): void {
-    // todo: implement validation
-    console.log(event);
-    event.confirm.resolve();
-  }
-
-  public onDeleteConfirm(event): void {
-    if (window.confirm('Are you sure you want to delete?')) {
-      console.log(event);
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
-    }
-  }
-
-  public openBulkUploadDialog(): void {
-    const activeModal = this.modalService.open(StudentBulkUploadModalComponent, { size: 'lg', container: 'nb-layout' });
-  }
-
-  public downloadExcelExport(): void {
-    
+  private openModal(modalheadertext, modalmessage) {
+    const modalRef = this.modalService.open(SchoolMessageModalContent);
+    modalRef.componentInstance.modalmessage = modalmessage;
+    modalRef.componentInstance.modalheadertext = modalheadertext;
   }
 
 }

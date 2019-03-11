@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
-import { IStudentDetail } from "./student.interface";
+import { ISchoolDetail,IStudent,IClassSectionDetail } from "./student.interface";
 
-const API_URL: string = 'http://localhost:9001/greenstarapp';
+const API_URL: string = 'http://localhost:2620';
 
 @Injectable()
 export class StudentService {
@@ -13,23 +13,23 @@ export class StudentService {
     constructor(private http: HttpClient) {
     }
 
-    public getStudents(): Observable<any> {
-        return this.http.get(API_URL + 'student', { headers: this.headerValue });
+    public getSchools(): Observable<any> {
+        return this.http.post(API_URL+'/school/getSchools', { headers: this.headerValue });
     }
 
-    public getSchoolNames(): Observable<any> {
-        return this.http.get(API_URL + 'student', { headers: this.headerValue });
+    public getClassList(school: ISchoolDetail): Observable<any> {
+        return this.http.post(API_URL+'/school/getClassList',school,{ headers: this.headerValue });
     }
 
-    public saveStudent(studentDetail: IStudentDetail): Observable<any> {
+    public getClassDetail(classInfo: IClassSectionDetail): Observable<any> {
+        return this.http.post(API_URL+'/school/getClassDetail',classInfo,{ headers: this.headerValue });
+    }
+
+    public updateStudent(studentDetail: IStudent): Observable<any> {
         return this.http.post(API_URL + 'student', studentDetail, { headers: this.headerValue });
     }
 
-    public updateStudent(studentDetail: IStudentDetail): Observable<any> {
-        return this.http.post(API_URL + 'student', studentDetail, { headers: this.headerValue });
-    }
-
-    public deleteStudent(studentDetail: IStudentDetail): Observable<any> {
+    public deleteStudent(studentDetail: IStudent): Observable<any> {
         return this.http.post(API_URL + 'student', studentDetail, { headers: this.headerValue });
     }
 
