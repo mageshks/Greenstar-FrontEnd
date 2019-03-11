@@ -54,6 +54,7 @@ export class SchoolComponent implements OnInit {
     this.loadTableSettings();
     if (this.action === 'create') {
       this.schoolDetail = SchoolData.createSchoolDetailObject();
+      this.perfParamDynamicDetail.load(this.schoolDetail.perfParamList);
     } else if (this.action === 'edit' || this.action === 'view') {
       // retrieve and load school data
       this.retrieveSchool();
@@ -62,7 +63,7 @@ export class SchoolComponent implements OnInit {
 
   private loadTableSettings() {
     this.classTableSetting = SchoolData.getClassTableSetting(this.action);
-    this.perfParamDynamicSetting = SchoolData.getPerfParamTableSetting(this.action);;
+    this.perfParamDynamicSetting = SchoolData.getPerfParamTableSetting(this.action);
     this.schoolHolidaySetting = SchoolData.getSchoolHolidaySetting(this.action);
     this.schoolWeekendWorkSetting = SchoolData.getSchoolWeekendWorkingSetting(this.action);
   }
@@ -229,13 +230,23 @@ export class SchoolComponent implements OnInit {
       console.log("Validation Success ==> " + JSON.stringify(this.schoolDetail));
       this.schoolDetail.userId = "Magesh";
       this.schoolDetail.action = this.action;
-      this.schoolService.saveSchool(this.schoolDetail).subscribe(
+      this.schoolService.submitSchool(this.schoolDetail).subscribe(
         (response) => {
-          this.openModal('Message', 'School information saved successfully');
+          if(this.action == 'create'){
+            this.openModal('Message', 'School information saved successfully');
+          }else{
+             //Edit flow
+            this.openModal('Message', 'School information updated successfully');
+          }
           this.schoolDetail = response;
         },
         error => {
-          this.openModal('Error Occured', "Error occured while saving school");
+          if(this.action == 'create'){
+            this.openModal('Error Occured', "Error occured while saving school");
+          }else{
+            //Edit flow
+            this.openModal('Error Occured', "Error occured while updating school");
+          }
           console.log("Http Server error", error);
         }
       );
