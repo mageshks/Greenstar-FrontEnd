@@ -12,7 +12,7 @@
                 <div class="row pt-5">
                     <div class="col-sm-10">
                         <div class="form-group row">
-                            <label for="schoolName" class="col-sm-3 col-form-label">Name</label>
+                            <label for="schoolName" class="col-sm-3 col-form-label required">Name</label>
                             <div class="input-group col-sm-7">
                                 <input type="text" id="schoolName" name="schoolName" maxlength="90"
                                     [(ngModel)]="schoolDetail.schoolName" class="form-control"
@@ -20,7 +20,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="address" class="col-sm-3 col-form-label">Address</label>
+                            <label for="address" class="col-sm-3 col-form-label  required">Address</label>
                             <div class="input-group col-sm-7">
                                 <textarea type="text" id="address" name="address" row="5" maxlength="500"
                                     [(ngModel)]="schoolDetail.address" class="form-control" placeholder="Address">
@@ -28,14 +28,14 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="city" class="col-sm-3 col-form-label">City</label>
+                            <label for="city" class="col-sm-3 col-form-label  required">City</label>
                             <div class="input-group col-sm-7">
                                 <input type="text" id="city" name="city" maxlength="45"
                                     [(ngModel)]="schoolDetail.cityName" class="form-control" placeholder="City">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="address" class="col-sm-3 col-form-label">State</label>
+                            <label for="address" class="col-sm-3 col-form-label  required">State</label>
                             <div class="input-group col-sm-7">
                                 <select id="state" name="state" class="form-control form-control-sm"
                                     [(ngModel)]="schoolDetail.state" (change)="onStateChange($event)">
@@ -47,7 +47,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="district" class="col-sm-3 col-form-label">District</label>
+                            <label for="district" class="col-sm-3 col-form-label  required">District</label>
                             <div class="input-group col-sm-7">
                                 <select id="district" name="district" class="form-control form-control-sm"
                                     [(ngModel)]="schoolDetail.district">
@@ -72,7 +72,7 @@
 
         <nb-tab tabTitle="Performance Parameter" class="pt-3" tabIcon="nb-bar-chart" responsive>
             <ng2-smart-table [settings]="perfParamDynamicSetting" [source]="perfParamDynamicDetail"
-               (editConfirm)="onParameterEdit($event)">
+                (editConfirm)="onParameterEdit($event)">
             </ng2-smart-table>
         </nb-tab>
 
@@ -84,8 +84,8 @@
                     </nb-accordion-item-header>
                     <nb-accordion-item-body>
                         <ng2-smart-table [settings]="schoolHolidaySetting" [source]="schoolHolidayDetail"
-                            (createConfirm)="onPostCallForHoliday($event)" (editConfirm)="onPostCallForHoliday($event)"
-                            (deleteConfirm)="onDeleteConfirmForHoliday($event)">
+                            (createConfirm)="onCreateForHoliday($event)" (editConfirm)="onEditForHoliday($event)"
+                            (deleteConfirm)="onDeleteForHoliday($event)">
                         </ng2-smart-table>
                     </nb-accordion-item-body>
                 </nb-accordion-item>
@@ -96,17 +96,14 @@
                     </nb-accordion-item-header>
                     <nb-accordion-item-body>
                         <ng2-smart-table [settings]="schoolWeekendWorkSetting" [source]="schoolWeekendWorkDetail"
-                            (createConfirm)="onPostCallForWeekendWorking($event)"
-                            (editConfirm)="onPostCallForWeekendWorking($event)"
-                            (deleteConfirm)="onDeleteConfirmForWeekendWorking($event)">
+                            (createConfirm)="onCreateForWeekendWorking($event)"
+                            (editConfirm)="onEditForWeekendWorking($event)"
+                            (deleteConfirm)="onDeleteForWeekendWorking($event)">
                         </ng2-smart-table>
                     </nb-accordion-item-body>
                 </nb-accordion-item>
-
             </nb-accordion>
-
         </nb-tab>
-
     </nb-tabset>
 </div>
 

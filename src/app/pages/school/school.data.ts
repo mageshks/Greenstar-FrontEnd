@@ -2,10 +2,6 @@ import { ISchoolDetail, IClass, IPerformanceParam, IHoliday } from "./school.int
 import { SmartTableDatePickerComponent } from "../../@theme/components/smart-table-date-picker-component/smart-table-date-picker.components";
 
 export class SchoolData {
-
-    public static PERF_PARAM_DEFAULT: string = 'DEFAULT';
-    public static PERF_PARAM_CUSTOM: string = 'CUSTOMIZED';
-
     public static schoolDetail: ISchoolDetail = {} as ISchoolDetail;
 
     public static getClassTableSetting(): any {
@@ -146,21 +142,15 @@ export class SchoolData {
         this.schoolDetail.cityName = '';
         this.schoolDetail.state = '--Select State--';
         this.schoolDetail.district = '--Select District--';
-
-
-
         // class detail
         this.schoolDetail.classList = [];
-
         // default performance parameters initialized
-        this.schoolDetail.perfParamType = this.PERF_PARAM_DEFAULT;
         this.schoolDetail.perfParamList = this.getDefaultPerfParamDetail();
-
         // holidays
         this.schoolDetail.holidays = [];
 
         // weekend working days
-        this.schoolDetail.weekendWorkingDayes = [];
+        this.schoolDetail.weekendWorkingDays = [];
 
         return this.schoolDetail;
     }
@@ -177,9 +167,6 @@ export class SchoolData {
         // class detail
         this.schoolDetail.classList = this.getTempClassDetail();
 
-        // performance parameters
-        this.schoolDetail.perfParamType = this.PERF_PARAM_DEFAULT;
-        // this.schoolDetail.perfParamType = this.PERF_PARAM_CUSTOM;
         this.schoolDetail.perfParamList = [];
 
         return this.schoolDetail;
@@ -232,16 +219,6 @@ export class SchoolData {
             { title: 'E', value: 'D' }
         ];
         return sectionValues;
-    }
-
-    public static getTempHolidaysDetail(): IHoliday[] {
-
-        var testHolidays: IHoliday[] = [
-            { fromDate: '2019-01-10', toDate: '2019-01-15', description: 'aaa' },
-            { fromDate: '2019-02-01', toDate: '2019-02-05', description: 'bbb' },
-            { fromDate: '2019-03-25', toDate: '2019-03-30', description: 'ccc' }
-        ];
-        return testHolidays;
     }
 
     public static getTempSchoolValue(): any {

@@ -19,7 +19,7 @@ export class ISchoolDetail {
     public holidays: IHoliday[];
 
     // weekend working day information
-    public weekendWorkingDayes: IWeekendWorkingDay[];
+    public weekendWorkingDays: IWeekendWorkingDay[];
 }
 
 export class ISchoolSearchData{
@@ -40,12 +40,14 @@ export class IPerformanceParam {
 }
 
 export class IHoliday {
+    public id:number;
     public fromDate: string;
     public toDate: string;
     public description: string;
 }
 
 export class IWeekendWorkingDay {
+    public id:number;
     public workingDate: string;
     public reason: string;
 }

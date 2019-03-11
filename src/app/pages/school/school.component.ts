@@ -4,8 +4,9 @@ import { SchoolData } from './school.data';
 import { ISchoolDetail, IClass } from './school.interface';
 import { OnInit } from '@angular/core';
 import { CommonService } from '../common/common.service';
+import { SchoolService } from './school.service';
 import { IState } from '../common/common.interface';
-import { ShoolMessageModalContent } from './shoolMessageModalContent.component';
+import { SchoolMessageModalContent } from './shoolMessageModalContent.component';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SmartTableDatePickerComponent } from '../../@theme/components/smart-table-date-picker-component/smart-table-date-picker.components';
 
@@ -32,7 +33,7 @@ export class SchoolComponent implements OnInit {
 
   // performance param table setting
   public perfParamDynamicDetail: LocalDataSource = new LocalDataSource();
-  public perfParamDynamicSetting: any=SchoolData.getPerfParamTableSetting();;
+  public perfParamDynamicSetting: any = SchoolData.getPerfParamTableSetting();;
 
   // school holiday table setting
   public schoolHolidayDetail: LocalDataSource = new LocalDataSource();
@@ -44,8 +45,8 @@ export class SchoolComponent implements OnInit {
 
   constructor(private commonService: CommonService,
     public activeModal: NgbActiveModal,
-    private modalService: NgbModal) {
-
+    private modalService: NgbModal,
+    private schoolService: SchoolService) {
   }
 
   ngOnInit(): void {
@@ -60,9 +61,8 @@ export class SchoolComponent implements OnInit {
     } else {
       console.log('No Matches Found For Action');
     }
-
     this.schoolHolidayDetail.load(this.schoolDetail.holidays);
-    this.schoolWeekendWorkDetail.load(this.schoolDetail.weekendWorkingDayes);
+    this.schoolWeekendWorkDetail.load(this.schoolDetail.weekendWorkingDays);
   }
 
   private loadStateData() {
@@ -75,7 +75,6 @@ export class SchoolComponent implements OnInit {
       }
     );
   }
-
 
   // On change of state set corresponding district to the district dropdown
   public onStateChange() {
@@ -91,38 +90,7 @@ export class SchoolComponent implements OnInit {
   }
 
   public onChangeTab(event) {
-    if (event.tabTitle === 'Class') {
-      this.classDetail.load(this.schoolDetail.classList);
-    } if (event.tabTitle === 'Performance Parameter') {
-      if (this.schoolDetail.perfParamType === SchoolData.PERF_PARAM_DEFAULT) {
-        this.schoolDetail.perfParamList = SchoolData.getDefaultPerfParamDetail();
-      } else if (this.schoolDetail.perfParamType === SchoolData.PERF_PARAM_CUSTOM) {
-        this.perfParamDynamicSetting = SchoolData.getPerfParamTableSetting();
-        this.perfParamDynamicDetail.load(this.schoolDetail.perfParamList);
-      } else {
-        console.log('No matches found for performance parameter type');
-      }
-    } else {
-      console.log('No matches found')
-    }
 
-  }
-
-  public onChangePerfParamType(event): void {
-
-    if (this.schoolDetail.perfParamType === SchoolData.PERF_PARAM_DEFAULT) {
-    } else if (this.schoolDetail.perfParamType === SchoolData.PERF_PARAM_CUSTOM) {
-      this.perfParamDynamicSetting = SchoolData.getPerfParamTableSetting();
-      this.perfParamDynamicDetail.load(this.schoolDetail.perfParamList);
-    } else {
-      console.log('No matches found for performance parameter type');
-    }
-  }
-
-  public onPostCallForClass(event): void {
-    // todo: implement validation
-    console.log(event);
-    event.confirm.resolve();
   }
 
   public onClassAdd(event): void {
@@ -130,7 +98,7 @@ export class SchoolComponent implements OnInit {
     this.schoolDetail.classList.forEach((clazzDetail) => {
       if (clazzDetail.className == event.newData.className &&
         clazzDetail.sectionName == event.newData.sectionName) {
-        const modalRef = this.modalService.open(ShoolMessageModalContent);
+        const modalRef = this.modalService.open(SchoolMessageModalContent);
         modalRef.componentInstance.modalmessage = 'Already class available with same name and section';
         modalRef.componentInstance.modalheadertext = 'Error';
         event.confirm.reject();
@@ -158,44 +126,133 @@ export class SchoolComponent implements OnInit {
   }
 
   public onParameterEdit(event): void {
-    this.schoolDetail.perfParamList = event.newData;
+    this.schoolDetail.perfParamList = event.source.data;
     event.confirm.resolve();
   }
 
-  public onPostCallForHoliday(event): void {
-    console.log(event);
+  public onCreateForHoliday(event): void {
+    // If any of the feilds are left blank 
+    if (event.newData.fromDate == null || event.newData.fromDate == '' ||
+      event.newData.toDate == null || event.newData.toDate == '' ||
+      event.newData.description == null || event.newData.description == '') {
+      const modalRef = this.modalService.open(SchoolMessageModalContent);
+      modalRef.componentInstance.modalmessage = 'All fieilds are mandatory to add a holiday!';
+      modalRef.componentInstance.modalheadertext = 'Error';
+      event.confirm.reject();
+    }else{
+      this.schoolDetail.holidays = event.source.data;
+      event.confirm.resolve();
+    }
+  }
+
+  public onEditForHoliday(event): void {
+    this.schoolDetail.holidays = event.source.data;
     event.confirm.resolve();
   }
 
-  public onDeleteConfirmForHoliday(event): void {
+  public onDeleteForHoliday(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
+      this.schoolDetail.holidays = event.source.data;
       event.confirm.resolve();
     } else {
       event.confirm.reject();
     }
   }
 
-  public onPostCallForWeekendWorking(event): void {
-    // todo: implement validation
-    console.log(event);
+  public onEditForWeekendWorking(event): void {
+    console.log("OnEdit ==> " + event.source.data);
+    this.schoolDetail.weekendWorkingDays = event.source.data;
     event.confirm.resolve();
   }
 
-  public onDeleteConfirmForWeekendWorking(event): void {
+  public onCreateForWeekendWorking(event): void {
+    console.log("OnCreate==> " + event.source.data);
+    // If any of the feilds are left blank 
+    if (event.newData.workingDate == null || event.newData.workingDate == '' ||
+      event.newData.reason == null || event.newData.reason == '') {
+      const modalRef = this.modalService.open(SchoolMessageModalContent);
+      modalRef.componentInstance.modalmessage = 'All fieilds are mandatory to add a weekend working day!';
+      modalRef.componentInstance.modalheadertext = 'Error';
+      event.confirm.reject();
+    }else{
+      this.schoolDetail.weekendWorkingDays = event.source.data;
+      event.confirm.resolve();
+    }
+  }
+
+  public onDeleteForWeekendWorking(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
+      console.log("OnDeleteAccept==> " + event.source.data);
+      this.schoolDetail.weekendWorkingDays = event.source.data;
       event.confirm.resolve();
     } else {
+      console.log("OnDeleteReject==> " + event.source.data);
       event.confirm.reject();
     }
   }
 
   public onSubmitChanges(): void {
     console.log(this.schoolDetail);
-    alert('Submitted Successfully');
+    let errorMessage = this.validateSubmit();
+    console.log('errorMessage ==> ' + errorMessage);
+    if (errorMessage != '') {
+      const modalRef = this.modalService.open(SchoolMessageModalContent);
+      modalRef.componentInstance.modalmessage = errorMessage;
+      modalRef.componentInstance.modalheadertext = 'Validation Error';
+    } else {
+      console.log("Validation Success ==> " + JSON.stringify(this.schoolDetail));
+      this.schoolService.saveSchool(this.schoolDetail).subscribe(
+        (response) => {
+          const modalRef = this.modalService.open(SchoolMessageModalContent);
+          modalRef.componentInstance.modalmessage = "School information saved successfully";
+          this.schoolDetail = response;
+          modalRef.componentInstance.modalheadertext = 'Message';
+        },
+        error => {
+          const modalRef = this.modalService.open(SchoolMessageModalContent);
+          modalRef.componentInstance.modalmessage = error;
+          modalRef.componentInstance.modalheadertext = 'Error Occured';
+          console.log("Http Server error", error);
+        }
+      );
+
+    }
   }
 
   closeModal() {
     this.activeModal.close();
   }
 
+  private validateSubmit() {
+    let errorField: string[] = [];
+    let errorString = '';
+    if (this.schoolDetail.cityName == null || this.schoolDetail.cityName == '') {
+      errorField.push("cityName");
+    }
+    if (this.schoolDetail.schoolName == null || this.schoolDetail.schoolName == '') {
+      errorField.push("schoolName");
+    }
+    if (this.schoolDetail.district == null || this.schoolDetail.district == '--Select District--') {
+      errorField.push("district");
+    }
+    if (this.schoolDetail.state == null || this.schoolDetail.state == '--Select State--') {
+      errorField.push("state");
+    }
+    if (this.schoolDetail.address == null || this.schoolDetail.address == '') {
+      errorField.push("address");
+    }
+    if (this.schoolDetail.classList.length == 0) {
+      errorField.push("Class");
+    }
+    if (this.schoolDetail.holidays.length == 0) {
+      errorField.push("Holidays");
+    }
+    if (errorField.length > 0) {
+      errorString = "Please provide data for "
+      errorField.forEach((errormsg) => {
+        errorString = errorString + errormsg + ",";
+      });
+    }
+    return errorString;
+  }
 }
