@@ -153,10 +153,10 @@
                             <div class="col-sm-3">
                                 <label for="className" class="col-form-label required">Class</label>
                                 <div class="input-group">
-                                    <select [(ngModel)]="selectedClass" id="classId" name="classId" formControlName="classId" class="form-control form-control-sm" [ngClass]="displayFieldCss('classId')">
+                                    <select [(ngModel)]="selectedClassName" id="classId" name="classId" formControlName="classId" class="form-control form-control-sm" [ngClass]="displayFieldCss('classId')">
                                         <option value=''>Select</option>
-                                        <option *ngFor="let class of classList" [ngValue]="class">
-                                            {{class.className}}
+                                        <option *ngFor="let classNameFromResponse of distinctClassList" [ngValue]="classNameFromResponse">
+                                            {{classNameFromResponse}}
                                         </option>
                                     </select>
                                 </div>
@@ -241,10 +241,10 @@
                             <div class="col-sm-3">
                                 <label for="className" class="col-form-label required">Class</label>
                                 <div class="input-group">
-                                    <select [(ngModel)]="selectedClass" id="classId" name="classId" formControlName="classId" class="form-control form-control-sm" [ngClass]="displayFieldCss('classId')">
+                                    <select [(ngModel)]="selectedClassName" id="classId" name="classId" formControlName="classId" class="form-control form-control-sm" [ngClass]="displayFieldCss('classId')">
                                         <option value=''>Select</option>
-                                        <option *ngFor="let class of classList" [ngValue]="class">
-                                            {{class.className}}
+                                        <option *ngFor="let classNameFromResponse of distinctClassList" [ngValue]="classNameFromResponse">
+                                            {{classNameFromResponse}}
                                         </option>
                                     </select>
                                 </div>
@@ -330,10 +330,10 @@
                 <div class="col-sm-3">
                     <label for="className" class="col-form-label required">Class</label>
                     <div class="input-group">
-                        <select [(ngModel)]="selectedClass" id="classId" name="classId" formControlName="classId" class="form-control form-control-sm" [ngClass]="displayFieldCss('classId')">
+                        <select [(ngModel)]="selectedClassName" id="classId" name="classId" formControlName="classId" class="form-control form-control-sm" [ngClass]="displayFieldCss('classId')">
                             <option value=''>Select</option>
-                            <option *ngFor="let class of classList" [ngValue]="class">
-                                {{class.className}}
+                            <option *ngFor="let classNameFromResponse of distinctClassList" [ngValue]="classNameFromResponse">
+                                {{classNameFromResponse}}
                             </option>
                         </select>
                     </div>
@@ -408,8 +408,8 @@
                                             <tr class="text-center">
                                                 <td scope="col">Class</td>
                                                 <td scope="col">Section</td>
-                                                <td scope="col">{{monthList[encouragingMetrics.month1].label}}</td>
-                                                <td scope="col">{{monthList[encouragingMetrics.month2].label}}</td>
+                                                <td scope="col">{{monthList[encouragingMetrics.month1-1].label}}</td>
+                                                <td scope="col">{{monthList[encouragingMetrics.month2-1].label}}</td>
                                                 <td scope="col">Increase %</td>
                                             </tr>
                                             <!-- Top Header Row - End -->

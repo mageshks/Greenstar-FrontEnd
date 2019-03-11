@@ -43,10 +43,12 @@ export class PerformanceMetricsComponent implements OnInit {
 
     public schoolList: ISchoolDetail[];
     public classList: IClassSectionDetail[];
+    public distinctClassList: Set<string>;
     public weekDays = new Map<String, String>();
     public monthList: Array<any>;
 
     public selectedClass: IClassSectionDetail;
+    public selectedClassName: string;
     public selectedMonth1: string;
     public selectedMonth2: string;
 
@@ -61,6 +63,7 @@ export class PerformanceMetricsComponent implements OnInit {
 
     ngOnInit(): void {
         this.monthList = PerformanceStaticData.monthList;
+        this.distinctClassList = new Set<string>();
         //this.performanceMetricsSource = PerformanceStaticData.getPerformanceMetricsTableContent();
         this.initializeForm();
         this.initializeClasswiseForm();
@@ -174,6 +177,9 @@ export class PerformanceMetricsComponent implements OnInit {
     private loadClassDetailsBySchoolId(schoolDetail: ISchoolDetail) {
         this.performanceStarService.getClassList(schoolDetail).subscribe((response) => {
             this.classList = response;
+            this.classList.forEach(element => {
+                this.distinctClassList.add(element.className);
+            });
             this.isSpinner = false;
         }, error => {
             console.log("Http Server error", error);
@@ -219,7 +225,7 @@ export class PerformanceMetricsComponent implements OnInit {
             let searchPerformanceMetrics: ISearchPerformanceMetrics = {} as ISearchPerformanceMetrics;
             searchPerformanceMetrics.schoolId = this.classPerfMetricsForm.getRawValue().schoolId;
             //searchPerformanceMetrics.classId = this.classPerfMetricsForm.getRawValue().classId;
-            searchPerformanceMetrics.className = this.selectedClass.className;
+            searchPerformanceMetrics.className = this.selectedClassName;
             this.loadClasswisePerformanceMetrics(searchPerformanceMetrics);
         } else {
             ValidatorUtil.validateAllFormFields(this.classPerfMetricsForm);
@@ -248,7 +254,7 @@ export class PerformanceMetricsComponent implements OnInit {
             let searchPerformanceMetrics: ISearchPerformanceMetrics = {} as ISearchPerformanceMetrics;
             searchPerformanceMetrics.schoolId = this.teamPerfMetricsForm.getRawValue().schoolId;
             //searchPerformanceMetrics.classId = this.teamPerfMetricsForm.getRawValue().classId;
-            searchPerformanceMetrics.className = this.selectedClass.className;
+            searchPerformanceMetrics.className = this.selectedClassName;
             this.loadTeamwisePerformanceMetrics(searchPerformanceMetrics);
         } else {
             ValidatorUtil.validateAllFormFields(this.teamPerfMetricsForm);
@@ -277,7 +283,7 @@ export class PerformanceMetricsComponent implements OnInit {
             let searchPerformanceMetrics: ISearchPerformanceMetrics = {} as ISearchPerformanceMetrics;
             searchPerformanceMetrics.schoolId = this.encouragingPerfMetricsForm.getRawValue().schoolId;
             //searchPerformanceMetrics.classId = this.teamPerfMetricsForm.getRawValue().classId;
-            searchPerformanceMetrics.className = this.selectedClass.className;
+            searchPerformanceMetrics.className = this.selectedClassName;
             searchPerformanceMetrics.month1 = this.selectedMonth1;
             searchPerformanceMetrics.month2 = this.selectedMonth2;
 
@@ -371,6 +377,6 @@ export class PerformanceMetricsComponent implements OnInit {
     }    
 
     selected(){
-        alert(this.selectedClass.className)
+        alert(this.selectedClassName)
       }
 }
