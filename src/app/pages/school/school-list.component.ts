@@ -138,6 +138,7 @@ export class SchoolListComponent implements OnInit {
     activeModal.componentInstance.title = 'Edit School Detail';
     activeModal.componentInstance.action = 'edit';
     activeModal.componentInstance.schoolId = event.data.id;
+    activeModal.componentInstance.stateList = this.stateList;
   }
 
   public viewSchool(event){
@@ -147,11 +148,13 @@ export class SchoolListComponent implements OnInit {
     activeModal.componentInstance.title = 'View School Detail';
     activeModal.componentInstance.action = 'view';
     activeModal.componentInstance.schoolId = event.data.id;
+    activeModal.componentInstance.stateList = this.stateList;
   }
 
   public createSchool(): void {
     const activeModal = this.modalService.open(SchoolComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.title = 'Add School Detail';
     activeModal.componentInstance.action = 'create';
+    activeModal.componentInstance.stateList = this.stateList;
   }
 }

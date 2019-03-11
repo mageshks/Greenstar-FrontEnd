@@ -16,14 +16,14 @@
                             <div class="input-group col-sm-7">
                                 <input type="text" id="schoolName" name="schoolName" maxlength="90"
                                     [(ngModel)]="schoolDetail.schoolName" class="form-control"
-                                    placeholder="School Name" />
+                                    placeholder="School Name" [disabled]="this.action == 'view'" />
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="address" class="col-sm-3 col-form-label  required">Address</label>
                             <div class="input-group col-sm-7">
                                 <textarea type="text" id="address" name="address" row="5" maxlength="500"
-                                    [(ngModel)]="schoolDetail.address" class="form-control" placeholder="Address">
+                                    [(ngModel)]="schoolDetail.address" class="form-control" placeholder="Address" [disabled]="this.action == 'view'"> 
                                     </textarea>
                             </div>
                         </div>
@@ -31,13 +31,13 @@
                             <label for="city" class="col-sm-3 col-form-label  required">City</label>
                             <div class="input-group col-sm-7">
                                 <input type="text" id="city" name="city" maxlength="45"
-                                    [(ngModel)]="schoolDetail.cityName" class="form-control" placeholder="City">
+                                    [(ngModel)]="schoolDetail.cityName" class="form-control" [disabled]="this.action == 'view'" placeholder="City">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="address" class="col-sm-3 col-form-label  required">State</label>
                             <div class="input-group col-sm-7">
-                                <select id="state" name="state" class="form-control form-control-sm"
+                                <select id="state" name="state" class="form-control form-control-sm" [disabled]="this.action == 'view'" 
                                     [(ngModel)]="schoolDetail.state" (change)="onStateChange($event)">
                                     <option value="--Select State--">--Select State--</option>
                                     <option *ngFor="let state of stateList" value={{state.stateName}}>
@@ -49,7 +49,7 @@
                         <div class="form-group row">
                             <label for="district" class="col-sm-3 col-form-label  required">District</label>
                             <div class="input-group col-sm-7">
-                                <select id="district" name="district" class="form-control form-control-sm"
+                                <select id="district" name="district" class="form-control form-control-sm" [disabled]="this.action == 'view'" 
                                     [(ngModel)]="schoolDetail.district">
                                     <option value="--Select District--">--Select District--</option>
                                     <option *ngFor="let district of districtList" value={{district}}>
