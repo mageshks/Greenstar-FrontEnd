@@ -32,11 +32,11 @@
                     </div>
                     
                     <div class='row'>
-                        <div class='col-md-2'>
+                        <div class='col-sm-2'>
                             <label for="month" class="col-form-label required">Month</label>
                             <div class="input-group">
-                                <select id="month" name="month" formControlName="month" class="form-control form-control-sm" [ngClass]="displayFieldCss('month')">
-                                    <option value=''>--Select--</option>
+                                <select id="month" name="month" formControlName="month" class="form-control form-control-sm" [ngClass]="displayFieldCss('month')" (change)="populateWeekWorkingDays($event.target.value)" required>
+                                    <option value=''>Select</option>
                                     <option value='1'>Jan</option>
                                     <option value='2'>Feb</option>
                                     <option value='3'>Mar</option>
@@ -52,16 +52,14 @@
                                 </select>
                             </div>
                         </div>
-                        <div class='col-md-2'>
+                        <div class='col-sm-2'>
                             <label for="week" class="col-form-label required">Week</label>
                             <div class="input-group">
                                 <select id="week" name="week" formControlName="week" class="form-control form-control-sm" [ngClass]="displayFieldCss('week')">
                                     <option value=''>Select</option>
-                                    <option value='2019-02-01~2019-02-01'>Week-1</option>
-                                    <option value='2019-02-04~2019-02-08'>Week-2</option>
-                                    <option value='2019-02-11~2019-02-15'>Week-3</option>
-                                    <option value='2019-02-18~2019-02-22'>Week-4</option>
-                                    <option value='2019-02-25~2019-02-28'>Week-5</option>
+                                    <option *ngFor="let weekDay of weekDays | keyvalue" value={{weekDay.value}}>
+                                        {{weekDay.key}}
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -85,7 +83,7 @@
                 </form>
     
                     <div class="row pt-3">
-                        <div class="col-md-12">
+                        <div class="col-sm-12">
                             <div class="table-responsive">
                                 <table class="table table-sm table-striped table-bordered">
                                     <thead>
@@ -94,7 +92,7 @@
                                             <th rowspan="2" scope="col">Roll ID</th>
                                             <th rowspan="2" scope="col">Name</th>
                                             <ng-container *ngFor="let headerObj of performanceMetricsSource.headers">
-                                                <th colspan="3" scope="col" class="text-center">
+                                                <th [attr.colspan]="performanceMetricsSource.totalSubTitle" scope="col" class="text-center">
                                                     <label nbTooltip="{{headerObj.title}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{headerObj.title}}</label> &nbsp;
                                                 </th>
                                             </ng-container>
@@ -114,13 +112,18 @@
                                         <!-- Top Sub Header Row - End -->
                                     </thead>
                                     <tbody>
+                                        <!-- Row content : No data found - Start -->
+                                        <!-- <tr class="text-center" *ngIf='performanceMetricsSource.performanceRows == null || performanceMetricsSource.performanceRows.length == 0'>
+                                            <td [attr.colspan]="(performanceMetricsSource.totalSubTitle * performanceMetricsSource.headers.length) + 2" scope="col">No Data Found</td>
+                                        </tr> -->
+                                        <!-- Row content : No data found - End -->
                                         <!-- Row content - Start -->
                                         <tr *ngFor="let performanceRow of performanceMetricsSource.performanceRows">
                                             <td scope="col">{{ performanceRow.rollId }}</td>
-                                            <td scope="col">{{ performanceRow.name }}</td>
-                                            <ng-container *ngFor="let performanceDay of performanceRow.performanceMetricsDays">
+                                            <td scope="col">{{ performanceRow.studentName }}</td>
+                                            <ng-container *ngFor="let performanceDay of performanceRow.performanceDays">
                                                 <!-- Single Value -->
-                                                <td scope="col" *ngFor="let performanceData of performanceDay.performanceDatas" style="text-align:center;">
+                                                <td scope="col" *ngFor="let performanceData of performanceDay.performanceData" class="text-center"> 
                                                     <label nbTooltip="{{performanceData.value==true?2:0}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{performanceData.value==true?2:0}}</label>
                                                 </td>
                                             </ng-container>

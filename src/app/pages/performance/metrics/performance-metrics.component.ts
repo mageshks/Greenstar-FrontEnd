@@ -16,6 +16,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ISchoolDetail, IClassSectionDetail } from '../star/performance-star.interface';
 import { ValidatorUtil } from '../../util/validator-util';
 import { PerformanceStarService } from '../star/performance-star.service';
+import { PerformanceDataService } from '../data/performance-data.service';
 
 @Component({
     selector: 'ngx-performance',
@@ -33,6 +34,7 @@ export class PerformanceMetricsComponent implements OnInit {
     public isClasswiseSearchDataNotValid: boolean = false;
     public isTeamwiseSearchDataNotValid: boolean = false;
     public isSpinner: boolean = false;
+    public searchDataErrorMsg: string = '';
 
     public perfMetricsForm: FormGroup;
     public classPerfMetricsForm: FormGroup;
@@ -41,6 +43,7 @@ export class PerformanceMetricsComponent implements OnInit {
 
     public schoolList: ISchoolDetail[];
     public classList: IClassSectionDetail[];
+    public weekDays = new Map<String, String>();
     public monthList: Array<any>;
 
     public selectedClass: IClassSectionDetail;
@@ -48,7 +51,6 @@ export class PerformanceMetricsComponent implements OnInit {
     public selectedMonth2: string;
 
     constructor(
-        private modalService: NgbModal,
         private formBuilder: FormBuilder,
         private classFormBuilder: FormBuilder,
         private teamFormBuilder: FormBuilder,
@@ -59,10 +61,7 @@ export class PerformanceMetricsComponent implements OnInit {
 
     ngOnInit(): void {
         this.monthList = PerformanceStaticData.monthList;
-        this.performanceMetricsSource = PerformanceStaticData.getPerformanceMetricsTableContent();
-       // this.classWiseMetricsSource = PerformanceStaticData.getClassWiseTableContent();
-       // this.teamWiseMetricsSource = PerformanceStaticData.getTeamWiseTableContent();
-       // this.encouragingMetricsSource = PerformanceStaticData.getEncouragingTableContent();
+        //this.performanceMetricsSource = PerformanceStaticData.getPerformanceMetricsTableContent();
         this.initializeForm();
         this.initializeClasswiseForm();
         this.initializeTeamwiseForm();
@@ -302,6 +301,74 @@ export class PerformanceMetricsComponent implements OnInit {
             }
         );
     }
+
+    private getSearchParamObject(): ISearchPerformanceMetrics {
+
+        let searchPerformanceData: ISearchPerformanceMetrics = {} as ISearchPerformanceMetrics;
+        searchPerformanceData.schoolId = this.perfMetricsForm.getRawValue().schoolId;
+        searchPerformanceData.classId = this.perfMetricsForm.getRawValue().classId;
+        searchPerformanceData.month = this.perfMetricsForm.getRawValue().month;
+        searchPerformanceData.week = this.perfMetricsForm.getRawValue().week;
+
+        searchPerformanceData.schoolName = this.getSchoolName(this.perfMetricsForm.getRawValue().schoolId);
+        searchPerformanceData.className = this.getClassName(this.perfMetricsForm.getRawValue().classId);
+
+        return searchPerformanceData;
+    }    
+
+    private getSchoolName(schoolId: number): string {
+
+        let schooName = '';
+        this.schoolList.forEach(school => {
+            if (school.id == schoolId) {
+                schooName = school.schoolName;
+            }
+        });
+        return schooName;
+    }
+
+    private getClassName(classId: number): string {
+
+        let className = '';
+        this.classList.forEach(classz => {
+            if (classz.id == classId) {
+                className = classz.className;
+            }
+        });
+        return className;
+    }
+
+    public populateWeekWorkingDays($event): void {
+
+        this.isSearchDataNotValid = false;
+        this.searchDataErrorMsg = '';
+
+        if (!ValidatorUtil.isEmpty(this.perfMetricsForm.getRawValue().schoolId)
+            && !ValidatorUtil.isEmpty(this.perfMetricsForm.getRawValue().classId)
+            && !ValidatorUtil.isEmpty(this.perfMetricsForm.getRawValue().month)) {
+
+            this.isSpinner = true;
+
+            let searchPerformanceMetrics: ISearchPerformanceMetrics = this.getSearchParamObject();
+
+            this.performanceMetricsService.getWeekDaysByMonth(searchPerformanceMetrics).subscribe(
+                (response) => {
+                    console.log(response.result);
+                    this.weekDays = response.result;
+                    this.isSpinner = false;
+                },
+                error => {
+                    console.log("Http Server error", error);
+                    this.isSpinner = false;
+                }
+            );
+        } else {
+            ValidatorUtil.validateAllFormFields(this.perfMetricsForm);
+            this.isSearchDataNotValid = true;
+            this.searchDataErrorMsg = 'All fields are mandatory!';
+            this.weekDays = new Map<String, String>();
+        }
+    }    
 
     selected(){
         alert(this.selectedClass.className)

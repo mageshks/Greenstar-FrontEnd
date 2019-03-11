@@ -1,5 +1,6 @@
 export interface ISearchPerformanceMetrics {
     schoolId: number;
+    schoolName: string;
     classId: string;
     className: string;
     sectionName: string;
@@ -44,20 +45,27 @@ export interface IPerformanceData {
 }
 
 export interface IPerformanceMetricsDataTable {
+    schoolId: number;
+    classId: number;
+    className: string;
+    section: string;
+    month: number;
+    week: string;
+    userId: string;
     headers: IPerformanceHeader[];
     performanceRows: IPerformanceMetricsRow[];
 }
 
 export interface IPerformanceMetricsRow {
     rollId: string;
-    name: string;
-    performanceMetricsDays: IPerformanceMetricsDay[];
+    studentName: string;
+    performanceDays: IPerformanceMetricsDay[];
 }
 
 
 export interface IPerformanceMetricsDay {
     dateValue: string;
-    performanceDatas: IPerformanceMetricsData[];
+    performanceData: IPerformanceMetricsData[];
 }
 
 export interface IPerformanceMetricsWeek {
