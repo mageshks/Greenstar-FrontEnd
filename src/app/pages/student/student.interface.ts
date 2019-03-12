@@ -7,15 +7,18 @@ export class IStudentSearchData {
 export class ISchoolDetail {
     public id: number;
     public schoolName: string;
+    public teamMap: Map<string,number>;
 }
 
 export class IClassSectionDetail {
     public id: number;
+    public schoolId: number;
     public className: string;
     public sectionName: string;
     public classAndSectionName: string;
     public studentList: IStudentDetail[] = [];
     public teamList: string[];
+    public schoolTeamList: ISchoolTeamCount[];
 }
 
 export class IStudentDetail {
@@ -25,5 +28,10 @@ export class IStudentDetail {
     public teamName: string;
     public rollId: string;
     public studentName: string;  
+}
+
+export class ISchoolTeamCount{
+    public teamName: string;
+    public studentCount: number;
 }
 

@@ -53,12 +53,22 @@
 
                 <nb-card *ngIf="isStudentAvailable">
                     <nb-card-body [nbSpinner]="loadingStudents" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
-                        <div class='row pt-3'>
-                            <div class='col-sm-12'>
+                        <div class='row'>
+                            <div class='col-sm-12 test-left'>
+                                <span>Note: Team can contain minimum 3 and maximum 5 students. Refer team name table for existing team name and count in each team</span>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-sm-7'>
                                 <ng2-smart-table [settings]="tableSetting" [source]="studentSource"
                                     (createConfirm)="onStudentCreate($event)" (editConfirm)="onStudentEdit($event)"
                                     (deleteConfirm)="onStudentDeleteConfirm($event)">
 
+                                </ng2-smart-table>
+                            </div>
+
+                            <div class='col-sm-5'>
+                                <ng2-smart-table [settings]="teamNameTableSetting" [source]="teamNameTableSource">
                                 </ng2-smart-table>
                             </div>
                         </div>

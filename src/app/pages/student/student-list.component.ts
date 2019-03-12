@@ -36,6 +36,10 @@ export class StudentListComponent implements OnInit {
   public studentSource: LocalDataSource = new LocalDataSource();
   public tableSetting: any = this.studentTableSetting();
 
+    // Team table setting
+    public teamNameTableSource: LocalDataSource = new LocalDataSource();
+    public teamNameTableSetting: any = this.teamTableSettings();
+
   constructor(
     private modalService: NgbModal,
     private studentService: StudentService) {
@@ -94,15 +98,17 @@ export class StudentListComponent implements OnInit {
       this.loadingStudents = true;
       let classDetail: IClassSectionDetail = new IClassSectionDetail();
       classDetail.id = this.studentSearchData.classId;
+      classDetail.schoolId = this.studentSearchData.schoolId;
       this.studentService.getClassDetail(classDetail).subscribe(
         (response) => {
-          console.log(response);
+          console.log("classDetail ==> " + response);
           this.classSectionDetail = response;
           if (this.classSectionDetail.studentList.length == 0) {
             this.isStudentAvailable = false;
           } else {
             this.isStudentAvailable = true;
             this.studentSource.load(this.classSectionDetail.studentList);
+            this.teamNameTableSource.load(this.classSectionDetail.schoolTeamList);
             this.loadingStudents = false;
           }
         },
@@ -112,6 +118,8 @@ export class StudentListComponent implements OnInit {
       );
     }
   }
+
+  private 
 
   public openBulkUploadDialog(): void {
     const activeModal = this.modalService.open(StudentBulkUploadModalComponent, { size: 'lg', container: 'nb-layout' });
@@ -182,6 +190,24 @@ export class StudentListComponent implements OnInit {
         },
         teamName: {
           title: 'Team Name',
+          type: 'string'
+        }
+      }
+    };
+    return settings;
+  }
+
+  private teamTableSettings() {
+    let settings: any = {
+      actions: { add: false, edit: false, delete: false },
+      pager: { display: true, perPage: 10 },
+      columns: {
+        teamName: {
+          title: 'Team Name',
+          type: 'string'
+        },
+        studentCount: {
+          title: 'Student Count',
           type: 'string'
         }
       }
