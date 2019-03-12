@@ -24,7 +24,7 @@
                             </div>
 
                             <div class="col-sm-2">
-                                <label for="className" class="col-form-label required">Class</label>
+                                <label for="className" class="col-form-label">Class</label>
                                 <div class="input-group">
                                     <select id="className" name="className" class="form-control form-control-sm"
                                         [(ngModel)]="studentSearchData.classId" (change)="onChangeClass()">
@@ -46,15 +46,20 @@
                                 <label for="uploadbtn" class="col-form-label empty">*</label>
                                 <div class="input-group">
                                     <button nbButton status="primary" id="uploadbtn"
-                                        (click)="onBulkUpload()">Bulk Upload</button>
+                                        (click)="openBulkUploadDialog()">Bulk Upload</button>
                                 </div>
                             </div>
                         </div>
                         <div class="row" *ngIf="isSearchDataNotValid">
                             <div class="col-sm-12 pt-2 text-left errormsg">
-                                <span>All fields are mandatory to search students!</span>
+                                <span>Both fields are mandatory to search students!</span>
                             </div>
                         </div>
+                        <div class="row" *ngIf="isBulkUploadRequestNotValid">
+                                <div class="col-sm-12 pt-2 text-left errormsg">
+                                    <span>School is mandatory for bulk upload!</span>
+                                </div>
+                            </div>
                     </nb-card-body>
                 </nb-card>
 

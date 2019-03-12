@@ -18,6 +18,8 @@ export class StudentListComponent implements OnInit {
 
   public isStudentAvailable: boolean = false;
 
+  public isBulkUploadRequestNotValid: boolean = false;
+
   public studentSearchData: IStudentSearchData = new IStudentSearchData();
 
   // Contains list of class to display in dropdown
@@ -70,6 +72,7 @@ export class StudentListComponent implements OnInit {
 
   public onChangeSchoolChange() {
     this.isSearchDataNotValid = false;
+    this.isBulkUploadRequestNotValid = false;
     if (this.studentSearchData.schoolId == 0) {
       this.classSectionList = [];
       this.studentSearchData.classId = 0;
@@ -142,7 +145,13 @@ export class StudentListComponent implements OnInit {
   }
 
   public openBulkUploadDialog(): void {
-    const activeModal = this.modalService.open(StudentBulkUploadModalComponent, { size: 'lg', container: 'nb-layout' });
+    if(this.studentSearchData.schoolId == 0){
+      this.isBulkUploadRequestNotValid = true;
+    }else{
+      const activeModal = this.modalService.open(StudentBulkUploadModalComponent, { size: 'lg', container: 'nb-layout' });
+      activeModal.componentInstance.schoolId = this.studentSearchData.schoolId;
+      activeModal.componentInstance.classId = this.studentSearchData.classId;
+    }
   }
 
   public downloadExcelExport(): void {
