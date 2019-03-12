@@ -18,6 +18,8 @@ export class StudentListComponent implements OnInit {
 
   public isStudentAvailable: boolean = false;
 
+  public isBulkUploadRequestNotValid: boolean = false;
+
   public studentSearchData: IStudentSearchData = new IStudentSearchData();
 
   // Contains list of class to display in dropdown
@@ -36,9 +38,9 @@ export class StudentListComponent implements OnInit {
   public studentSource: LocalDataSource = new LocalDataSource();
   public tableSetting: any = this.studentTableSetting();
 
-    // Team table setting
-    public teamNameTableSource: LocalDataSource = new LocalDataSource();
-    public teamNameTableSetting: any = this.teamTableSettings();
+  // Team table setting
+  public teamNameTableSource: LocalDataSource = new LocalDataSource();
+  public teamNameTableSetting: any = this.teamTableSettings();
 
   constructor(
     private modalService: NgbModal,
@@ -70,6 +72,7 @@ export class StudentListComponent implements OnInit {
 
   public onChangeSchoolChange() {
     this.isSearchDataNotValid = false;
+    this.isBulkUploadRequestNotValid = false;
     if (this.studentSearchData.schoolId == 0) {
       this.classSectionList = [];
       this.studentSearchData.classId = 0;
@@ -119,10 +122,36 @@ export class StudentListComponent implements OnInit {
     }
   }
 
-  private 
+  public onStudentSubmit() {
+    this.loadingStudents = true;
+    //TODO: convert this to session variable
+    this.classSectionDetail.userId="Magesh";
+    this.classSectionDetail.schoolId=this.studentSearchData.schoolId;
+    console.log("this.classSectionDetail.studentList" + JSON.stringify(this.classSectionDetail.studentList));
+    this.studentService.saveOrUpdateStudent(this.classSectionDetail).subscribe(
+      (response) => {
+        console.log("classDetail ==> " + response);
+        this.classSectionDetail = response;
+        this.studentSource.load(this.classSectionDetail.studentList);
+        this.teamNameTableSource.load(this.classSectionDetail.schoolTeamList);
+        this.loadingStudents = false;
+        this.openModal('Message', 'Students updated successfully!');
+      },
+      error => {
+        console.log("Http Server error", error);
+        this.openModal('Error Message', 'Error occured while updating students!');
+      },
+    );
+  }
 
   public openBulkUploadDialog(): void {
-    const activeModal = this.modalService.open(StudentBulkUploadModalComponent, { size: 'lg', container: 'nb-layout' });
+    if(this.studentSearchData.schoolId == 0){
+      this.isBulkUploadRequestNotValid = true;
+    }else{
+      const activeModal = this.modalService.open(StudentBulkUploadModalComponent, { size: 'lg', container: 'nb-layout' });
+      activeModal.componentInstance.schoolId = this.studentSearchData.schoolId;
+      activeModal.componentInstance.classId = this.studentSearchData.classId;
+    }
   }
 
   public downloadExcelExport(): void {
@@ -156,8 +185,15 @@ export class StudentListComponent implements OnInit {
 
   public onStudentDeleteConfirm(event): void {
     console.log('delete triggerred!');
-    if (window.confirm('Are you sure you want to delete?')) {
+    if (window.confirm('Are you sure you want to delete? All the preformance data for the student will also get deleted!')) {
       this.classSectionDetail.studentList = event.source.data;
+      for (let i = 0; i < this.classSectionDetail.studentList.length; i++) {
+        let student = this.classSectionDetail.studentList[i];
+        if (student.studentName === event.data.studentName
+          && student.teamName === event.data.teamName) {
+          this.classSectionDetail.studentList.splice(i, 1);
+        }
+      }
       event.confirm.resolve();
     } else {
       event.confirm.reject();
@@ -202,8 +238,12 @@ export class StudentListComponent implements OnInit {
       actions: { add: false, edit: false, delete: false },
       pager: { display: true, perPage: 10 },
       columns: {
+        classSectionName: {
+          title: 'Class',
+          type: 'string'
+        },
         teamName: {
-          title: 'Team Name',
+          title: 'Team',
           type: 'string'
         },
         studentCount: {

@@ -72,11 +72,26 @@ export class SchoolComponent implements OnInit {
     this.schoolService.retrieveSchool(this.schoolId).subscribe(
       (response) => {
         this.schoolDetail = response;
-        // Load datasource with the data froms erver
-        this.classDetail.load(this.schoolDetail.classList);
+        // Load datasource with the data from server
+        if (this.schoolDetail.classList == null) {
+          this.classDetail.load([]);
+        } else {
+          this.classDetail.load(this.schoolDetail.classList);
+        }
+
         this.perfParamDynamicDetail.load(this.schoolDetail.perfParamList);
-        this.schoolHolidayDetail.load(this.schoolDetail.holidays);
-        this.schoolWeekendWorkDetail.load(this.schoolDetail.weekendWorkingDays);
+
+        if (this.schoolDetail.holidays == null) {
+          this.schoolHolidayDetail.load([]);
+        } else {
+          this.schoolHolidayDetail.load(this.schoolDetail.holidays);
+        }
+
+        if (this.schoolDetail.weekendWorkingDays == null) {
+          this.schoolWeekendWorkDetail.load([]);
+        } else {
+          this.schoolWeekendWorkDetail.load(this.schoolDetail.weekendWorkingDays);
+        }
         //Load district list
         this.onStateChange();
         console.log("Retrieved school Detail Response ==> " + response);
@@ -147,6 +162,14 @@ export class SchoolComponent implements OnInit {
     if (event.data.id == undefined) {
       if (window.confirm('Are you sure you want to delete class?')) {
         this.schoolDetail.classList = event.source.data;
+        //remove un saved class, persisted class won't allow to delete
+        for (let i = 0; i < this.schoolDetail.classList.length; i++) {
+          let clazz = this.schoolDetail.classList[i];
+          if (clazz.className === event.data.className
+            && clazz.sectionName === event.data.sectionName) {
+            this.schoolDetail.classList.splice(i, 1);
+          }
+        }
         event.confirm.resolve();
       } else {
         event.confirm.reject();
@@ -191,6 +214,16 @@ export class SchoolComponent implements OnInit {
   public onDeleteForHoliday(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
       this.schoolDetail.holidays = event.source.data;
+      //remove the holiday
+      for (let i = 0; i < this.schoolDetail.holidays.length; i++) {
+        let holiday = this.schoolDetail.holidays[i];
+        if (holiday.id === event.data.id
+          && holiday.fromDate === event.data.fromDate
+          && holiday.toDate === event.data.toDate &&
+          holiday.description === event.data.description) {
+          this.schoolDetail.holidays.splice(i, 1);
+        }
+      }
       event.confirm.resolve();
     } else {
       event.confirm.reject();
@@ -218,11 +251,18 @@ export class SchoolComponent implements OnInit {
 
   public onDeleteForWeekendWorking(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
-      console.log("OnDeleteAccept==> " + event.source.data);
+      console.log("OnDeleteAccept==> ");
       this.schoolDetail.weekendWorkingDays = event.source.data;
+      for (let i = 0; i < this.schoolDetail.weekendWorkingDays.length; i++) {
+        let workingDay = this.schoolDetail.weekendWorkingDays[i];
+        if (workingDay.id === event.data.id
+          && workingDay.reason === event.data.reason
+          && workingDay.workingDate === event.data.workingDate) {
+          this.schoolDetail.weekendWorkingDays.splice(i, 1);
+        }
+      }
       event.confirm.resolve();
     } else {
-      console.log("OnDeleteReject==> " + event.source.data);
       event.confirm.reject();
     }
   }

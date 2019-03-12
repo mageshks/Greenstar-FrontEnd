@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
-import { ISchoolDetail,IStudentDetail,IClassSectionDetail } from "./student.interface";
+import { ISchoolDetail,IClassSectionDetail,IStudentSearchData } from "./student.interface";
 
 const API_URL: string = 'http://localhost:2620';
 
@@ -25,20 +25,16 @@ export class StudentService {
         return this.http.post(API_URL+'/school/getClassDetail',classInfo,{ headers: this.headerValue });
     }
 
-    public updateStudent(studentDetail: IStudentDetail): Observable<any> {
-        return this.http.post(API_URL + 'student', studentDetail, { headers: this.headerValue });
+    public saveOrUpdateStudent(classInfo: IClassSectionDetail): Observable<any> {
+        return this.http.post(API_URL + '/school/saveclassstudents', classInfo, { headers: this.headerValue });
     }
 
-    public deleteStudent(studentDetail: IStudentDetail): Observable<any> {
-        return this.http.post(API_URL + 'student', studentDetail, { headers: this.headerValue });
+    public getStudentDataTemplate(searchStudentData: IStudentSearchData): Observable<any> {
+        return this.http.post(API_URL + '/school/student/downloadtemplate', searchStudentData, { responseType: 'blob' });
     }
 
-    public saveBulkData(formData: FormData): Observable<any> {
-        return this.http.post(API_URL + 'student', formData, { headers: this.headerValue });
-    }
-
-    public getStudentUploadTemplate(): Observable<any> {
-        return this.http.get(API_URL + 'student', { responseType: 'blob' });
+    public bulkUploadStudentData(formData: FormData): Observable<any> {
+        return this.http.post(API_URL + '/school/student/uploadbulkdata', formData, { headers: this.headerValue });
     }
 
     private handleError(error: Response | any): any {
