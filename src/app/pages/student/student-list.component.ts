@@ -229,8 +229,12 @@ export class StudentListComponent implements OnInit {
       actions: { add: false, edit: false, delete: false },
       pager: { display: true, perPage: 10 },
       columns: {
+        classSectionName: {
+          title: 'Class',
+          type: 'string'
+        },
         teamName: {
-          title: 'Team Name',
+          title: 'Team',
           type: 'string'
         },
         studentCount: {

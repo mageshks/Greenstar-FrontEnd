@@ -34,5 +34,7 @@ export class IStudentDetail {
 export class ISchoolTeamCount{
     public teamName: string;
     public studentCount: number;
+    public classId:number;
+	public classSectionName: string;
 }
 
