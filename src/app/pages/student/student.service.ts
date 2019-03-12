@@ -25,12 +25,8 @@ export class StudentService {
         return this.http.post(API_URL+'/school/getClassDetail',classInfo,{ headers: this.headerValue });
     }
 
-    public updateStudent(studentDetail: IStudentDetail): Observable<any> {
-        return this.http.post(API_URL + 'student', studentDetail, { headers: this.headerValue });
-    }
-
-    public deleteStudent(studentDetail: IStudentDetail): Observable<any> {
-        return this.http.post(API_URL + 'student', studentDetail, { headers: this.headerValue });
+    public saveOrUpdateStudent(classInfo: IClassSectionDetail): Observable<any> {
+        return this.http.post(API_URL + '/school/saveclassstudents', classInfo, { headers: this.headerValue });
     }
 
     public saveBulkData(formData: FormData): Observable<any> {

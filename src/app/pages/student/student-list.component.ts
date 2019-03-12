@@ -36,9 +36,9 @@ export class StudentListComponent implements OnInit {
   public studentSource: LocalDataSource = new LocalDataSource();
   public tableSetting: any = this.studentTableSetting();
 
-    // Team table setting
-    public teamNameTableSource: LocalDataSource = new LocalDataSource();
-    public teamNameTableSetting: any = this.teamTableSettings();
+  // Team table setting
+  public teamNameTableSource: LocalDataSource = new LocalDataSource();
+  public teamNameTableSetting: any = this.teamTableSettings();
 
   constructor(
     private modalService: NgbModal,
@@ -119,7 +119,25 @@ export class StudentListComponent implements OnInit {
     }
   }
 
-  private 
+  public onStudentSubmit() {
+    this.loadingStudents = true;
+    //TODO: convert this to session variable
+    this.classSectionDetail.userId="Magesh";
+    this.classSectionDetail.schoolId=this.studentSearchData.schoolId;
+    console.log("this.classSectionDetail.studentList" + JSON.stringify(this.classSectionDetail.studentList));
+    this.studentService.saveOrUpdateStudent(this.classSectionDetail).subscribe(
+      (response) => {
+        console.log("classDetail ==> " + response);
+        this.classSectionDetail = response;
+        this.studentSource.load(this.classSectionDetail.studentList);
+        this.teamNameTableSource.load(this.classSectionDetail.schoolTeamList);
+        this.loadingStudents = false;
+      },
+      error => {
+        console.log("Http Server error", error);
+      },
+    );
+  }
 
   public openBulkUploadDialog(): void {
     const activeModal = this.modalService.open(StudentBulkUploadModalComponent, { size: 'lg', container: 'nb-layout' });
@@ -156,8 +174,15 @@ export class StudentListComponent implements OnInit {
 
   public onStudentDeleteConfirm(event): void {
     console.log('delete triggerred!');
-    if (window.confirm('Are you sure you want to delete?')) {
+    if (window.confirm('Are you sure you want to delete? All the preformance data for the student will also get deleted!')) {
       this.classSectionDetail.studentList = event.source.data;
+      for (let i = 0; i < this.classSectionDetail.studentList.length; i++) {
+        let student = this.classSectionDetail.studentList[i];
+        if (student.studentName === event.data.studentName
+          && student.teamName === event.data.teamName) {
+          this.classSectionDetail.studentList.splice(i, 1);
+        }
+      }
       event.confirm.resolve();
     } else {
       event.confirm.reject();

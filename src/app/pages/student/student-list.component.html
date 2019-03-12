@@ -23,7 +23,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <label for="className" class="col-form-label required">Class</label>
                                 <div class="input-group">
                                     <select id="className" name="className" class="form-control form-control-sm"
@@ -35,11 +35,18 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class='col-md-4 text-right'>
+                            <div class='col-md-2 text-right'>
                                 <label for="searchbtn" class="col-form-label empty">*</label>
                                 <div class="input-group">
                                     <button nbButton status="primary" id="searchbtn"
                                         (click)="onSearch()">Search</button>
+                                </div>
+                            </div>
+                            <div class='col-md-3 text-right'>
+                                <label for="uploadbtn" class="col-form-label empty">*</label>
+                                <div class="input-group">
+                                    <button nbButton status="primary" id="uploadbtn"
+                                        (click)="onBulkUpload()">Bulk Upload</button>
                                 </div>
                             </div>
                         </div>
@@ -54,8 +61,12 @@
                 <nb-card *ngIf="isStudentAvailable">
                     <nb-card-body [nbSpinner]="loadingStudents" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
                         <div class='row'>
-                            <div class='col-sm-12 text-left'>
-                                <span>Note: Team can contain minimum 3 and maximum 5 students. Refer team name table for existing team name and count in each team</span>
+                            <div class='col-sm-10 text-left'>
+                                <span>Note: Team can contain minimum 3 and maximum 5 students. Refer team name table for
+                                    existing teams</span>
+                            </div>
+                            <div class='col-sm-2 text-right pb-2'>
+                                <button nbButton status="primary" id="submitbtn" (click)="onStudentSubmit()">Submit</button>
                             </div>
                         </div>
                         <div class='row'>
@@ -63,7 +74,6 @@
                                 <ng2-smart-table [settings]="tableSetting" [source]="studentSource"
                                     (createConfirm)="onStudentCreate($event)" (editConfirm)="onStudentEdit($event)"
                                     (deleteConfirm)="onStudentDeleteConfirm($event)">
-
                                 </ng2-smart-table>
                             </div>
 

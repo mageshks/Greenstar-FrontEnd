@@ -12,6 +12,7 @@ export class ISchoolDetail {
 
 export class IClassSectionDetail {
     public id: number;
+    public userId: string;
     public schoolId: number;
     public className: string;
     public sectionName: string;
