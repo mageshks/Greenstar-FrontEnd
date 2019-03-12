@@ -132,9 +132,11 @@ export class StudentListComponent implements OnInit {
         this.studentSource.load(this.classSectionDetail.studentList);
         this.teamNameTableSource.load(this.classSectionDetail.schoolTeamList);
         this.loadingStudents = false;
+        this.openModal('Message', 'Students updated successfully!');
       },
       error => {
         console.log("Http Server error", error);
+        this.openModal('Error Message', 'Error occured while updating students!');
       },
     );
   }
