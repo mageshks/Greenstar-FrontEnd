@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
             if (response.roleName === 'Admin') {
               menuNames = 'Dashboard~School~Student~Performance Data~Performance Star~Performance Metrics~Admin';
             } else if (response.roleName === 'Event POC') {
-              menuNames = 'Dashboard~School~Student~';
+              menuNames = 'Dashboard~School~Student';
             } else if (response.roleName === 'PMO') {
               menuNames = 'Dashboard~School~Student~~Performance Data~Performance Star';
             } else {
@@ -58,14 +58,13 @@ export class LoginComponent implements OnInit {
 
             localStorage.setItem('roleName', response.roleName);
             localStorage.setItem('apiToken', response.apiToken);
-            //localStorage.setItem('uiMenuList', JSON.stringify(response.uiMenuList));
+            // localStorage.setItem('uiMenuList', JSON.stringify(response.uiMenuList));
             localStorage.setItem('uiMenuList', menuNames);
             localStorage.setItem('userId', this.loginForm.getRawValue().userId);
 
-            this.isSpinner = false;
-
             this.router.navigate(['greenstarui/pages/dashboard']);
           } else {
+            this.isSpinner = false;
             this.isShowErrorMsg = true;
           }
         },

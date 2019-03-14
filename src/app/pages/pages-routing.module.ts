@@ -11,20 +11,20 @@ import { PerformanceStarComponent } from './performance/star/performance-star.co
 import { PerformanceMetricsComponent } from './performance/metrics/performance-metrics.component';
 import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { AdminComponent } from './admin/admin.component';
+import { AuthGuardService } from './util/auth-guard.service';
 
 export const PAGE_ROUTES: Routes = [
   {
     path: '', component: PagesComponent,
     children: [
       { path: '', component: DashboardComponent },
-      { path: 'dashboard', component: DashboardComponent },
-      /* { path: 'dashboard', component: ECommerceComponent }, */
-      { path: 'school', component: SchoolListComponent },
-      { path: 'student', component: StudentListComponent },
-      { path: 'performancedata', component: PerformanceDataComponent },
-      { path: 'performancemetrics', component: PerformanceMetricsComponent },
-      { path: 'performancestar', component: PerformanceStarComponent },
-      { path: 'admin', component: AdminComponent }
+      { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService] },
+      { path: 'school', component: SchoolListComponent, canActivate: [AuthGuardService] },
+      { path: 'student', component: StudentListComponent, canActivate: [AuthGuardService] },
+      { path: 'performancedata', component: PerformanceDataComponent, canActivate: [AuthGuardService] },
+      { path: 'performancemetrics', component: PerformanceMetricsComponent, canActivate: [AuthGuardService] },
+      { path: 'performancestar', component: PerformanceStarComponent, canActivate: [AuthGuardService] },
+      { path: 'admin', component: AdminComponent, canActivate: [AuthGuardService] }
     ]
   }
 ];

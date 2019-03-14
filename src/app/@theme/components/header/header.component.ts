@@ -19,9 +19,9 @@ export class HeaderComponent implements OnInit {
   userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
 
   constructor(private sidebarService: NbSidebarService,
-              private menuService: NbMenuService,
-              private userService: UserService,
-              private analyticsService: AnalyticsService) {
+    private menuService: NbMenuService,
+    private userService: UserService,
+    private analyticsService: AnalyticsService) {
   }
 
   ngOnInit() {
@@ -49,4 +49,10 @@ export class HeaderComponent implements OnInit {
   startSearch() {
     this.analyticsService.trackEvent('startSearch');
   }
+
+  public logout(): void {
+    localStorage.clear();
+    location.href = '/greenstarui/login';
+  }
+
 }

@@ -11,6 +11,9 @@ import { PerformanceModule } from './performance/performance.module';
 import { ECommerceModule } from './e-commerce/e-commerce.module';
 import { AdminModule } from './admin/admin.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { HttpConfigInterceptor } from '../interceptor/httpconfig.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthGuardService } from './util/auth-guard.service';
 
 const PAGES_COMPONENTS = [
   PagesComponent
@@ -32,6 +35,10 @@ const PAGES_COMPONENTS = [
   declarations: [
     ...PAGES_COMPONENTS,
   ],
+  providers: [
+    AuthGuardService,
+    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
+  ]
 })
 export class PagesModule {
 }

@@ -51,13 +51,15 @@ export class PageMenu implements OnInit {
   public static getMenus(): NbMenuItem[] {
 
     this.finalMenu = [];
-
     let menu = localStorage.getItem('uiMenuList');
-    let uiMenuList = menu.split('~');
 
-    for (let menuObj of MENU_ITEMS) {
-      if (uiMenuList.includes(menuObj.title)) {
-        this.finalMenu.push(menuObj);
+    if ((typeof menu !== 'undefined') && null !== menu && '' !== menu ) {
+      let uiMenuList = menu.split('~');
+
+      for (let menuObj of MENU_ITEMS) {
+        if (uiMenuList.includes(menuObj.title)) {
+          this.finalMenu.push(menuObj);
+        }
       }
     }
     return this.finalMenu;
