@@ -8,7 +8,6 @@ import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { SchoolModule } from './school/school.module';
 import { StudentModule } from './student/student.module';
 import { PerformanceModule } from './performance/performance.module';
-import { ECommerceModule } from './e-commerce/e-commerce.module';
 import { AdminModule } from './admin/admin.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { HttpConfigInterceptor } from '../interceptor/httpconfig.interceptor';
@@ -28,7 +27,6 @@ const PAGES_COMPONENTS = [
     SchoolModule,
     StudentModule,
     PerformanceModule,
-    ECommerceModule,
     AdminModule,
     Ng2SmartTableModule
   ],

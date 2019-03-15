@@ -1,17 +1,8 @@
-<!-- <div class="row">
-  <nb-card>
-    <nb-card-body>Dashboard Module</nb-card-body>
-  </nb-card>
-  <div class="col-xxl-7">
-    <ngx-ecommerce-charts></ngx-ecommerce-charts>
-  </div>
-  <div class="col-xxl-9">
-    <ngx-ecommerce-visitors-analytics></ngx-ecommerce-visitors-analytics>
-  </div>
-</div>
- -->
  <div class="row">
     <nb-card>
+        <nb-card-header>
+            Schools using Greenstar Application every month
+        </nb-card-header>
         <ngx-charts-bar-vertical
         [view]="view"
         [scheme]="colorScheme"
@@ -26,20 +17,6 @@
         [yAxisLabel]="yAxisLabel"
         (select)="onSelect($event)">
       </ngx-charts-bar-vertical>
-        <ngx-charts-gauge
-          [view]="view"
-          [scheme]="colorScheme"
-          [results]="single"
-          [min]="0"
-          [max]="100"
-          [legend]="showLegend"
-          [angleSpan]="240"
-          [startAngle]="-120"
-          [units]="'points'"
-          [bigSegments]="10"
-          [smallSegments]="5"
-          (select)="onSelect($event)">
-        </ngx-charts-gauge>
     </nb-card>
  </div>
 <div class="row">
