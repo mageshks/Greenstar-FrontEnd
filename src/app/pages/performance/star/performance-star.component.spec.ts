@@ -33,7 +33,6 @@ describe('GreenstarComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PerformanceStarComponent);
     component = fixture.componentInstance;
-    spyOn(console, 'error');
   });
 
   it('should create', () => {
