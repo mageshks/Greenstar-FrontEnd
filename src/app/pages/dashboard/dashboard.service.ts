@@ -24,7 +24,11 @@ export class DashboardService {
     public getTopPerformingSchools(): Observable<any> {
         return this.http.post(API_URL + '/perfmetrics/dashboard/topschools',  { headers: this.headerValue });
     }
-   
+
+    public getTopPerformingVolunteers(): Observable<any> {
+        return this.http.post(API_URL + '/perfmetrics/dashboard/topvolunteers',  { headers: this.headerValue });
+    }
+    
     private handleError(error: Response | any): any {
         console.log('API Service :: Handle Error' + error);
         return Observable.throw(error);

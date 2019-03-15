@@ -19,9 +19,9 @@ export class DashboardComponent implements OnInit {
     showXAxisLabel = true;
     xAxisLabelForSchoolMonth = 'Month';
     yAxisLabelForSchoolMonth = 'Number of Schools using Greenstar application';
-    xAxisLabel = 'X' ;
+    xAxisLabel = 'Outreach Performers' ;
     showYAxisLabel = true;
-    yAxisLabel = 'Y' ;
+    yAxisLabel = 'Contributions' ;
     timeline = true;
   
     colorScheme = {
@@ -37,6 +37,7 @@ export class DashboardComponent implements OnInit {
     doughnut = false;
     public schoolByMonthSingle: Array<any>;
     public topSchoolByMonthSingle: Array<any>;
+    public topPerformingVolunteersSingle:Array<any>;
 
   constructor(
     private dashboardService: DashboardService) {
@@ -46,6 +47,7 @@ export class DashboardComponent implements OnInit {
     this.getTotalNoOfSchools(); 
     this.getSchoolByMonthMetrics();
     this.getTopPerformingSchools();
+    this.getTopPerformingVolunteers();
   }
   private getTotalNoOfSchools(): void {
     this.dashboardService.getTotalNoOfSchools().subscribe((response) => {
@@ -58,6 +60,14 @@ export class DashboardComponent implements OnInit {
   private getTopPerformingSchools(): void{
     this.dashboardService.getTopPerformingSchools().subscribe((response) => {
       this.topSchoolByMonthSingle = response.result;
+    }, error => {
+      console.log("Http Server error", error);
+    });
+  }
+
+  private getTopPerformingVolunteers(): void{
+    this.dashboardService.getTopPerformingVolunteers().subscribe((response) => {
+      this.topPerformingVolunteersSingle = response.result;
     }, error => {
       console.log("Http Server error", error);
     });
