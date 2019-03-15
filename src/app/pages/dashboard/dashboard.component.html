@@ -3,24 +3,51 @@
         <nb-card-header>
             Schools using Greenstar Application every month
         </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            Total number of schools enrolled: {{totalNoOfSchools}}
+          </div>
+        </nb-card-body>
         <ngx-charts-bar-vertical
         [view]="view"
         [scheme]="colorScheme"
-        [results]="single"
+        [results]="schoolByMonthSingle"
         [gradient]="gradient"
         [xAxis]="showXAxis"
         [yAxis]="showYAxis"
         [legend]="showLegend"
         [showXAxisLabel]="showXAxisLabel"
         [showYAxisLabel]="showYAxisLabel"
-        [xAxisLabel]="xAxisLabel"
-        [yAxisLabel]="yAxisLabel"
+        [xAxisLabel]="yAxisLabelForSchoolMonth"
+        [yAxisLabel]="yAxisLabelForSchoolMonth"
         (select)="onSelect($event)">
       </ngx-charts-bar-vertical>
+    </nb-card>
+    <nb-card>
+        <nb-card-header>
+            Top Performing schools in Greenstar Application
+        </nb-card-header>
+        <ngx-charts-gauge
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="topSchoolByMonthSingle"
+          [min]="0"
+          [max]="100"
+          [legend]="showLegend"
+          [angleSpan]="240"
+          [startAngle]="-120"
+          [units]="'points'"
+          [bigSegments]="10"
+          [smallSegments]="5"
+          (select)="onSelect($event)">
+        </ngx-charts-gauge>
     </nb-card>
  </div>
 <div class="row">
   <nb-card>
+    <nb-card-header>
+        Top Performing Outreach Volunteers in Greenstar Application
+    </nb-card-header>
     <ngx-charts-line-chart
           [view]="view"
           [scheme]="colorScheme"
@@ -42,7 +69,7 @@
       <ngx-charts-gauge
         [view]="view"
         [scheme]="colorScheme"
-        [results]="single"
+        [results]="topSchoolByMonthSingle"
         [min]="0"
         [max]="100"
         [legend]="showLegend"

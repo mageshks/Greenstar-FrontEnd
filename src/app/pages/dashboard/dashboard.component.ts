@@ -8,31 +8,62 @@ import { DashboardService } from './dashboard.service';
 })
 export class DashboardComponent implements OnInit {
 
-    public monthList: Array<any>;
+  public totalNoOfSchools:String;
+
+    view: any[] = [800, 600];
+    // options for the chart
+    showXAxis = true;
+    showYAxis = true;
+    gradient = false;
+    showLegend = true;
+    showXAxisLabel = true;
+    xAxisLabelForSchoolMonth = 'Month';
+    yAxisLabelForSchoolMonth = 'Number of Schools using Greenstar application';
+    xAxisLabel = 'X' ;
+    showYAxisLabel = true;
+    yAxisLabel = 'Y' ;
+    timeline = true;
+  
+    colorScheme = {
+      domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+    };
+  
+    // line, area
+    autoScale = true;
+  
+    //pie
+    showLabels = true;
+    explodeSlices = false;
+    doughnut = false;
+    public schoolByMonthSingle: Array<any>;
+    public topSchoolByMonthSingle: Array<any>;
+
   constructor(
     private dashboardService: DashboardService) {
 	}
 
   ngOnInit(): void {
-    this.monthList = PerformanceStaticData.monthList;
+    this.getTotalNoOfSchools(); 
     this.getSchoolByMonthMetrics();
+    this.getTopPerformingSchools();
+  }
+  private getTotalNoOfSchools(): void {
+    this.dashboardService.getTotalNoOfSchools().subscribe((response) => {
+      this.totalNoOfSchools = response.result;
+    }, error => {
+        console.log("Http Server error", error);
+    });
+  }
+
+  private getTopPerformingSchools(): void{
+    this.dashboardService.getTopPerformingSchools().subscribe((response) => {
+      this.topSchoolByMonthSingle = response.result;
+    }, error => {
+      console.log("Http Server error", error);
+    });
   }
 
   // data goes here
-public single = [
-  {
-    "name": "Attendance",
-    "value": 155
-  },
-  {
-    "name": "Homework",
-    "value": 165
-  },
-  {
-    "name": "Discipline",
-    "value": 170
-  }
-];
 
 public multi = [
   {
@@ -124,34 +155,9 @@ public multi = [
   }
 ];
 
-
-  view: any[] = [700, 400];
-
-  // options for the chart
-  showXAxis = true;
-  showYAxis = true;
-  gradient = false;
-  showLegend = true;
-  showXAxisLabel = true;
-  xAxisLabel = 'Month';
-  showYAxisLabel = true;
-  yAxisLabel = 'Number of Schools using Greenstar application';
-  timeline = true;
-
-  colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-  };
-
-  // line, area
-  autoScale = true;
-
-  //pie
-  showLabels = true;
-  explodeSlices = false;
-  doughnut = false;
   private getSchoolByMonthMetrics() {
     this.dashboardService.getSchoolByMonthMetrics().subscribe((response) => {
-        this.single = response.result;
+        this.schoolByMonthSingle = response.result;
     }, error => {
         console.log("Http Server error", error);
     });

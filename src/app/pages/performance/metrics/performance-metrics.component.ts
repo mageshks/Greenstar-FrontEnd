@@ -1,22 +1,11 @@
-import { OnInit, Component, ChangeDetectionStrategy } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
-import { DomSanitizer } from '@angular/platform-browser';
-import { NbDialogService } from '@nebular/theme';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PerformanceMetricsService } from './performance-metrics.service';
-import { IStudentDetail } from '../../student/student.interface';
-import { SchoolData } from '../../school/school.data';
-import { StudentBulkUploadModalComponent } from '../../student/student-bulk-upload.component.modal';
-import { SchoolService } from '../../school/school.service';
-import { StudentService } from '../../student/student.service';
-import { IPerformanceDataTable, IPerformanceRow, IPerformanceDay, IPerformanceData, IPerformanceHeader, IPerformanceMetricsDataTable, IClassWiseMetricsDataTable, ITeamWiseMetricsDataTable, IEncouragingMetricsDataTable, ISearchPerformanceMetrics } from './performance-metrics.interface';
-import { PerformanceStaticData } from './performance-metrics.constant';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ISchoolDetail, IClassSectionDetail } from '../star/performance-star.interface';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidatorUtil } from '../../util/validator-util';
+import { IClassSectionDetail, ISchoolDetail } from '../star/performance-star.interface';
 import { PerformanceStarService } from '../star/performance-star.service';
-import { PerformanceDataService } from '../data/performance-data.service';
+import { PerformanceStaticData } from './performance-metrics.constant';
+import { IClassWiseMetricsDataTable, IEncouragingMetricsDataTable, IPerformanceMetricsDataTable, ISearchPerformanceMetrics, ITeamWiseMetricsDataTable } from './performance-metrics.interface';
+import { PerformanceMetricsService } from './performance-metrics.service';
 
 @Component({
     selector: 'ngx-performance',
