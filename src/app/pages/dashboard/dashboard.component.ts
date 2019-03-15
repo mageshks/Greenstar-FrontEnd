@@ -1,12 +1,23 @@
 import { Component, OnInit } from '@angular/core';
+import { PerformanceStaticData } from '../performance/metrics/performance-metrics.constant';
+import { DashboardService } from './dashboard.service';
 
 @Component({
   selector: 'ngx-dashboard',
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
+
+    public monthList: Array<any>;
+  constructor(
+    private dashboardService: DashboardService) {
+	}
+
   ngOnInit(): void {
+    this.monthList = PerformanceStaticData.monthList;
+    this.getSchoolByMonthMetrics();
   }
+
   // data goes here
 public single = [
   {
@@ -122,9 +133,9 @@ public multi = [
   gradient = false;
   showLegend = true;
   showXAxisLabel = true;
-  xAxisLabel = 'Metrics';
+  xAxisLabel = 'Month';
   showYAxisLabel = true;
-  yAxisLabel = 'Points';
+  yAxisLabel = 'Number of Schools using Greenstar application';
   timeline = true;
 
   colorScheme = {
@@ -138,4 +149,11 @@ public multi = [
   showLabels = true;
   explodeSlices = false;
   doughnut = false;
+  private getSchoolByMonthMetrics() {
+    this.dashboardService.getSchoolByMonthMetrics().subscribe((response) => {
+        this.single = response.result;
+    }, error => {
+        console.log("Http Server error", error);
+    });
+}
 }

@@ -14,6 +14,7 @@ import { PerformanceDataSuccessModalComponent } from './data/performance-data-su
 import { PerformanceStarService } from './star/performance-star.service';
 import { PerformanceGenerateStarService } from './star/performance-star.generate.service';
 import { CommonService } from '../common/common.service';
+import { DashboardService } from '../dashboard/dashboard.service';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { CommonService } from '../common/common.service';
     PerformanceMetricsService,
     PerformanceStarService,
     PerformanceGenerateStarService,
-    CommonService
+    CommonService,
+    DashboardService
   ]
 })
 export class PerformanceModule { }

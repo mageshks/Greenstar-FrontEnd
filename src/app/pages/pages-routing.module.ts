@@ -9,7 +9,6 @@ import { StudentListComponent } from './student/student-list.component';
 import { PerformanceDataComponent } from './performance/data/performance-data.component';
 import { PerformanceStarComponent } from './performance/star/performance-star.component';
 import { PerformanceMetricsComponent } from './performance/metrics/performance-metrics.component';
-import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { AdminComponent } from './admin/admin.component';
 import { AuthGuardService } from './util/auth-guard.service';
 
