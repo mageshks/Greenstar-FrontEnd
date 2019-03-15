@@ -3,7 +3,6 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { ThemeModule } from '../../@theme/theme.module';
 import { NbDialogModule,NbStepperModule,NbSpinnerModule } from '@nebular/theme';
-import { SmartTableDatePickerComponent } from '../../@theme/components/smart-table-date-picker-component/smart-table-date-picker.components';
 import { PerformanceDataService } from './data/performance-data.service';
 import { PerformanceMetricsService } from './metrics/performance-metrics.service';
 import { PerformanceDataComponent } from './data/performance-data.component';

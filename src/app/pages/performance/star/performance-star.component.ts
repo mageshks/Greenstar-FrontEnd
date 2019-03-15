@@ -1,19 +1,11 @@
 import { OnInit, Component } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
-import { DomSanitizer } from '@angular/platform-browser';
-import { NbDialogService, NbStepperComponent, NbSpinnerComponent } from '@nebular/theme';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PerformanceStarService } from './performance-star.service';
 import { PerformanceGenerateStarService } from './performance-star.generate.service';
-import { GreenstarComponent } from './greenstar/greenstar.component';
-import { FormBuilder } from '@angular/forms';
-import { FormGroup } from '@angular/forms';
 import { ISearchPerformanceStarData, ISchoolDetail, IClassSectionDetail, IStudent, IPerformanceStarData } from "./performance-star.interface";
 
 import * as jspdf from 'jspdf';
 
-import html2canvas from 'html2canvas';
+import * as html2canvas from 'html2canvas';
 @Component({
     selector: 'ngx-performance',
     styleUrls: ['./performance-star.component.scss'],
@@ -35,6 +27,8 @@ export class PerformanceStarComponent implements OnInit {
     public studentName = "";
     public month = "";
 
+    //Const month array
+    public monthArray: any[] = [{ "id": 0, "value": "--Select--" }, { "id": 1, "value": "Jan" }, { "id": 2, "value": "Feb" }, { "id": 3, "value": "Mar" }, { "id": 4, "value": "Apr" }, { "id": 5, "value": "May" }, { "id": 6, "value": "Jun" }, { "id": 7, "value": "Jul" }, { "id": 8, "value": "Aug" }, { "id": 9, "value": "Sep" }, { "id": 10, "value": "Oct" }, { "id": 11, "value": "Nov" }, { "id": 12, "value": "Dec" }];
 
     // Loading indicator used on printing pdf and loading star
     public loading = false;
@@ -60,8 +54,7 @@ export class PerformanceStarComponent implements OnInit {
     public performanceStarData: IPerformanceStarData = {} as IPerformanceStarData;
 
 
-    constructor(private formBuilder: FormBuilder,
-        private performanceStarService: PerformanceStarService,
+    constructor(private performanceStarService: PerformanceStarService,
         private performanceGenerateStarService: PerformanceGenerateStarService) {
     }
 
@@ -92,7 +85,7 @@ export class PerformanceStarComponent implements OnInit {
                     if (this.performanceStarData.paramOneMonthColorCodes == null) {
                         this.isDataAvailable = false;
                         this.isNoPerfData = true;
-                    }else if (this.performanceStarData.paramOneMonthColorCodes.length > 0) {
+                    } else if (this.performanceStarData.paramOneMonthColorCodes.length > 0) {
                         this.isDataAvailable = true;
                         this.isNoPerfData = false;
                     }
@@ -134,12 +127,12 @@ export class PerformanceStarComponent implements OnInit {
             starSVGS[0].setAttribute("width", "100%");
             starSVGS[0].setAttribute("height", "100%");
             this.loading = false;
+            console.log("Star Printed!");
         });
     }
 
     // Method to enable disable input based on the type selection
     public onChangeCalcType(selectedValue: string) {
-        this.enableSearchComponents(selectedValue);
         // Reset other dropdowns
         this.searchPerformanceStarData.schoolId = 0;
         this.searchPerformanceStarData.classId = 0;
@@ -151,8 +144,9 @@ export class PerformanceStarComponent implements OnInit {
             this.loadingDropdown = true;
             this.performanceStarService.getSchools().subscribe(
                 (response) => {
-                    console.log(response);
+                    console.log(JSON.stringify(response));
                     this.schoolList = response;
+                    this.enableSearchComponents(selectedValue);
                     this.loadingDropdown = false;
                 },
                 error => {
@@ -171,13 +165,18 @@ export class PerformanceStarComponent implements OnInit {
     }
 
     // Method to enable disable input based on the type selection
-    public onChangeSchoolChange($event) {
-        this.schoolName = $event.target.options[$event.target.options.selectedIndex].text;
+    public onChangeSchoolChange() {
+
+        this.schoolName = this.getSchoolSelectedValue(this.searchPerformanceStarData.schoolId);
         // Reset other dropdowns
         this.searchPerformanceStarData.classId = 0;
         this.searchPerformanceStarData.month = 0;
         this.searchPerformanceStarData.studentId = 0;
         this.searchPerformanceStarData.teamName = "Select";
+        //Reset the dropdown values
+        this.classList = [];
+        this.studentList = [];
+        this.teamList = [];
         // Populate class details
         if (this.searchPerformanceStarData.schoolId != 0) {
             this.loadingDropdown = true;
@@ -185,7 +184,7 @@ export class PerformanceStarComponent implements OnInit {
             schoolDetail.id = this.searchPerformanceStarData.schoolId;
             this.performanceStarService.getClassList(schoolDetail).subscribe(
                 (response) => {
-                    console.log(response);
+                    console.log(JSON.stringify(response));
                     this.classList = response;
                     this.loadingDropdown = false;
                 },
@@ -195,11 +194,6 @@ export class PerformanceStarComponent implements OnInit {
                 }
             );
         }
-        //Reset the dropdown values
-        this.classList = [];
-        this.studentList = [];
-        this.teamList = [];
-
         //Reset error message
         this.isSearchDataNotValid = false;
 
@@ -208,8 +202,19 @@ export class PerformanceStarComponent implements OnInit {
         this.isNoPerfData = false;
     }
 
-    public onChangeClassChange($event) {
-        this.classAndSectionName = $event.target.options[$event.target.options.selectedIndex].text;
+    private getSchoolSelectedValue(schoolId: number): string {
+        if (schoolId == 0) {
+            return "--Select--"
+        }
+        for (let i = 0; i < this.schoolList.length; i++) {
+            if (schoolId == this.schoolList[i].id) {
+                return this.schoolList[i].schoolName;
+            }
+        }
+    }
+
+    public onChangeClassChange() {
+        this.classAndSectionName = this.getClassSelectedValue(this.searchPerformanceStarData.classId);
         // Reset other dropdowns
         this.searchPerformanceStarData.month = 0;
         this.searchPerformanceStarData.studentId = 0;
@@ -222,7 +227,9 @@ export class PerformanceStarComponent implements OnInit {
             classDetail.id = this.searchPerformanceStarData.classId;
             this.performanceStarService.getClassDetail(classDetail).subscribe(
                 (response) => {
-                    console.log(response);
+                    //Reset the dropdown values
+                    this.teamList = [];
+                    console.log(JSON.stringify(response));
                     this.studentList = response.studentList;
                     this.teamList = response.teamList;
                     this.loadingDropdown = false;
@@ -233,9 +240,7 @@ export class PerformanceStarComponent implements OnInit {
                 }
             );
         }
-        //Reset the dropdown values
-        this.studentList = [];
-        this.teamList = [];
+
 
         //Reset error message
         this.isSearchDataNotValid = false;
@@ -245,8 +250,21 @@ export class PerformanceStarComponent implements OnInit {
         this.isNoPerfData = false;
     }
 
-    public onChangeStudentChange($event) {
-        this.studentName = $event.target.options[$event.target.options.selectedIndex].text;
+    private getClassSelectedValue(classId: number): string {
+        if (classId == 0) {
+            return "--Select--"
+        }
+        for (let i = 0; i < this.classList.length; i++) {
+            if (classId == this.classList[i].id) {
+                return this.classList[i].classAndSectionName;
+            }
+        }
+    }
+
+    public onChangeStudentChange() {
+        console.log("searchPerformanceStarData ==> ");
+        console.log(this.searchPerformanceStarData);
+        this.studentName = this.getStudentSelectedValue(this.searchPerformanceStarData.studentId);
         // Reset other dropdowns
         this.searchPerformanceStarData.month = 0;
         this.searchPerformanceStarData.teamName = "Select";
@@ -258,8 +276,22 @@ export class PerformanceStarComponent implements OnInit {
         this.isNoPerfData = false;
     }
 
-    public onChangeTeamChange($event) {
-        this.teamName = $event.target.options[$event.target.options.selectedIndex].text;
+    private getStudentSelectedValue(studentId: number): string {
+        console.log("searchPerformanceStarData in change method==> ");
+        console.log(this.searchPerformanceStarData);
+        console.log(this.studentList);
+        if (studentId == 0) {
+            return "--Select--"
+        }
+        for (let i = 0; i < this.studentList.length; i++) {
+            if (studentId == this.studentList[i].id) {
+                return this.studentList[i].studentName;
+            }
+        }
+    }
+
+    public onChangeTeamChange() {
+        this.teamName = this.searchPerformanceStarData.teamName;
         // Reset other dropdowns
         this.searchPerformanceStarData.month = 0;
         this.searchPerformanceStarData.studentId = 0;
@@ -271,8 +303,8 @@ export class PerformanceStarComponent implements OnInit {
         this.isNoPerfData = false;
     }
 
-    public onChangeMonthChange($event) {
-        this.month = $event.target.options[$event.target.options.selectedIndex].text;
+    public onChangeMonthChange() {
+        this.month = this.monthArray[this.searchPerformanceStarData.month].value;
         //Reset error message
         this.isSearchDataNotValid = false;
 
@@ -306,14 +338,7 @@ export class PerformanceStarComponent implements OnInit {
             this.isClassViewable = false;
             this.isNameViewable = false;
             this.isTeamViewable = false;
-        } else if (selectedValue == "Select") {
-            this.isSchoolViewable = false;
-            this.isMonthViewable = false;
-            this.isClassViewable = false;
-            this.isNameViewable = false;
-            this.isTeamViewable = false;
-            this.schoolList = [];
-        }
+        } 
         //Reset the dropdown values
         this.searchPerformanceStarData.classId = 0;
         this.searchPerformanceStarData.month = 0;

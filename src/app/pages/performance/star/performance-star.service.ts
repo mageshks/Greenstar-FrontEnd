@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
-import { ISearchPerformanceStarData,ISchoolDetail, IClassSectionDetail,IStudent } from "./performance-star.interface";
+import { ISchoolDetail, IClassSectionDetail } from "./performance-star.interface";
 
 const API_URL: string = 'http://localhost:2620';
 
