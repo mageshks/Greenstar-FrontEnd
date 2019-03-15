@@ -10,7 +10,7 @@ import { PerformanceStarServiceMock } from './mocks/performance-star.service.moc
 import { PerformanceStarGenerateServiceMock } from './mocks/performance-star.generate.service.mock';
 import { By } from '@angular/platform-browser';
 
-
+// To test the green star component 
 describe('GreenstarComponent', () => {
   let component: PerformanceStarComponent;
   let fixture: ComponentFixture<PerformanceStarComponent>;
@@ -33,6 +33,7 @@ describe('GreenstarComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PerformanceStarComponent);
     component = fixture.componentInstance;
+    spyOn(console, 'error');
   });
 
   it('should create', () => {
@@ -77,6 +78,73 @@ describe('GreenstarComponent', () => {
     component.searchPerformanceStarData.teamName = 'paalai';
     component.onChangeTeamChange();
     expect(component.teamName == 'paalai');
+  });
+
+  it('should create drop downs, its values, generate star and print', () => {
+    component.ngOnInit();
+    fixture.detectChanges();
+    component.searchPerformanceStarData.calcType = 'Individual';
+    component.onChangeCalcType("Individual");
+    fixture.detectChanges();
+    // Set autodetect is tru so that setting values will get reflected in UI then and there
+    //Check data for school dropdown is populated
+    expect(component.schoolList.length > 0);
+    // Check the school dropdown is populated in UI
+    expect(fixture.debugElement.query(By.css('#school')).name == "school");
+    //Set the school dropdown value
+    component.searchPerformanceStarData.schoolId = 313;
+    //Trigger school dropdown change
+    component.onChangeSchoolChange();
+    fixture.detectChanges();
+    //Check if the class dropdown data is populated
+    expect(component.classList.length > 0);
+    //Check if class dropdown is populated in UI
+    expect(fixture.debugElement.query(By.css('#className')).name == "className");
+    //Set the class id
+    component.searchPerformanceStarData.classId = 487;
+    //Trigger class dropdown change
+    component.onChangeClassChange();
+    fixture.detectChanges();
+    // Check if student dropdown is rendered
+    expect(fixture.debugElement.query(By.css('#sname')).name == "sname");
+    // Set the student id
+    component.searchPerformanceStarData.studentId = 4841;
+    //Trigger student onchange
+    component.onChangeStudentChange();
+    fixture.detectChanges();
+    //Check if month dropdown is rendered
+    expect(fixture.debugElement.query(By.css('#month')).name == "month");
+    //Set month id
+    component.searchPerformanceStarData.month = 1;
+    //Trigger student onchange
+    component.onChangeMonthChange();
+    fixture.detectChanges();
+    component.generatePerformanceStar();
+    fixture.detectChanges();
+    // Check star data is populated
+    expect(component.performanceStarData.paramOneMonthColorCodes.length > 0);
+    // Check if star rendered
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('h6').textContent).toContain('School: Coimbatore Government Hr Sec School');
+
+    component.printStar();
+  });
+
+
+  it('Empty star data on non existing school id', () => {
+    component.ngOnInit();
+    component.searchPerformanceStarData.calcType = 'Individual';
+    component.onChangeCalcType("Individual");
+    component.searchPerformanceStarData.schoolId = 1;
+    component.onChangeSchoolChange();
+    component.searchPerformanceStarData.classId = 487;
+    component.onChangeClassChange();
+    component.searchPerformanceStarData.studentId = 4841;
+    component.onChangeStudentChange();
+    component.searchPerformanceStarData.month = 1;
+    component.onChangeMonthChange();
+    component.generatePerformanceStar();
+    expect(component.performanceStarData.paramOneMonthColorCodes == null);
   });
 
   it('should display error on any of the dropdown is select', () => {
@@ -175,55 +243,5 @@ describe('GreenstarComponent', () => {
     component.onChangeCalcType("School");
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('#school')).name == "school");
-  });
-
-  it('should create drop downs, its values and generate star', () => {
-    component.ngOnInit();
-    fixture.detectChanges();
-    component.searchPerformanceStarData.calcType = 'Individual';
-    component.onChangeCalcType("Individual");
-    fixture.detectChanges();
-    // Set autodetect is tru so that setting values will get reflected in UI then and there
-    //Check data for school dropdown is populated
-    expect(component.schoolList.length > 0);
-    // Check the school dropdown is populated in UI
-    expect(fixture.debugElement.query(By.css('#school')).name == "school");
-    //Set the school dropdown value
-    component.searchPerformanceStarData.schoolId = 313;
-    //Trigger school dropdown change
-    component.onChangeSchoolChange();
-    fixture.detectChanges();
-    //Check if the class dropdown data is populated
-    expect(component.classList.length > 0);
-    //Check if class dropdown is populated in UI
-    expect(fixture.debugElement.query(By.css('#className')).name == "className");
-    //Set the class id
-    component.searchPerformanceStarData.classId = 487;
-    //Trigger class dropdown change
-    component.onChangeClassChange();
-    fixture.detectChanges();
-    // Check if student dropdown is rendered
-    expect(fixture.debugElement.query(By.css('#sname')).name == "sname");
-    // Set the student id
-    component.searchPerformanceStarData.studentId = 4841;
-    //Trigger student onchange
-    component.onChangeStudentChange();
-    fixture.detectChanges();
-    //Check if month dropdown is rendered
-    expect(fixture.debugElement.query(By.css('#month')).name == "month");
-    //Set month id
-    component.searchPerformanceStarData.month = 1;
-    //Trigger student onchange
-    component.onChangeMonthChange();
-    fixture.detectChanges();
-    component.generatePerformanceStar();
-    fixture.detectChanges();
-    // Check star data is populated
-    expect(component.performanceStarData.paramOneMonthColorCodes.length > 0);
-    // Check if star rendered
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h6').textContent).toContain('School: Coimbatore Government Hr Sec School');
-
-    component.printStar();
   });
 });
