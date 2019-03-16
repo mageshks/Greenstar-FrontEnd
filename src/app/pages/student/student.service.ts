@@ -33,6 +33,10 @@ export class StudentService {
         return this.http.post(API_URL + '/school/student/downloadtemplate', searchStudentData, { responseType: 'blob' });
     }
 
+    public exportStudents(searchStudentData: IStudentSearchData): Observable<any> {
+        return this.http.post(API_URL + '/school/student/exportstudents', searchStudentData, { responseType: 'blob' });
+    }
+
     public bulkUploadStudentData(formData: FormData): Observable<any> {
         return this.http.post(API_URL + '/school/student/uploadbulkdata', formData, { headers: this.headerValue });
     }

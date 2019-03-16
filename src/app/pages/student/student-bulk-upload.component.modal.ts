@@ -108,16 +108,15 @@ export class StudentBulkUploadModalComponent implements OnInit {
                 (response) => {
                     this.isSpinner = false;
                     console.log("response ==> " + response);
-                    if (response.message == 'Bulk Uplaod Successful!') {
+                    if (response == 'Bulk Uplaod Successful!') {
                         this.isShowSuccessMsg = true;
                         this.isDisableButton = true;
                     } else {
                         this.uploadFile = null;
                         this.fileName = '';
                         this.isDisableButton = true;
-                        this.isShowSuccessMsg = true;
-                        this.isShowErrorMsg = false;
-                        this.errorMsg = '';
+                        this.isShowErrorMsg = true;
+                        this.errorMsg = response;
                     }
                 },
                 error => {

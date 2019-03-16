@@ -6,6 +6,7 @@ import { SchoolMessageModalContent } from '../school/schoolMessageModalContent.c
 import { IClassSectionDetail, ISchoolDetail, IStudentDetail, IStudentSearchData } from './student.interface';
 import { StudentBulkUploadModalComponent } from './student-bulk-upload.component.modal';
 import { StudentService } from './student.service';
+import { saveAs as tempSaveAs } from 'file-saver';
 
 @Component({
   selector: 'ngx-student',
@@ -34,6 +35,8 @@ export class StudentListComponent implements OnInit {
 
   public isSearchDataNotValid: boolean = false;
 
+  public isExportNotValid: boolean = false;
+
   // class table setting
   public studentSource: LocalDataSource = new LocalDataSource();
   public tableSetting: any = this.studentTableSetting();
@@ -51,7 +54,7 @@ export class StudentListComponent implements OnInit {
     this.loadSchoolDropDown();
     this.studentSearchData.schoolId = 0;
     this.studentSearchData.classId = 0;
-    this.isSearch=false;
+    this.isSearch = false;
     this.studentSource.load(this.classSectionDetail.studentList);
   }
 
@@ -69,13 +72,14 @@ export class StudentListComponent implements OnInit {
 
   public onChangeClass() {
     this.isSearchDataNotValid = false;
-    this.isSearch=false;
+    this.isSearch = false;
   }
 
   public onChangeSchoolChange() {
     this.isSearchDataNotValid = false;
     this.isBulkUploadRequestNotValid = false;
-    this.isSearch=false;
+    this.isExportNotValid = false;
+    this.isSearch = false;
     if (this.studentSearchData.schoolId == 0) {
       this.classSectionList = [];
       this.studentSearchData.classId = 0;
@@ -109,16 +113,35 @@ export class StudentListComponent implements OnInit {
         (response) => {
           console.log("classDetail ==> ");
           console.log(response);
-          this.isSearch=true;
+          this.isSearch = true;
           this.classSectionDetail = response;
           this.studentSource.load(this.classSectionDetail.studentList);
           this.teamNameTableSource.load(this.classSectionDetail.schoolTeamList);
           this.loadingStudents = false;
         },
         error => {
-          this.isSearch=false;
+          this.isSearch = false;
           console.log("Http Server error", error);
         },
+      );
+    }
+  }
+
+  public exportStudents() {
+    if (this.studentSearchData.schoolId == 0) {
+      this.isExportNotValid = true;
+    } else {
+      this.loadingDropdown = true;
+      this.studentService.exportStudents(this.studentSearchData).subscribe(
+        (response) => {
+          var blob = new Blob([response], { type: 'application/octet-stream' });
+          tempSaveAs(blob, "Student_Exports_" + this.studentSearchData.schoolId + "_" + new Date() + ".xlsx");
+          this.loadingDropdown = false;
+        },
+        error => {
+          this.loadingDropdown = false;
+          console.log("Http Server error", error);
+        }
       );
     }
   }

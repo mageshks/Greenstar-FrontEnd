@@ -9,7 +9,7 @@
                     <nb-card-body [nbSpinner]="loadingDropdown" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
                         <div class="row">
 
-                            <div class="col-sm-5">
+                            <div class="col-sm-4">
                                 <label for="school" class="col-form-label required">School</label>
                                 <div class="input-group">
                                     <select id="school" name="school" class="form-control form-control-sm"
@@ -35,43 +35,56 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class='col-md-2 text-right'>
-                                <label for="searchbtn" class="col-form-label empty">*</label>
-                                <div class="input-group">
-                                    <button nbButton status="primary" id="searchbtn"
-                                        (click)="onSearch()">Search</button>
-                                </div>
-                            </div>
-                            <div class='col-md-3 text-right'>
+                            <div class='col-sm-2 text-right'>
                                 <label for="uploadbtn" class="col-form-label empty">*</label>
                                 <div class="input-group">
                                     <button nbButton status="primary" id="uploadbtn"
                                         (click)="openBulkUploadDialog()">Bulk Upload</button>
                                 </div>
                             </div>
+                            <div class='col-sm-2 text-right'>
+                                <label for="exportbtn" class="col-form-label empty">*</label>
+                                <div class="input-group">
+                                    <button nbButton status="primary" id="exportbtn"
+                                        (click)="exportStudents()">Export</button>
+                                </div>
+                            </div>
+                            <div class='col-sm-2 text-right'>
+                                <label for="searchbtn" class="col-form-label empty">*</label>
+                                <div class="input-group">
+                                    <button nbButton status="primary" id="searchbtn" (click)="onSearch()">Edit
+                                        Class</button>
+                                </div>
+                            </div>
                         </div>
                         <div class="row" *ngIf="isSearchDataNotValid">
-                            <div class="col-sm-12 pt-2 text-left errormsg">
-                                <span>Both fields are mandatory to search students!</span>
+                            <div class="col-sm-12 pt-2 text-left text-danger">
+                                <span>Both fields are mandatory to edit students!</span>
                             </div>
                         </div>
                         <div class="row" *ngIf="isBulkUploadRequestNotValid">
-                                <div class="col-sm-12 pt-2 text-left errormsg">
-                                    <span>School is mandatory for bulk upload!</span>
-                                </div>
+                            <div class="col-sm-12 pt-2 text-left text-danger">
+                                <span>School is mandatory for bulk upload!</span>
                             </div>
+                        </div>
+                        <div class="row" *ngIf="isExportNotValid">
+                            <div class="col-sm-12 pt-2 text-left text-danger">
+                                <span>School is mandatory for export!</span>
+                            </div>
+                        </div>
                     </nb-card-body>
                 </nb-card>
 
                 <nb-card *ngIf="isSearch">
                     <nb-card-body [nbSpinner]="loadingStudents" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
                         <div class='row'>
-                            <div class='col-sm-10 text-left'>
+                            <div class='col-sm-9 text-left text-info'>
                                 <span>Note: Team can contain minimum 3 and maximum 5 students. Refer team name table for
                                     existing teams</span>
                             </div>
-                            <div class='col-sm-2 text-right pb-2'>
-                                <button nbButton status="primary" id="submitbtn" (click)="onStudentSubmit()">Submit</button>
+                            <div class='col-sm-3 text-right pb-2'>
+                                <button nbButton status="primary" id="submitbtn"
+                                    (click)="onStudentSubmit()">Update Students</button>
                             </div>
                         </div>
                         <div class='row'>
