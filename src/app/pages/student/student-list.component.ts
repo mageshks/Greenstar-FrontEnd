@@ -3,7 +3,7 @@ import { Ng2SmartTableModule, LocalDataSource } from 'ng2-smart-table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OnInit } from '@angular/core';
 import { SchoolMessageModalContent } from '../school/schoolMessageModalContent.component';
-import { IClassSectionDetail, ISchoolDetail, IStudentDetail, IStudentSearchData } from './student.interface';
+import { IClassSectionDetail, ISchoolDetail, IStudentDetail, IStudentSearchData, ISchoolTeamCount } from './student.interface';
 import { StudentBulkUploadModalComponent } from './student-bulk-upload.component.modal';
 import { StudentService } from './student.service';
 import { saveAs as tempSaveAs } from 'file-saver';
@@ -100,7 +100,8 @@ export class StudentListComponent implements OnInit {
     }
   }
 
-  public onSearch() {
+  // On click of class edit
+  public onClassEdit() {
     if (this.studentSearchData.schoolId == 0 ||
       this.studentSearchData.classId == 0) {
       this.isSearchDataNotValid = true;
@@ -127,6 +128,7 @@ export class StudentListComponent implements OnInit {
     }
   }
 
+  // on click of export 
   public exportStudents() {
     if (this.studentSearchData.schoolId == 0) {
       this.isExportNotValid = true;
@@ -146,15 +148,21 @@ export class StudentListComponent implements OnInit {
     }
   }
 
+  // On submit after updating the students
   public onStudentSubmit() {
-    this.loadingStudents = true;
-    //TODO: convert this to session variable
     this.classSectionDetail.userId = "Magesh";
     this.classSectionDetail.schoolId = this.studentSearchData.schoolId;
-    console.log("this.classSectionDetail.studentList" + JSON.stringify(this.classSectionDetail.studentList));
+    console.log("this.classSectionDetail.studentList", JSON.stringify(this.classSectionDetail.studentList));
+    let validationError = this.validateTeamName();
+    // If error exist do not proceed open the error model
+    if (validationError != '') {
+      this.openModal("Error", validationError);
+      return;
+    }
+    this.loadingStudents = true;
     this.studentService.saveOrUpdateStudent(this.classSectionDetail).subscribe(
       (response) => {
-        console.log("classDetail ==> " + response);
+        console.log("classDetail ==> ",response);
         this.classSectionDetail = response;
         this.studentSource.load(this.classSectionDetail.studentList);
         this.teamNameTableSource.load(this.classSectionDetail.schoolTeamList);
@@ -166,6 +174,65 @@ export class StudentListComponent implements OnInit {
         this.openModal('Error Message', 'Error occured while updating students!');
       },
     );
+  }
+
+  // Check if the team name is not part of other class and each team should have 3 to 5 students
+  private validateTeamName(): string {
+    let errorMessage = '';
+    //Selected class
+    let className = this.getClassSectionName();
+    // Container to hold the current team details list
+    let classTeamList: ISchoolTeamCount[] = [];
+    this.classSectionDetail.studentList.forEach(student => {
+      this.classSectionDetail.schoolTeamList.forEach(schoolTeam => {
+        if (schoolTeam.classSectionName != className && schoolTeam.teamName == student.teamName) {
+          errorMessage = "The team name " + student.teamName + " already taken by class :: " + schoolTeam.classSectionName;
+          return false;
+        }
+      });
+
+      // Get the current class team and check if it already has count 5
+      let isTeamAlreadyAdded = false;
+      classTeamList.forEach(classTeam => {
+        if (student.teamName == classTeam.teamName) {
+          isTeamAlreadyAdded = true;
+          if (classTeam.studentCount == 5) {
+            errorMessage = "The team name " + student.teamName + " has more than 5 students";
+            return false;
+          } else {
+            classTeam.studentCount = classTeam.studentCount + 1;
+          }
+        }
+      });
+      // If this team is not present in the current team list add to the list
+      if (!isTeamAlreadyAdded) {
+        let teamCount: ISchoolTeamCount = new ISchoolTeamCount();
+        teamCount.studentCount = 1;
+        teamCount.teamName = student.teamName;
+        classTeamList.push(teamCount);
+      }
+    });
+    // Finally check if the count is between 3 and 5
+    classTeamList.forEach(classTeam => {
+      let classTeamCount = classTeam.studentCount;
+      if (classTeamCount < 3 || classTeamCount > 5) {
+        errorMessage = "The team name " + classTeam.teamName + " count is not between 3 to 5!"
+        return false;
+      }
+    });
+    return errorMessage;
+  }
+
+  // get the class and section name of the selected class in dropdown
+  private getClassSectionName(): string {
+    let classSectionName = '';
+    this.classSectionList.forEach(classSection => {
+      if (classSection.id == this.studentSearchData.classId) {
+        classSectionName = classSection.classAndSectionName;
+        return false;
+      }
+    });
+    return classSectionName;
   }
 
   public openBulkUploadDialog(): void {
