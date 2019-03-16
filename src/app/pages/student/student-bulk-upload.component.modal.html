@@ -5,8 +5,21 @@
     </button>
 </div>
 
-<div class="modal-body">
-
+<div class="modal-body" [nbSpinner]="isSpinner" nbSpinnerSize="xxxlarge" nbSpinnerStatus="success">
+    <div class="row" *ngIf='isShowSuccessMsg'>
+        <div class="col-sm-12">
+            <p class="text-success">
+                <strong>Students Bulk Upload successfull!</strong>
+            </p>
+        </div>
+    </div>
+    <div class="row" *ngIf='isShowErrorMsg'>
+        <div class="col-sm-12">
+            <p class="text-danger">
+                <strong>{{errorMsg}}</strong>
+            </p>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-6">
             <form class="form-horizontal">
@@ -32,5 +45,5 @@
 </div>
 
 <div class="modal-footer">
-    <button class="btn btn-md btn-primary" (click)="uploadStudentBulkData()">Upload</button>
+    <button class="btn btn-md btn-primary" [disabled]="isDisableButton" (click)="uploadStudentBulkData()">Upload</button>
 </div>

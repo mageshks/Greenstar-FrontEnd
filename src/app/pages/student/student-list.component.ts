@@ -16,7 +16,7 @@ export class StudentListComponent implements OnInit {
 
   public schoolList: ISchoolDetail[];
 
-  public isStudentAvailable: boolean = false;
+  public isSearch: boolean;
 
   public isBulkUploadRequestNotValid: boolean = false;
 
@@ -51,6 +51,7 @@ export class StudentListComponent implements OnInit {
     this.loadSchoolDropDown();
     this.studentSearchData.schoolId = 0;
     this.studentSearchData.classId = 0;
+    this.isSearch=false;
     this.studentSource.load(this.classSectionDetail.studentList);
   }
 
@@ -68,11 +69,13 @@ export class StudentListComponent implements OnInit {
 
   public onChangeClass() {
     this.isSearchDataNotValid = false;
+    this.isSearch=false;
   }
 
   public onChangeSchoolChange() {
     this.isSearchDataNotValid = false;
     this.isBulkUploadRequestNotValid = false;
+    this.isSearch=false;
     if (this.studentSearchData.schoolId == 0) {
       this.classSectionList = [];
       this.studentSearchData.classId = 0;
@@ -104,18 +107,16 @@ export class StudentListComponent implements OnInit {
       classDetail.schoolId = this.studentSearchData.schoolId;
       this.studentService.getClassDetail(classDetail).subscribe(
         (response) => {
-          console.log("classDetail ==> " + response);
+          console.log("classDetail ==> ");
+          console.log(response);
+          this.isSearch=true;
           this.classSectionDetail = response;
-          if (this.classSectionDetail.studentList.length == 0) {
-            this.isStudentAvailable = false;
-          } else {
-            this.isStudentAvailable = true;
-            this.studentSource.load(this.classSectionDetail.studentList);
-            this.teamNameTableSource.load(this.classSectionDetail.schoolTeamList);
-            this.loadingStudents = false;
-          }
+          this.studentSource.load(this.classSectionDetail.studentList);
+          this.teamNameTableSource.load(this.classSectionDetail.schoolTeamList);
+          this.loadingStudents = false;
         },
         error => {
+          this.isSearch=false;
           console.log("Http Server error", error);
         },
       );
@@ -125,8 +126,8 @@ export class StudentListComponent implements OnInit {
   public onStudentSubmit() {
     this.loadingStudents = true;
     //TODO: convert this to session variable
-    this.classSectionDetail.userId="Magesh";
-    this.classSectionDetail.schoolId=this.studentSearchData.schoolId;
+    this.classSectionDetail.userId = "Magesh";
+    this.classSectionDetail.schoolId = this.studentSearchData.schoolId;
     console.log("this.classSectionDetail.studentList" + JSON.stringify(this.classSectionDetail.studentList));
     this.studentService.saveOrUpdateStudent(this.classSectionDetail).subscribe(
       (response) => {
@@ -145,9 +146,9 @@ export class StudentListComponent implements OnInit {
   }
 
   public openBulkUploadDialog(): void {
-    if(this.studentSearchData.schoolId == 0){
+    if (this.studentSearchData.schoolId == 0) {
       this.isBulkUploadRequestNotValid = true;
-    }else{
+    } else {
       const activeModal = this.modalService.open(StudentBulkUploadModalComponent, { size: 'lg', container: 'nb-layout' });
       activeModal.componentInstance.schoolId = this.studentSearchData.schoolId;
       activeModal.componentInstance.classId = this.studentSearchData.classId;
