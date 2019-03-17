@@ -22,6 +22,7 @@ export class PerformanceMetricsComponent implements OnInit {
     public isSearchDataNotValid: boolean = false;
     public isClasswiseSearchDataNotValid: boolean = false;
     public isTeamwiseSearchDataNotValid: boolean = false;
+    public isEncouragingSearchDataNotValid: boolean = false;
     public isSpinner: boolean = false;
     public searchDataErrorMsg: string = '';
 
@@ -53,7 +54,6 @@ export class PerformanceMetricsComponent implements OnInit {
     ngOnInit(): void {
         this.monthList = PerformanceStaticData.monthList;
         this.distinctClassList = new Set<string>();
-        //this.performanceMetricsSource = PerformanceStaticData.getPerformanceMetricsTableContent();
         this.initializeForm();
         this.initializeClasswiseForm();
         this.initializeTeamwiseForm();
@@ -87,7 +87,7 @@ export class PerformanceMetricsComponent implements OnInit {
     private initializeEncouragingForm(): void{
         this.encouragingPerfMetricsForm = this.encouragingFormBuilder.group({
             schoolId: ['',Validators.required],
-            classId: [''],
+            classId: ['',Validators.required],
             month1: ['', Validators.required],
             month2: ['', Validators.required]
         })
@@ -126,7 +126,7 @@ export class PerformanceMetricsComponent implements OnInit {
         );
     }
 
-    public loadIndividualClassDetailsBySchool($event) : void {
+    public loadIndividualClassDetailsBySchool() : void {
         if (this.perfMetricsForm.getRawValue().schoolId != 0) {
             this.isSpinner = true;
             let schoolDetail: ISchoolDetail = {} as ISchoolDetail;
@@ -135,7 +135,7 @@ export class PerformanceMetricsComponent implements OnInit {
         }
     }
 
-    public loadClasswiseClassDetailsBySchool($event) : void {
+    public loadClasswiseClassDetailsBySchool() : void {
         if (this.classPerfMetricsForm.getRawValue().schoolId != 0) {
             this.isSpinner = true;
             let schoolDetail: ISchoolDetail = {} as ISchoolDetail;
@@ -144,7 +144,7 @@ export class PerformanceMetricsComponent implements OnInit {
         }
     }
 
-    public loadTeamwiseClassDetailsBySchool($event) : void {
+    public loadTeamwiseClassDetailsBySchool() : void {
         if (this.teamPerfMetricsForm.getRawValue().schoolId != 0) {
             this.isSpinner = true;
             let schoolDetail: ISchoolDetail = {} as ISchoolDetail;
@@ -154,7 +154,7 @@ export class PerformanceMetricsComponent implements OnInit {
     }
 
 
-    public loadEncouragingClassDetailsBySchool($event) : void {
+    public loadEncouragingClassDetailsBySchool() : void {
         if (this.encouragingPerfMetricsForm.getRawValue().schoolId != 0) {
             this.isSpinner = true;
             let schoolDetail: ISchoolDetail = {} as ISchoolDetail;
@@ -267,7 +267,7 @@ export class PerformanceMetricsComponent implements OnInit {
 
     public viewEncouragingPerformanceMetrics(): void {
 
-        this.isTeamwiseSearchDataNotValid = false;
+        this.isEncouragingSearchDataNotValid = false;
         if (this.encouragingPerfMetricsForm.valid) {
             let searchPerformanceMetrics: ISearchPerformanceMetrics = {} as ISearchPerformanceMetrics;
             searchPerformanceMetrics.schoolId = this.encouragingPerfMetricsForm.getRawValue().schoolId;
@@ -279,7 +279,7 @@ export class PerformanceMetricsComponent implements OnInit {
             this.loadEncouragingPerformanceMetrics(searchPerformanceMetrics);
         } else {
             ValidatorUtil.validateAllFormFields(this.teamPerfMetricsForm);
-            this.isTeamwiseSearchDataNotValid = true;
+            this.isEncouragingSearchDataNotValid = true;
         }
     }
 
