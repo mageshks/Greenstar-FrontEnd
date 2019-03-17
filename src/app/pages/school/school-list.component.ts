@@ -1,11 +1,8 @@
 import { OnInit, Component } from '@angular/core';
-import { Ng2SmartTableModule, LocalDataSource } from 'ng2-smart-table';
-import { DomSanitizer } from '@angular/platform-browser';
+import { LocalDataSource } from 'ng2-smart-table';
 import { SchoolComponent } from './school.component';
 import { SchoolService } from './school.service';
-import { NbDialogService } from '@nebular/theme';
-import { ISchoolDetail, ISchoolSearchData } from './school.interface';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ISchoolSearchData } from './school.interface';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonService } from '../common/common.service';
 import { IState } from '../common/common.interface';
