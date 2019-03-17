@@ -29,7 +29,7 @@ pipeline {
 
   stage('NPM test') {
    steps {
-    bat label: 'npm test', returnStdout: true, script: 'npm test --watch=false --code-coverage'
+    bat label: 'Run angular test', returnStatus: true, returnStdout: true, script: 'npm test --watch=false --code-coverage'
    }
   }
 
@@ -39,5 +39,24 @@ pipeline {
    }
   }
 
+  stage('Docker Image') {
+   steps {
+    bat label: 'Docker build', script: 'dockerx build -t greenstarui:prod .'
+   }
+  }
+
+  stage('Stop And Remove Container Exists') {
+   /*To stop and remove if container exists or running. 
+			 Returning true to avoid failure if not exists or running */
+   steps {
+    bat label: 'Stop/Remove if exists', returnStatus: true, script: 'dockerx stop greenstarui-docker && dockerx rm greenstarui-docker'
+   }
+  }
+  
+  stage('Docker Run') {
+   steps {
+    bat label: 'Run docker on container', returnStatus: true, script: 'dockerx run -d --name=greenstarui-docker --publish=4552:4552 greenstarui:prod'
+   }
+  }
  }
 }
