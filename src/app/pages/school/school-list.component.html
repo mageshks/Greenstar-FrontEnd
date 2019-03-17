@@ -13,7 +13,7 @@
                                 <label for="state" class="col-form-label required">State</label>
                                 <div class="input-group">
                                     <select id="state" name="state" class="form-control form-control-sm"
-                                        [(ngModel)]="schoolSearchData.stateName" (change)="onStateChange($event)">
+                                        [(ngModel)]="schoolSearchData.stateName" (change)="onStateChange()">
                                         <option value="--Select State--">--Select State--</option>
                                         <option *ngFor="let state of stateList" value={{state.stateName}}>
                                             {{state.stateName}}
