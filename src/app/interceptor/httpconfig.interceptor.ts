@@ -13,23 +13,28 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { ErrorDialogModalComponent } from '../error-dialog/errordialog.modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
 
     private allowedStatusCodes: number[] = [200, 201, 202, 203, 204, 205, 206, 207, 208, 226];
 
-    constructor(private modalService: NgbModal) { }
+    constructor(private modalService: NgbModal,private router: Router) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         let newRequest = request;
-        console.log('From interceptor ==> ', request);
         //If not login url then add headers
         if (request.url.indexOf('api/security/login') == -1) {
 
-            console.log('Token & userId', localStorage.getItem('apiToken'),
-             localStorage.getItem('userId'));
+            if(localStorage.getItem('apiToken') === undefined ||
+             localStorage.getItem('apiToken') ==''){
+                const activeModal = this.modalService.open(ErrorDialogModalComponent, { size: 'lg', container: 'nb-layout' });
+                activeModal.componentInstance.modalContent = 'Session expired or invalid.Login again';
+                this.router.navigate(['/login']);
+            }
+
             // clone the request to add the api authentication key to header.
             newRequest = request.clone({
                 headers: new HttpHeaders({
@@ -39,14 +44,22 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 })
             });
         }
-        console.log('New request', newRequest);
 
         return next.handle(newRequest).pipe(
             map((event: HttpEvent<any>) => {
 
                 if (event instanceof HttpResponse) {
                     // if block to check the http allowed status code and show the error message popup
-                    if (!this.allowedStatusCodes.includes(event.status)) {
+                    if(event.status == 504){
+                        const activeModal = this.modalService.open(ErrorDialogModalComponent, { size: 'lg', container: 'nb-layout' });
+                        activeModal.componentInstance.modalContent = 'Session timeout, Please retry after sometime!';
+                    }else if(event.status == 401){
+                        const activeModal = this.modalService.open(ErrorDialogModalComponent, { size: 'lg', container: 'nb-layout' });
+                        activeModal.componentInstance.modalContent = 'Session expired or invalid.Login again';
+                        this.router.navigate(['/login']);
+                        // Invalidate local storage
+                        localStorage.clear();
+                    }else if (!this.allowedStatusCodes.includes(event.status)) {
                         const activeModal = this.modalService.open(ErrorDialogModalComponent, { size: 'lg', container: 'nb-layout' });
                         activeModal.componentInstance.modalContent = 'Error Occured, Please try again later';
                     }
@@ -56,11 +69,16 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             // catch error block to check error and show to error popup alert.
             catchError((error: HttpErrorResponse) => {
                 let data = {};
+                console.log('Error--->>>', JSON.stringify(error));
+                if(error.status == 504){
+                    const activeModal = this.modalService.open(ErrorDialogModalComponent, { size: 'lg', container: 'nb-layout' });
+                    activeModal.componentInstance.modalContent = 'Session timeout, Please retry after sometime!';
+                    return throwError(error);
+                }
                 data = {
                     reason: error && error.error.reason ? error.error.reason : '',
                     status: error.status
                 };
-                console.log('Error--->>>', JSON.stringify(error));
                 const activeModal = this.modalService.open(ErrorDialogModalComponent, { size: 'lg', container: 'nb-layout' });
                 activeModal.componentInstance.modalContent = 'Error Occured, Please try again later';
                 return throwError(error);

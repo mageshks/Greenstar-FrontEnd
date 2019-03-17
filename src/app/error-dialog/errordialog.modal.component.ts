@@ -5,7 +5,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
   selector: 'ngx-modal',
   template: `
     <div class="modal-header">
-      <span>Alert</span>
+      <span>Message</span>
       <button class="close" aria-label="Close" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
       </button>
