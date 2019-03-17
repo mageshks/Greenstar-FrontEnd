@@ -19,8 +19,7 @@
         [showXAxisLabel]="showXAxisLabel"
         [showYAxisLabel]="showYAxisLabel"
         [xAxisLabel]="yAxisLabelForSchoolMonth"
-        [yAxisLabel]="yAxisLabelForSchoolMonth"
-        (select)="onSelect($event)">
+        [yAxisLabel]="yAxisLabelForSchoolMonth">
       </ngx-charts-bar-vertical>
     </nb-card>
     <nb-card>
@@ -38,8 +37,7 @@
           [startAngle]="-120"
           [units]="'points'"
           [bigSegments]="10"
-          [smallSegments]="5"
-          (select)="onSelect($event)">
+          [smallSegments]="5">
         </ngx-charts-gauge>
     </nb-card>
  </div>
@@ -51,8 +49,7 @@
     <ngx-charts-pie-grid
     [view]="view"
     [scheme]="colorScheme"
-    [results]="topPerformingVolunteersSingle"
-    (select)="onSelect($event)">
+    [results]="topPerformingVolunteersSingle">
   </ngx-charts-pie-grid>
   </nb-card>
 </div>

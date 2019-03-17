@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-sm-12">
         <nb-card>
             <nb-card-body [nbSpinner]="isSpinner" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
               <nb-tabset>
@@ -29,9 +29,6 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class='row'>
                         <div class='col-sm-2'>
                             <label for="month" class="col-form-label required">Month</label>
                             <div class="input-group">
@@ -66,24 +63,23 @@
                     </div>
                     <div class="row pt-3">
                         <div class="col-sm-3 text-left errormsg">
-                            <span style="color:red" *ngIf="isSearchDataNotValid">All fields are mandatory!</span>
+                            <span id="errorMessage" style="color:red" *ngIf="isSearchDataNotValid">All fields are mandatory!</span>
                         </div>
                     </div>
                     <div class='row pt-3'>
-                        <div class="col-sm-3 text-left">
+                        <div class="col-sm-4 text-left">
                             <button class="btn btn-primary btn-sm" type="button" (click)="resetPerformanceSearch();">Reset</button>
                         </div>
-                        <div class="col-sm-3 text-center">
-                            <button class="btn btn-primary btn-sm" type="submit">View Metrics</button>
+                        <div class="col-sm-4">
                         </div>
-                        <div class='col-sm-3 text-right'>
-                            <button class="btn btn-primary btn-sm" type="button" (click)="downloadExcelExport()">Excel Export</button> 
+                        <div class="col-sm-4 text-right">
+                            <button class="btn btn-primary btn-sm" type="submit">View Metrics</button>
                         </div>
                     </div>
                 </form>
     
                     <div class="row pt-3">
-                        <div class="col-sm-12">
+                        <div class="col-sm-12" *ngIf="performanceMetricsSource.headers">
                             <div class="table-responsive">
                                 <table class="table table-sm table-striped table-bordered">
                                     <thead>
@@ -165,24 +161,21 @@
 
                     <div class="row pt-3">
                             <div class="col-sm-3 text-left errormsg">
-                                <span style="color:red" *ngIf="isClasswiseSearchDataNotValid">All fields are mandatory!</span>
+                                <span id="errorMessage" style="color:red" *ngIf="isClasswiseSearchDataNotValid">All fields are mandatory!</span>
                             </div>
                         </div>
                         <div class='row pt-3'>
-                            <div class="col-sm-3 text-left">
+                            <div class="col-sm-6 text-left">
                                 <button class="btn btn-primary btn-sm" type="button" (click)="resetClasswisePerformanceSearch();">Reset</button>
                             </div>
-                            <div class="col-sm-3 text-center">
+                            <div class="col-sm-6 text-right">
                                 <button class="btn btn-primary btn-sm" type="submit">View Classwise Metrics</button>
-                            </div>
-                            <div class='col-sm-3 text-right'>
-                                <button class="btn btn-primary btn-sm" type="button" (click)="downloadExcelExport()">Excel Export</button> 
                             </div>
                         </div>
                     </form>
     
                     <div class="row pt-3">
-                        <div class="col-md-12">
+                        <div class="col-sm-12" *ngIf="classWiseMetricsSource.sectionData">
                             <div class="table-responsive">
                                 <table class="table table-sm table-striped table-bordered">
                                     <thead>
@@ -253,24 +246,21 @@
 
                     <div class="row pt-3">
                         <div class="col-sm-3 text-left errormsg">
-                            <span style="color:red" *ngIf="isTeamwiseSearchDataNotValid">All fields are mandatory!</span>
+                            <span id="errorMessage" style="color:red" *ngIf="isTeamwiseSearchDataNotValid">All fields are mandatory!</span>
                         </div>
                     </div>
                     <div class='row pt-3'>
-                        <div class="col-sm-3 text-left">
+                        <div class="col-sm-6 text-left">
                             <button class="btn btn-primary btn-sm" type="button" (click)="resetTeamwisePerformanceSearch();">Reset</button>
                         </div>
-                        <div class="col-sm-3 text-center">
+                        <div class="col-sm-6 text-right">
                             <button class="btn btn-primary btn-sm" type="submit">View Teamwise Metrics</button>
-                        </div>
-                        <div class='col-sm-3 text-right'>
-                            <button class="btn btn-primary btn-sm" type="button" (click)="downloadExcelExport()">Excel Export</button> 
                         </div>
                     </div>
                 </form>
     
                     <div class="row pt-3">
-                        <div class="col-md-12">
+                        <div class="col-sm-12" *ngIf="teamWiseMetricsSource.sectionData">
                             <div class="table-responsive">
                                 <table class="table table-sm table-striped table-bordered">
                                     <thead>
@@ -315,7 +305,7 @@
                 <nb-tab tabTitle="Encouraging Metrics" tabIcon="nb-arrow-thin-up" responsive>
                 <form [formGroup]="encouragingPerfMetricsForm" (ngSubmit)="viewEncouragingPerformanceMetrics()">
                   <div class='row pt-5'>
-                    <div class="col-sm-5">
+                    <div class="col-sm-6">
                     <label for="schoolId" class="col-form-label required">School</label>
                     <div class="input-group required">
                         <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" [ngClass]="displayFieldCss('schoolId')" (change)="loadEncouragingClassDetailsBySchool($event.target.value)" required>
@@ -327,7 +317,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <label for="className" class="col-form-label required">Class</label>
                     <div class="input-group">
                         <select [(ngModel)]="selectedClassName" id="classId" name="classId" formControlName="classId" class="form-control form-control-sm" [ngClass]="displayFieldCss('classId')">
@@ -338,62 +328,62 @@
                         </select>
                     </div>
                 </div>
+                <div class='col-sm-2'>
+                    <label for="month1" class='col-form-label required'>Month 1</label>
+                    <div class="input-group">
+                    <select [(ngModel)]="selectedMonth1" id="month1" name="month1" formControlName="month1" class="form-control form-control-sm" placeholder="Select" outline>
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
                     </div>
-                    <div class='row'>
-                        <div class='col-sm-3'>
-                            <label for="month1" class='col-form-label required'>Month 1</label>
-                            <div class="input-group">
-                            <select [(ngModel)]="selectedMonth1" id="month1" name="month1" formControlName="month1" placeholder="Select" outline>
-                                <option value="1">January</option>
-                                <option value="2">February</option>
-                                <option value="3">March</option>
-                                <option value="4">April</option>
-                                <option value="5">May</option>
-                                <option value="6">June</option>
-                                <option value="7">July</option>
-                                <option value="8">August</option>
-                                <option value="9">September</option>
-                                <option value="10">October</option>
-                                <option value="11">November</option>
-                                <option value="12">December</option>
-                            </select>
+                </div>
+                <div class='col-sm-2'>
+                    <label for="month2" class='col-form-label required'>Month 2</label>
+                    <div class="input-group">
+                        <select [(ngModel)]="selectedMonth2" id="month2" name="month2" formControlName="month2" class="form-control form-control-sm" placeholder="Select" outline>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                </div>
+                    </div>
+                    <div class="row pt-3">
+                            <div class="col-sm-3 text-left errormsg">
+                                <span id="errorMessage" style="color:red" *ngIf="isEncouragingSearchDataNotValid">All fields are mandatory!</span>
                             </div>
                         </div>
-                        <div class='col-sm-3'>
-                            <label for="month2" class='col-form-label required'>Month 2</label>
-                            <div class="input-group">
-                            <select [(ngModel)]="selectedMonth2" id="month2" name="month2" formControlName="month2" placeholder="Select" outline>
-                                <option value="1">January</option>
-                                <option value="2">February</option>
-                                <option value="3">March</option>
-                                <option value="4">April</option>
-                                <option value="5">May</option>
-                                <option value="6">June</option>
-                                <option value="7">July</option>
-                                <option value="8">August</option>
-                                <option value="9">September</option>
-                                <option value="10">October</option>
-                                <option value="11">November</option>
-                                <option value="12">December</option>
-                            </select>
-                        </div>
-                        </div>
-                    </div>
                     <div class='row pt-3'>
-                        <div class='col-md-6'>
+                        <div class='col-sm-4'>
+                        </div>
+                        <div class='col-sm-4'>
                             <button nbButton status="primary">Compare Metrics</button>
                         </div>
-                        <div class='col-md-3'>
-                            
-                        </div>
-                        <div class='col-md-3'>
-                            
-                            <button nbButton status="primary" (click)="downloadExcelExport()">Excel Export</button> 
+                        <div class='col-sm-4'>
                         </div>
                     </div>
                 </form>
                     <div class="row pt-3">
-                        <div class="col-md-12">
+                        <div class="col-sm-12" *ngIf="encouragingMetricsSource.sectionData">
                             <div class="table-responsive">
                                 <ng-container *ngFor="let encouragingMetrics of encouragingMetricsSource.metrics">
                                     <table class="table table-sm table-striped table-bordered">
