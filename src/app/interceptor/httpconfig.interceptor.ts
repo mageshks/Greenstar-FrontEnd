@@ -52,7 +52,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                     // if block to check the http allowed status code and show the error message popup
                     if(event.status == 504){
                         const activeModal = this.modalService.open(ErrorDialogModalComponent, { size: 'lg', container: 'nb-layout' });
-                        activeModal.componentInstance.modalContent = 'Session timeout, Please retry after sometime!';
+                        activeModal.componentInstance.modalContent = 'Gateway timeout, Please retry after sometime!';
                     }else if(event.status == 401){
                         const activeModal = this.modalService.open(ErrorDialogModalComponent, { size: 'lg', container: 'nb-layout' });
                         activeModal.componentInstance.modalContent = 'Session expired or invalid.Login again';
