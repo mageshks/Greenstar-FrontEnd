@@ -1,0 +1,43 @@
+/* This script is coded to run in windows environment
+   dockerx is the bat file name configured in windows docker client installed path
+   Steps to setup docker client and host
+   =====================================
+   1. Download “Docker client for Linux, MacOS and Windows”
+   2. Navigate in the folder and create "dockerx.bat" file with following contents:
+      Docker -H=172.18.2.50:2375  %*
+   3. Save the file and close it
+   4. Install nodejs plugin in jenkins and add the node path with name as GreenAppNodeJS
+ */
+pipeline {
+ agent any
+ tools {
+  nodejs "GreenAppNodeJS"
+ }
+ stages {
+
+  stage('Checkout') {
+   steps {
+    git url: 'http://172.18.2.18/teamgreenstar/371793-Hackathon-FrontEnd.git', credentialsId: 'mageshgitlabcred', branch: 'master'
+   }
+  }
+
+  stage('NPM Install') {
+   steps {
+    bat label: 'npm install', returnStdout: true, script: 'npm install'
+   }
+  }
+
+  stage('NPM test') {
+   steps {
+    bat label: 'npm test', returnStdout: true, script: 'npm test --watch=false --code-coverage'
+   }
+  }
+
+  stage('NPM build') {
+   steps {
+    bat label: 'npm build', returnStdout: true, script: 'npm run build --prod --aot'
+   }
+  }
+
+ }
+}
