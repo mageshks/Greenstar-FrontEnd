@@ -44,7 +44,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 })
             });
         }
-
+        // Forward the request
         return next.handle(newRequest).pipe(
             map((event: HttpEvent<any>) => {
 
