@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
 import { IPerformanceDataTable, ISearchPerformanceData } from "./performance-data.interface";
 
-const API_URL: string = 'http://localhost:2640';
+const API_URL: string = 'http://localhost:8765/api';
 
 @Injectable()
 export class PerformanceDataService {

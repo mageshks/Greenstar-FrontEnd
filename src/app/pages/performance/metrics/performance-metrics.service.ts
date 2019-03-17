@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
-import { IPerformanceDataTable, ISearchPerformanceMetrics } from "./performance-metrics.interface";
+import { ISearchPerformanceMetrics } from "./performance-metrics.interface";
 
-const API_URL: string = 'http://localhost:2640';
+const API_URL: string = 'http://localhost:8765/api/perfdata';
 
 @Injectable()
 export class PerformanceMetricsService {
@@ -14,11 +14,11 @@ export class PerformanceMetricsService {
     }
 
     public getWeekDaysByMonth(searchPerformanceMetrics: ISearchPerformanceMetrics): Observable<any> {
-        return this.http.post(API_URL + '/perfdata/weekdayes', searchPerformanceMetrics, { headers: this.headerValue });
+        return this.http.post(API_URL + '/weekdayes', searchPerformanceMetrics, { headers: this.headerValue });
     }
 
     public getIndividualPerformanceMetrics(searchPerformanceMetrics: ISearchPerformanceMetrics): Observable<any> {
-        return this.http.post(API_URL+'/perfdata/existingmetricdatas', searchPerformanceMetrics, { headers: this.headerValue });
+        return this.http.post(API_URL+'/existingmetricdatas', searchPerformanceMetrics, { headers: this.headerValue });
     }
 
     public getTeamwisePerformanceMetrics(searchPerformanceMetrics: ISearchPerformanceMetrics): Observable<any> {

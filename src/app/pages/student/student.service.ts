@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
 import { ISchoolDetail,IClassSectionDetail,IStudentSearchData } from "./student.interface";
 
-const API_URL: string = 'http://localhost:2620';
+const API_URL: string = 'http://localhost:8765/api';
 
 @Injectable()
 export class StudentService {

@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
 
 
-const API_URL: string = 'http://localhost:2640';
+const API_URL: string = 'http://localhost:8765/api/perfdata';
 
 @Injectable()
 export class DashboardService {

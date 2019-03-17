@@ -55,7 +55,9 @@ export class LoginComponent implements OnInit {
             } else {
               console.log('No matches found');
             }
-
+            console.log('roleName', response.roleName);
+            console.log('apiToken', response.apiToken);
+            console.log('uiMenuList', menuNames);
             localStorage.setItem('roleName', response.roleName);
             localStorage.setItem('apiToken', response.apiToken);
             // localStorage.setItem('uiMenuList', JSON.stringify(response.uiMenuList));
