@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
-
-const API_URL: string = 'http://localhost:8765/api';
+import { environment } from '../../environments/environment';
+const API_URL: string = environment.API_URL+'/api';
 
 @Injectable()
 export class LoginService {
