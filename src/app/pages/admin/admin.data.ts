@@ -29,7 +29,7 @@ export class AdminData {
                     title: 'User ID',
                     type: 'string',
                 },
-                roleId: {
+                roleName: {
                     title: 'Role',
                     type: 'string',
                     editor: {
@@ -44,16 +44,6 @@ export class AdminData {
         };
 
         return settings;
-    }
-
-    public static getTempUserRoleDetail(): IAdminDetail[] {
-
-        var classList: IAdminDetail[] = [
-            { userId: 'Magesh', roleId: 'Admin' },
-            { userId: 'Panneer', roleId: 'Event POC' },
-            { userId: 'Bharath', roleId: 'PMO' }
-        ];
-        return classList;
     }
 
     public static getRoles(): any {

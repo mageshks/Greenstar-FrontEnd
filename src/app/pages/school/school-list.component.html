@@ -43,7 +43,9 @@
                                         <button nbButton status="primary" (click)="onSearch()">Search</button>
                                 </div>
                             <div class='col-sm-4 text-right pt-2'>
-                                <button nbButton status="primary" (click)="createSchool()">Add School</button>
+                                <span *ngIf='isGrantedRole();'>
+                                    <button nbButton status="primary" (click)="createSchool()">Add School</button>
+                                </span>
                             </div>
 
                         </div>

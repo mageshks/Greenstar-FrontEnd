@@ -23,7 +23,7 @@ export class SchoolListComponent implements OnInit {
   public searchDropdownLoading: boolean;
   public searchDataLoading: boolean;
 
-  public isSearchError:boolean;
+  public isSearchError: boolean;
 
 
   // performance param table setting
@@ -31,15 +31,15 @@ export class SchoolListComponent implements OnInit {
   public schoolTableParamSetting: any = this.getSchoolTableSetting();
 
   constructor(private modalService: NgbModal,
-     private commonService: CommonService,
-     private schoolService: SchoolService) {
+    private commonService: CommonService,
+    private schoolService: SchoolService) {
 
   }
 
   ngOnInit(): void {
-    this.isSearchError=false;
+    this.isSearchError = false;
     this.searchDropdownLoading = false;
-    this.searchDataLoading= false;
+    this.searchDataLoading = false;
     this.loadSearchDropDowns();
     this.schoolSearchData.stateName = "--Select State--";
     this.schoolSearchData.district = "--Select District--";
@@ -69,8 +69,8 @@ export class SchoolListComponent implements OnInit {
         deleteButtonContent: '<i class="ion-eye"></i>'
       },
       mode: 'external',
-      pager: {display: true,perPage: 5},
-      actions: { add: false,position: 'right' },
+      pager: { display: true, perPage: 5 },
+      actions: { add: false, position: 'right' },
 
       columns: {
         schoolName: {
@@ -97,7 +97,7 @@ export class SchoolListComponent implements OnInit {
     if (this.schoolSearchData.stateName == '--Select State--') {
       this.districtList = [];
     } else {
-      this.isSearchError=false;
+      this.isSearchError = false;
       this.stateList.forEach((state) => {
         if (state.stateName == this.schoolSearchData.stateName) {
           this.districtList = state.districts;
@@ -107,15 +107,15 @@ export class SchoolListComponent implements OnInit {
     this.searchDropdownLoading = false;
   }
 
-  public onSearch(){
+  public onSearch() {
     if (this.schoolSearchData.stateName == '--Select State--') {
-      this.isSearchError=true;
-    } else{
+      this.isSearchError = true;
+    } else {
       this.searchDataLoading = true;
       this.schoolService.getSchoolsForSearch(this.schoolSearchData).subscribe(
         (response) => {
           console.log(JSON.stringify(response));
-          this.schoolTableData =  new LocalDataSource(response);
+          this.schoolTableData = new LocalDataSource(response);
           this.searchDataLoading = false;
         },
         error => {
@@ -127,10 +127,10 @@ export class SchoolListComponent implements OnInit {
     }
   }
 
-  public editSchool(event){
+  public editSchool(event) {
     console.log(event.data);
-    
-    console.log("Editing school Id ==> "+event.data.id);
+
+    console.log("Editing school Id ==> " + event.data.id);
     const activeModal = this.modalService.open(SchoolComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.title = 'Edit School Detail';
     activeModal.componentInstance.action = 'edit';
@@ -138,9 +138,9 @@ export class SchoolListComponent implements OnInit {
     activeModal.componentInstance.stateList = this.stateList;
   }
 
-  public viewSchool(event){
+  public viewSchool(event) {
     console.log(event.data);
-    console.log("Viewing school Id ==> "+event.data.id);
+    console.log("Viewing school Id ==> " + event.data.id);
     const activeModal = this.modalService.open(SchoolComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.title = 'View School Detail';
     activeModal.componentInstance.action = 'view';
@@ -153,5 +153,15 @@ export class SchoolListComponent implements OnInit {
     activeModal.componentInstance.title = 'Add School Detail';
     activeModal.componentInstance.action = 'create';
     activeModal.componentInstance.stateList = this.stateList;
+  }
+
+  public isGrantedRole(): boolean {
+    const restrictedRole = 'Event POC';
+    //const restrictedRole = 'PMO';
+    if (restrictedRole === localStorage.getItem('roleName')) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

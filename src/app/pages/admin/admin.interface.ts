@@ -1,4 +1,6 @@
 export class IAdminDetail {
+    public id: number;
     public userId: string;
-    public roleId: string;
+    public roleName: string;
+    public loggedUserId: string;
 }

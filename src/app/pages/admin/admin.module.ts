@@ -6,6 +6,7 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { SmartTableDatePickerComponent } from '../../@theme/components/smart-table-date-picker-component/smart-table-date-picker.components';
 import { AdminComponent } from './admin.component';
 import { AdminService } from './admin.service';
+import { AdminModalComponent } from './admin.component.modal';
 
 @NgModule({
   imports: [
@@ -15,9 +16,11 @@ import { AdminService } from './admin.service';
   ],
   declarations: [
     AdminComponent,
+    AdminModalComponent
   ],
   entryComponents: [
-    SmartTableDatePickerComponent
+    SmartTableDatePickerComponent,
+    AdminModalComponent
   ],
   providers: [
     AdminService
