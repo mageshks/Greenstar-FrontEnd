@@ -10,7 +10,7 @@ export class DashboardComponent implements OnInit {
 
   public totalNoOfSchools:String;
 
-    view: any[] = [800, 600];
+    view: any[] = [800, 400];
     // options for the chart
     showXAxis = true;
     showYAxis = true;
@@ -41,6 +41,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService) {
+      this.view = [innerWidth / 1.3, 400];
 	}
 
   ngOnInit(): void {
@@ -49,6 +50,11 @@ export class DashboardComponent implements OnInit {
     this.getTopPerformingSchools();
     this.getTopPerformingVolunteers();
   }
+
+  onResize(event) {
+    this.view = [event.target.innerWidth / 1.35, 400];
+  }
+
   private getTotalNoOfSchools(): void {
     this.dashboardService.getTotalNoOfSchools().subscribe((response) => {
       this.totalNoOfSchools = response.result;
@@ -72,98 +78,6 @@ export class DashboardComponent implements OnInit {
       console.log("Http Server error", error);
     });
   }
-
-  // data goes here
-
-public multi = [
-  {
-    "name": "5th Standard",
-    "series": [
-      {
-        "name": "Attendance",
-        "value": 165
-      },
-      {
-        "name": "Homework",
-        "value": 170
-      },
-      {
-        "name": "Discipline",
-        "value": 162
-      }
-    ]
-  },
-
-  {
-    "name": "6th Standard",
-    "series": [
-      {
-        "name": "Attendance",
-        "value": 105
-      },
-      {
-        "name": "Homework",
-        "value": 120
-      },
-      {
-        "name": "Discipline",
-        "value": 152
-      }
-    ]
-  },
-
-  {
-    "name": "7th Standard",
-    "series": [
-      {
-        "name": "Attendance",
-        "value": 125
-      },
-      {
-        "name": "Homework",
-        "value": 130
-      },
-      {
-        "name": "Discipline",
-        "value": 112
-      }
-    ]
-  },
-  {
-    "name": "8th Standard",
-    "series": [
-      {
-        "name": "Attendance",
-        "value": 185
-      },
-      {
-        "name": "Homework",
-        "value": 130
-      },
-      {
-        "name": "Discipline",
-        "value": 122
-      }
-    ]
-  },
-  {
-    "name": "9th Standard",
-    "series": [
-      {
-        "name": "Attendance",
-        "value": 115
-      },
-      {
-        "name": "Homework",
-        "value": 107
-      },
-      {
-        "name": "Discipline",
-        "value": 126
-      }
-    ]
-  }
-];
 
   private getSchoolByMonthMetrics() {
     this.dashboardService.getSchoolByMonthMetrics().subscribe((response) => {
