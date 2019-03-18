@@ -35,7 +35,7 @@ pipeline {
 
   stage('NPM build') {
    steps {
-    bat label: 'npm build', returnStdout: true, script: 'npm run build --prod --aot'
+    bat label: 'npm build', returnStdout: true, script: 'npm run build -- --prod --aot'
    }
   }
 
