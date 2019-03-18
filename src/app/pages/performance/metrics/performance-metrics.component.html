@@ -9,7 +9,7 @@
                         <div class="col-sm-5">
                             <label for="schoolId" class="col-form-label required">School</label>
                             <div class="input-group required">
-                                <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" [ngClass]="displayFieldCss('schoolId')" (change)="loadIndividualClassDetailsBySchool($event.target.value)" required>
+                                <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" [ngClass]="displayFieldCss('schoolId')" (change)="loadIndividualClassDetailsBySchool()" required>
                                     <option value=''>Select</option>
                                     <option *ngFor="let school of schoolList" value={{school.id}}>
                                         {{school.schoolName}}
@@ -137,7 +137,7 @@
                             <div class="col-sm-5">
                                 <label for="schoolId" class="col-form-label required">School</label>
                                 <div class="input-group required">
-                                    <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" [ngClass]="displayFieldCss('schoolId')" (change)="loadClasswiseClassDetailsBySchool($event.target.value)" required>
+                                    <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" [ngClass]="displayFieldCss('schoolId')" (change)="loadClasswiseClassDetailsBySchool()" required>
                                         <option value=''>Select</option>
                                         <option *ngFor="let school of schoolList" value={{school.id}}>
                                             {{school.schoolName}}
@@ -222,7 +222,7 @@
                             <div class="col-sm-5">
                                 <label for="schoolId" class="col-form-label required">School</label>
                                 <div class="input-group required">
-                                    <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" [ngClass]="displayFieldCss('schoolId')" (change)="loadTeamwiseClassDetailsBySchool($event.target.value)" required>
+                                    <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" [ngClass]="displayFieldCss('schoolId')" (change)="loadTeamwiseClassDetailsBySchool()" required>
                                         <option value=''>Select</option>
                                         <option *ngFor="let school of schoolList" value={{school.id}}>
                                             {{school.schoolName}}
@@ -308,7 +308,7 @@
                     <div class="col-sm-6">
                     <label for="schoolId" class="col-form-label required">School</label>
                     <div class="input-group required">
-                        <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" [ngClass]="displayFieldCss('schoolId')" (change)="loadEncouragingClassDetailsBySchool($event.target.value)" required>
+                        <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" [ngClass]="displayFieldCss('schoolId')" (change)="loadEncouragingClassDetailsBySchool()" required>
                             <option value=''>Select</option>
                             <option *ngFor="let school of schoolList" value={{school.id}}>
                                 {{school.schoolName}}
@@ -383,7 +383,7 @@
                     </div>
                 </form>
                     <div class="row pt-3">
-                        <div class="col-sm-12" *ngIf="encouragingMetricsSource.sectionData">
+                        <div class="col-sm-12" *ngIf="encouragingMetricsSource">
                             <div class="table-responsive">
                                 <ng-container *ngFor="let encouragingMetrics of encouragingMetricsSource.metrics">
                                     <table class="table table-sm table-striped table-bordered">
