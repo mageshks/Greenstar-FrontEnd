@@ -145,7 +145,7 @@ export class PerformanceDataComponent implements OnInit {
         );
     }
 
-    private loadClassDetailsBySchool($event): void {
+    public loadClassDetailsBySchool($event): void {
         if (this.perfDataForm.getRawValue().schoolId != 0) {
             this.isSpinner = true;
             let schoolDetail: ISchoolDetail = {} as ISchoolDetail;

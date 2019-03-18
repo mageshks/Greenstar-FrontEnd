@@ -41,7 +41,7 @@
                             <div class="input-group col-sm-7">
                                 <select id="state" name="state" class="form-control form-control-sm"
                                     [disabled]="this.action == 'view'" [(ngModel)]="schoolDetail.state"
-                                    (change)="onStateChange($event)">
+                                    (change)="onStateChange()">
                                     <option value="--Select State--">--Select State--</option>
                                     <option *ngFor="let state of stateList" value={{state.stateName}}>
                                         {{state.stateName}}

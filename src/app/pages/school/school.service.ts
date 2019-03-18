@@ -3,7 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
 import { ISchoolDetail,ISchoolSearchData } from "./school.interface";
 
-const API_URL: string = 'http://localhost:8765/api';
+import { environment } from '../../../environments/environment';
+
+const API_URL: string = environment.API_URL+'/api';
 
 @Injectable()
 export class SchoolService {
