@@ -1,4 +1,5 @@
  <div class="row">
+    <div class="col-sm-12">
     <nb-card>
         <nb-card-header id="dashboardTitle">
             Schools using Greenstar Application every month
@@ -9,8 +10,8 @@
           </div>
         </nb-card-body>
         <ngx-charts-bar-vertical
+        (window:resize)="onResize($event)"
         [view]="view"
-        [scheme]="colorScheme"
         [results]="schoolByMonthSingle"
         [gradient]="gradient"
         [xAxis]="showXAxis"
@@ -22,11 +23,16 @@
         [yAxisLabel]="yAxisLabelForSchoolMonth">
       </ngx-charts-bar-vertical>
     </nb-card>
-    <nb-card>
+  </div>
+ </div>
+ <div class="row">
+    <div class="col-sm-12">
+      <nb-card>
         <nb-card-header>
             Top Performing schools in Greenstar Application
         </nb-card-header>
         <ngx-charts-gauge
+          (window:resize)="onResize($event)"
           [view]="view"
           [scheme]="colorScheme"
           [results]="topSchoolByMonthSingle"
@@ -40,16 +46,20 @@
           [smallSegments]="5">
         </ngx-charts-gauge>
     </nb-card>
- </div>
+    <nb-card>
+        <nb-card-header>
+            Top Performing Outreach Volunteers in Greenstar Application
+        </nb-card-header>
+        <ngx-charts-pie-grid
+        (window:resize)="onResize($event)"
+        [view]="view"
+        [results]="topPerformingVolunteersSingle">
+      </ngx-charts-pie-grid>
+      </nb-card>
+  </div>
+</div>
 <div class="row">
-  <nb-card>
-    <nb-card-header>
-        Top Performing Outreach Volunteers in Greenstar Application
-    </nb-card-header>
-    <ngx-charts-pie-grid
-    [view]="view"
-    [scheme]="colorScheme"
-    [results]="topPerformingVolunteersSingle">
-  </ngx-charts-pie-grid>
-  </nb-card>
+    <div class="col-sm-12">
+ 
+    </div>
 </div>
