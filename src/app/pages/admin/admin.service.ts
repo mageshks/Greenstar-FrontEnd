@@ -5,7 +5,7 @@ import { Observable } from "rxjs";
 import { environment } from '../../../environments/environment';
 import { IAdminDetail } from "./admin.interface";
 
-const API_URL: string = environment.API_URL + '/api';
+const API_URL: string = environment.API_URL + '/api/admin';
 
 @Injectable()
 export class AdminService {
