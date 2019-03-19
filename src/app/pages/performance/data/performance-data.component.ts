@@ -145,7 +145,7 @@ export class PerformanceDataComponent implements OnInit {
         );
     }
 
-    public loadClassDetailsBySchool($event): void {
+    public loadClassDetailsBySchool(): void {
         if (this.perfDataForm.getRawValue().schoolId != 0) {
             this.isSpinner = true;
             let schoolDetail: ISchoolDetail = {} as ISchoolDetail;
@@ -163,7 +163,7 @@ export class PerformanceDataComponent implements OnInit {
         }
     }
 
-    public populateWeekWorkingDays($event): void {
+    public populateWeekWorkingDays(): void {
 
         this.isSearchDataNotValid = false;
         this.searchDataErrorMsg = '';

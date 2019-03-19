@@ -11,7 +11,7 @@
                         <div class="col-sm-5">
                             <label for="schoolId" class="col-form-label required">School</label>
                             <div class="input-group required">
-                                <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" [ngClass]="displayFieldCss('schoolId')" (change)="loadClassDetailsBySchool($event.target.value)" required>
+                                <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" [ngClass]="displayFieldCss('schoolId')" (change)="loadClassDetailsBySchool()" required>
                                     <option value=''>Select</option>
                                     <option *ngFor="let school of schoolList" value={{school.id}}>
                                         {{school.schoolName}}
@@ -35,7 +35,7 @@
                         <div class="col-sm-2">
                             <label for="month" class="col-form-label required">Month</label>
                             <div class="input-group">
-                                <select id="month" name="month" formControlName="month" class="form-control form-control-sm" [ngClass]="displayFieldCss('month')" (change)="populateWeekWorkingDays($event.target.value)" required>
+                                <select id="month" name="month" formControlName="month" class="form-control form-control-sm" [ngClass]="displayFieldCss('month')" (change)="populateWeekWorkingDays()" required>
                                     <option value=''>--Select--</option>
                                     <option value='1'>Jan</option>
                                     <option value='2'>Feb</option>
