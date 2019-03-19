@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class PerformanceDataServiceMock {
-    constructor(private http: HttpClient) { }
+    constructor() { }
 
     public getExistingPerformanceMetricDatas(searchPerformanceData: ISearchPerformanceData): Observable<any> {
         
@@ -37,7 +37,7 @@ export class PerformanceDataServiceMock {
 
     public getPerformanceDataTemplate(searchPerformanceData: ISearchPerformanceData): Observable<any> {
 
-        let excelFile = this.http.get("../../../assets/test_bulk_upload_template.xlsx");
+        // let excelFile = this.http.get("../../../assets/test_bulk_upload_template.xlsx");
 
         return null;
 

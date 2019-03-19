@@ -68,7 +68,7 @@
 
                     <div class="row pt-3">
                         <div class="col-sm-8 text-left errormsg">
-                            <span *ngIf="isSearchDataNotValid"> {{searchDataErrorMsg}} </span>
+                            <span id="errorSpanMsg" *ngIf="isSearchDataNotValid"> {{searchDataErrorMsg}} </span>
                         </div>
                         <div class="col-sm-2 text-right">
                             <button class="btn btn-primary btn-sm" type="button" (click)="resetPerformanceSearch();">Reset</button>

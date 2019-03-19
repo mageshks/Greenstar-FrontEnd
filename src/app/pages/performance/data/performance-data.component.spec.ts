@@ -16,89 +16,31 @@ import { fakeAsync } from '@angular/core/testing';
 import { PerformanceDataUploadModalComponent } from './performance-data-upload.component.modal';
 import { PerformanceDataSuccessModalComponent } from './performance-data-success.component.modal';
 import { CommonModule } from '@angular/common';
-import {
-    NbActionsModule,
-    NbCardModule,
-    NbLayoutModule,
-    NbMenuModule,
-    NbRouteTabsetModule,
-    NbSearchModule,
-    NbSidebarModule,
-    NbTabsetModule,
-    NbThemeModule,
-    NbUserModule,
-    NbCheckboxModule,
-    NbPopoverModule,
-    NbContextMenuModule,
-    NbProgressBarModule,
-    NbCalendarModule,
-    NbCalendarRangeModule,
-    NbStepperModule,
-    NbButtonModule,
-    NbInputModule,
-    NbAccordionModule,
-    NbDialogModule,
-    NbWindowModule,
-    NbListModule,
-    NbToastrModule,
-    NbAlertModule,
-    NbSpinnerModule,
-    NbRadioModule,
-    NbSelectModule,
-    NbTooltipModule,
-  } from '@nebular/theme';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NbSecurityModule } from '@nebular/security';
-// To test the green star component 
-describe('PerforamnceComponent', () => {
+import { NbStepperModule, NbSpinnerModule, NbDialogModule } from '@nebular/theme';
+
+describe('Perforamnce Data Component', () => {
 
     let component: PerformanceDataComponent;
     let fixture: ComponentFixture<PerformanceDataComponent>;
 
-    const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
-
-    const NB_MODULES = [
-        NbCardModule,
-        NbLayoutModule,
-        NbTabsetModule,
-        NbRouteTabsetModule,
-        NbMenuModule,
-        NbUserModule,
-        NbActionsModule,
-        NbSearchModule,
-        NbSidebarModule,
-        NbCheckboxModule,
-        NbPopoverModule,
-        NbContextMenuModule,
-        NgbModule,
-        NbSecurityModule,
-        NbProgressBarModule,
-        NbCalendarModule,
-        NbCalendarRangeModule,
-        NbStepperModule,
-        NbButtonModule,
-        NbListModule,
-        NbToastrModule,
-        NbInputModule,
-        NbAccordionModule,
-        NbDialogModule,
-        NbWindowModule,
-        NbAlertModule,
-        NbSpinnerModule,
-        NbRadioModule,
-        NbSelectModule,
-        NbTooltipModule
-      ];
-
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [PerformanceDataComponent, PerformanceDataUploadModalComponent, PerformanceDataSuccessModalComponent],
-            
-            providers: [FormBuilder,
+
+            providers: [
                 { provide: PerformanceDataService, useClass: PerformanceDataServiceMock },
                 { provide: PerformanceStarService, useClass: PerformanceStarServiceMock }
-            ],            
-            imports: [...BASE_MODULES, ...NB_MODULES],
+            ],
+            imports: [
+                FormsModule,
+                ReactiveFormsModule,
+                ThemeModule,
+                NbStepperModule,
+                NbSpinnerModule,
+                NbDialogModule.forRoot()
+            ],
         })
             .compileComponents();
     }));
@@ -114,6 +56,7 @@ describe('PerforamnceComponent', () => {
         expect(component).toBeTruthy();
     });
 
+    
     it('Should search the performance data without any search param', () => {
         component.ngOnInit();
         component.searchPerformanceData();
@@ -123,17 +66,17 @@ describe('PerforamnceComponent', () => {
         expect(compiled.querySelector('#errorSpanMsg').textContent).toContain('All fields are mandatory!');
     });
 
-    it('Should load the class and section dropdown based on selected school', async(() => {       
-        component.ngOnInit();        
+    it('Should load the class and section dropdown based on selected school', async(() => {
+        component.ngOnInit();
         let schoolValue = component.perfDataForm.controls['schoolId'].setValue(313);
         component.loadClassDetailsBySchool();
         fixture.detectChanges();
         expect(component.classList.length > 0);
     }));
 
-    it('Should load the week dropdown based on selected school, class and month', async(() => {       
-        
-        component.ngOnInit();        
+    it('Should load the week dropdown based on selected school, class and month', async(() => {
+
+        component.ngOnInit();
         component.perfDataForm.controls['schoolId'].setValue(313);
         component.loadClassDetailsBySchool();
 
@@ -146,9 +89,9 @@ describe('PerforamnceComponent', () => {
         expect(component.weekDays.size > 0);
     }));
 
-    it('Should load the existing performance data based on selected school, class, month and week', async(() => { 
-        
-        component.ngOnInit();        
+    it('Should load the existing performance data based on selected school, class, month and week', async(() => {
+
+        component.ngOnInit();
         component.perfDataForm.controls['schoolId'].setValue(313);
         component.loadClassDetailsBySchool();
 
@@ -159,14 +102,14 @@ describe('PerforamnceComponent', () => {
 
         component.perfDataForm.controls['week'].setValue("01-Feb-2019");
 
-        component.searchPerformanceData();       
+        component.searchPerformanceData();
 
         expect(component.performanceSource.performanceRows.length > 0);
     }));
 
-    it('Should empty for existing performance data based on selected school, class, month and week', async(() => { 
-        
-        component.ngOnInit();        
+    it('Should empty for existing performance data based on selected school, class, month and week', async(() => {
+
+        component.ngOnInit();
         component.perfDataForm.controls['schoolId'].setValue(313);
         component.loadClassDetailsBySchool();
 
@@ -177,11 +120,11 @@ describe('PerforamnceComponent', () => {
 
         component.perfDataForm.controls['week'].setValue("04-Feb-2019~05-Feb-2019~08-Feb-2019~09-Feb-2019");
 
-        component.searchPerformanceData();       
+        component.searchPerformanceData();
 
         expect(component.performanceSource.performanceRows.length <= 0);
     }));
-    
+
     it('Should reset search form data', () => {
         component.ngOnInit();
         fixture.detectChanges();
@@ -189,9 +132,9 @@ describe('PerforamnceComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('Should load the create new performance data based on selected school, class, month and week', async(() => { 
-        
-        component.ngOnInit();        
+    it('Should load the create new performance data based on selected school, class, month and week', async(() => {
+
+        component.ngOnInit();
         component.perfDataForm.controls['schoolId'].setValue(313);
         component.loadClassDetailsBySchool();
 
@@ -202,19 +145,20 @@ describe('PerforamnceComponent', () => {
 
         component.perfDataForm.controls['week'].setValue("01-Feb-2019");
 
-        component.addPerformanceData();       
+        component.addPerformanceData();
 
         expect(component.performanceSource.performanceRows.length > 0);
     }));
-
-
     
-    it('Should open bulk upload performance data', async(() => { 
+
+    /*
+    it('Should open bulk upload performance data', async(() => {
         component.ngOnInit();
         fixture.detectChanges();
         component.openBulkUploadMmodal();
         expect(component).toBeTruthy();
     }));
-    
+    */
+
 
 });
