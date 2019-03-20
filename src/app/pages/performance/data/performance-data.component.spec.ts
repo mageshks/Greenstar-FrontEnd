@@ -41,13 +41,13 @@ describe('Perforamnce Data Component', () => {
         component = fixture.componentInstance;
 
         originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
     });
 
     afterEach(function () {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
     });
-
+    
     it('Should perforamnce data component create', () => {
         component.ngOnInit();
         fixture.detectChanges();
@@ -65,10 +65,19 @@ describe('Perforamnce Data Component', () => {
 
     it('Should load the class and section dropdown based on selected school', async(() => {
         component.ngOnInit();
-        let schoolValue = component.perfDataForm.controls['schoolId'].setValue(313);
+        component.perfDataForm.controls['schoolId'].setValue(313);
         component.loadClassDetailsBySchool();
         fixture.detectChanges();
         expect(component.classList.length > 0);
+    }));
+
+    it('Should load the week dropdown without search param', async(() => {
+
+        component.ngOnInit();
+        component.populateWeekWorkingDays();
+        fixture.detectChanges();
+
+        expect(component.weekDays.size <= 0);
     }));
 
     it('Should load the week dropdown based on selected school, class and month', async(() => {
@@ -118,11 +127,36 @@ describe('Perforamnce Data Component', () => {
         expect(component.performanceSource.performanceRows.length <= 0);
     }));
 
+    it('Should null for existing performance data based on selected school, class, month and week', async(() => {
+
+        component.ngOnInit();
+        component.perfDataForm.controls['schoolId'].setValue(313);
+
+        component.loadClassDetailsBySchool();
+        component.perfDataForm.controls['classId'].setValue(487);
+        component.perfDataForm.controls['month'].setValue(2);
+
+        component.populateWeekWorkingDays();
+        component.perfDataForm.controls['week'].setValue("11-Feb-2019");
+
+        component.searchPerformanceData();
+        expect(component.performanceSource == null);
+    }));
+
     it('Should reset search form data', () => {
         component.ngOnInit();
         fixture.detectChanges();
         component.resetPerformanceSearch();
         expect(component).toBeTruthy();
+    });
+
+    it('Should load the create new performance data without any search param', () => {
+        component.ngOnInit();
+        component.addPerformanceData();
+        fixture.detectChanges();
+        
+        let compiled = fixture.debugElement.nativeElement;
+        expect(compiled.querySelector('#errorSpanMsg').textContent).toContain('All fields are mandatory!');
     });
 
     it('Should load the create new performance data based on selected school, class, month and week', async(() => {
@@ -287,13 +321,56 @@ describe('Perforamnce Data Component', () => {
         expect(component.performanceSource.performanceRows.length <= 0);
     }));
 
-    /*
-    it('Should open bulk upload performance data', async(() => {
+    it('Should empty for create new performance data', async(() => {
         component.ngOnInit();
+        component.perfDataForm.controls['schoolId'].setValue(313);
+
+        component.loadClassDetailsBySchool();
+        component.perfDataForm.controls['classId'].setValue(487);
+        component.perfDataForm.controls['month'].setValue(2);
+
+        component.populateWeekWorkingDays();
+        component.perfDataForm.controls['week'].setValue("04-Feb-2019~05-Feb-2019~08-Feb-2019~09-Feb-2019");
+
+        component.addPerformanceData();
+        component.editPerformanceData();
+
+        component.checkAllPerformance(true);
+        expect(component.performanceSource.performanceRows.length <= 0);
+    }));
+
+    it('Should null for create new performance data', async(() => {
+        component.ngOnInit();
+        component.perfDataForm.controls['schoolId'].setValue(313);
+
+        component.loadClassDetailsBySchool();
+        component.perfDataForm.controls['classId'].setValue(487);
+        component.perfDataForm.controls['month'].setValue(2);
+
+        component.populateWeekWorkingDays();
+        component.perfDataForm.controls['week'].setValue("11-Feb-2019");
+
+        component.addPerformanceData();
+        component.editPerformanceData();
+
+        component.checkAllPerformance(true);
+        expect(component.performanceSource == null);
+    }));
+    
+    it('Should download bulk upload template file, without entering school, class and month', async(() => {
+        component.ngOnInit();        
+        component.downloadTemplate();
         fixture.detectChanges();
-        component.openBulkUploadMmodal();
+
+        let compiled = fixture.debugElement.nativeElement;
+        expect(compiled.querySelector('#errorSpanMsg').textContent).toContain('Please select school, class and month');
+    }));
+
+    it('Should validate the field level', async(() => {
+        component.ngOnInit();
+        component.isFieldValid('schoolId');
         expect(component).toBeTruthy();
     }));
-    */
+    
 
 });
