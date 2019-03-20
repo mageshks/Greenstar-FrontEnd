@@ -92,7 +92,7 @@
                         <button class="btn btn-primary btn-sm" (click)="addPerformanceData();" [disabled]="!isPerformanceAddEnabled">Add</button>
                     </div>
                     <div class="col-sm-2 text-right">
-                        <nb-checkbox (change)="checkAllPerformance($event);" [disabled]="!isPerformanceChkboxEnabled">Select All</nb-checkbox>
+                        <nb-checkbox (change)="checkAllPerformance($event.target.checked);" [disabled]="!isPerformanceChkboxEnabled">Select All</nb-checkbox>
                     </div>
                     <div class="col-sm-1 text-right">
                         <button class="btn btn-primary btn-sm" [disabled]="!isPerformanceEditEnabled" (click)="editPerformanceData();">Edit</button>
@@ -114,7 +114,7 @@
                                         <ng-container *ngFor="let headerObj of performanceSource.headers">
                                             <th [attr.colspan]="performanceSource.totalSubTitle" scope="col" class="text-center">
                                                 <label nbTooltip="{{headerObj.title}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{headerObj.title}}</label> &nbsp;
-                                                <nb-checkbox [value]="headerObj.checkValue" (change)="checkPerformanceDayWise($event, headerObj);" [disabled]="!isPerformanceChkboxEnabled"></nb-checkbox>
+                                                <nb-checkbox [value]="headerObj.checkValue" (change)="checkPerformanceDayWise($event.target.checked, headerObj);" [disabled]="!isPerformanceChkboxEnabled"></nb-checkbox>
                                             </th>
                                         </ng-container>
                                     </tr>
@@ -127,7 +127,7 @@
                                                 <th *ngFor="let subTitle of headerObj.subTitleList" class="text-center" scope="col">
                                                     <label nbTooltip="{{subTitle.title}}" nbTooltipPlacement="top" nbTooltipStatus="info">{{subTitle.alais}}</label>
                                                     <br/>
-                                                    <nb-checkbox [value]="subTitle.checkValue" (change)="checkPerformanceParamWise($event, headerObj, subTitle);" class="pl-4"
+                                                    <nb-checkbox [value]="subTitle.checkValue" (change)="checkPerformanceParamWise($event.target.checked, headerObj, subTitle);" class="pl-4"
                                                         [disabled]="!isPerformanceChkboxEnabled"></nb-checkbox>
                                                 </th>
                                             </ng-container>
@@ -150,7 +150,7 @@
                                             <!-- <td>{{performanceDay.dateValue}}</td> -->
                                             <!-- Single Value  -->
                                             <td scope="col" *ngFor="let performanceData of performanceDay.performanceData" class="text-center">
-                                                <nb-checkbox [value]="performanceData.value" (change)="checkCellPerformanceDataStatus($event, performanceRow, performanceDay, performanceData)"
+                                                <nb-checkbox [value]="performanceData.value" (change)="checkCellPerformanceDataStatus($event.target.checked, performanceData)"
                                                     class="pl-4" [disabled]="!isPerformanceChkboxEnabled"></nb-checkbox>
                                             </td>
                                         </ng-container>

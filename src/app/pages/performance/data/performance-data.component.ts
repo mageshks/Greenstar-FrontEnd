@@ -310,12 +310,11 @@ export class PerformanceDataComponent implements OnInit {
         return ValidatorUtil.displayFieldCss(this.perfDataForm, field);
     }
 
-    public checkCellPerformanceDataStatus(event: any, performanceRow: IPerformanceRow, performanceDay: IPerformanceDay, performanceData: IPerformanceData): void {
-        performanceData.value = event.target.checked;
+    public checkCellPerformanceDataStatus(checkValue: boolean, performanceData: IPerformanceData): void {
+        performanceData.value = checkValue;
     }
 
-    public checkPerformanceParamWise(event: any, headerObj: IPerformanceHeader, subTitle: IPerformanceHeader): void {
-
+    public checkPerformanceParamWise(checkValue: boolean, headerObj: IPerformanceHeader, subTitle: IPerformanceHeader): void {
         this.performanceSource.performanceRows.forEach(
             (performanceRow) => {
                 performanceRow.performanceDays.forEach(
@@ -324,7 +323,7 @@ export class PerformanceDataComponent implements OnInit {
                             performanceDay.performanceData.forEach(
                                 (performanceData) => {
                                     if (performanceData.key === subTitle.title) {
-                                        performanceData.value = event.target.checked;
+                                        performanceData.value = checkValue;
                                     }
                                 });
                         }
@@ -332,8 +331,7 @@ export class PerformanceDataComponent implements OnInit {
             });
     }
 
-    public checkPerformanceDayWise(event: any, headerObj: IPerformanceHeader): void {
-
+    public checkPerformanceDayWise(checkValue: boolean, headerObj: IPerformanceHeader): void {
         this.performanceSource.performanceRows.forEach(
             (performanceRow) => {
                 performanceRow.performanceDays.forEach(
@@ -341,7 +339,7 @@ export class PerformanceDataComponent implements OnInit {
                         if (performanceDay.dateValue === headerObj.title) {
                             performanceDay.performanceData.forEach(
                                 (performanceData) => {
-                                    performanceData.value = event.target.checked;
+                                    performanceData.value = checkValue;
                                 });
                         }
                     });
@@ -354,15 +352,15 @@ export class PerformanceDataComponent implements OnInit {
                     performanceHeader.subTitleList.forEach(
                         (performanceHeader) => {
                             //if (performanceHeader.title === headerObj.title) {
-                            performanceHeader.checkValue = event.target.checked;
+                            performanceHeader.checkValue = checkValue;
                             //}
                         });
                 }
             });
-
     }
 
-    public checkAllPerformance(event: any): void {
+    public checkAllPerformance(checkValue: boolean): void {
+        
         // check all performance parameters
         this.performanceSource.performanceRows.forEach(
             (performanceRow) => {
@@ -370,7 +368,7 @@ export class PerformanceDataComponent implements OnInit {
                     (performanceDay) => {
                         performanceDay.performanceData.forEach(
                             (performanceData) => {
-                                performanceData.value = event.target.checked;
+                                performanceData.value = checkValue;
                             });
                     });
             });
@@ -378,10 +376,10 @@ export class PerformanceDataComponent implements OnInit {
         // check header checkbox
         this.performanceSource.headers.forEach(
             (performanceHeader) => {
-                performanceHeader.checkValue = event.target.checked;
+                performanceHeader.checkValue = checkValue;
                 performanceHeader.subTitleList.forEach(
                     (performanceHeader) => {
-                        performanceHeader.checkValue = event.target.checked;
+                        performanceHeader.checkValue = checkValue;
                     });
             });
     }
