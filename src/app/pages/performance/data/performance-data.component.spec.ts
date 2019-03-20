@@ -1,24 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NbDialogModule, NbSpinnerModule, NbStepperModule } from '@nebular/theme';
 import { ThemeModule } from '../../../@theme/theme.module';
-import { By } from '@angular/platform-browser';
-import { PerformanceDataComponent } from './performance-data.component';
-import { PerformanceDataServiceMock } from './mocks/performance-data.service.mock';
-import { PerformanceDataService } from './performance-data.service';
-import { PerformanceStarService } from '../star/performance-star.service';
 import { PerformanceStarServiceMock } from '../star/mocks/performance-star.service.mock';
-import { FormsModule } from '@angular/forms';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormBuilder } from '@angular/forms';
-import { tick } from '@angular/core/testing';
-import { fakeAsync } from '@angular/core/testing';
-import { PerformanceDataUploadModalComponent } from './performance-data-upload.component.modal';
+import { PerformanceStarService } from '../star/performance-star.service';
+import { PerformanceDataServiceMock } from './mocks/performance-data.service.mock';
 import { PerformanceDataSuccessModalComponent } from './performance-data-success.component.modal';
-import { CommonModule } from '@angular/common';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NbSecurityModule } from '@nebular/security';
-import { NbStepperModule, NbSpinnerModule, NbDialogModule } from '@nebular/theme';
+import { PerformanceDataUploadModalComponent } from './performance-data-upload.component.modal';
+import { PerformanceDataComponent } from './performance-data.component';
+import { PerformanceDataService } from './performance-data.service';
 
 describe('Perforamnce Data Component', () => {
 

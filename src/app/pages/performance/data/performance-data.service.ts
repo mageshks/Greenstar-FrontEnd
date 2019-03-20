@@ -1,9 +1,8 @@
-import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { IPerformanceDataTable, ISearchPerformanceData } from "./performance-data.interface";
-
 import { environment } from '../../../../environments/environment';
+import { IPerformanceDataTable, ISearchPerformanceData } from "./performance-data.interface";
 
 const API_URL: string = environment.API_URL+'/api';
 

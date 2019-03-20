@@ -1,18 +1,14 @@
-import { OnInit, Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { saveAs as tempSaveAs } from 'file-saver';
-import { NbDialogService } from '@nebular/theme';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { LocalDataSource } from 'ng2-smart-table';
-import { IPerformanceDataTable, IPerformanceRow, IPerformanceDay, IPerformanceData, IPerformanceHeader, ISearchPerformanceData } from './performance-data.interface';
-import { PerformanceStaticData, } from './performance-data.constant';
-import { PerformanceDataUploadModalComponent } from './performance-data-upload.component.modal';
-import { PerformanceDataSuccessModalComponent } from './performance-data-success.component.modal';
-import { PerformanceDataService } from './performance-data.service';
-import { PerformanceStarService } from '../star/performance-star.service';
+import { saveAs as tempSaveAs } from 'file-saver';
 import { ValidatorUtil } from '../../util/validator-util';
-import { ISchoolDetail, IClassSectionDetail } from '../star/performance-star.interface';
+import { IClassSectionDetail, ISchoolDetail } from '../star/performance-star.interface';
+import { PerformanceStarService } from '../star/performance-star.service';
+import { PerformanceDataSuccessModalComponent } from './performance-data-success.component.modal';
+import { PerformanceDataUploadModalComponent } from './performance-data-upload.component.modal';
+import { IPerformanceData, IPerformanceDataTable, IPerformanceHeader, ISearchPerformanceData } from './performance-data.interface';
+import { PerformanceDataService } from './performance-data.service';
 
 @Component({
     selector: 'ngx-performance',
@@ -174,7 +170,7 @@ export class PerformanceDataComponent implements OnInit {
 
             this.isSpinner = true;
             let searchPerformanceData: ISearchPerformanceData = this.getSearchParamObject();
-            
+
             this.performanceDataService.getWeekDaysByMonth(searchPerformanceData).subscribe(
                 (response) => {
                     this.weekDays = response.result;
@@ -360,7 +356,7 @@ export class PerformanceDataComponent implements OnInit {
     }
 
     public checkAllPerformance(checkValue: boolean): void {
-        
+
         // check all performance parameters
         this.performanceSource.performanceRows.forEach(
             (performanceRow) => {
