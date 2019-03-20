@@ -56,7 +56,7 @@ describe('Perforamnce Data Component', () => {
         expect(component).toBeTruthy();
     });
 
-    
+
     it('Should search the performance data without any search param', () => {
         component.ngOnInit();
         component.searchPerformanceData();
@@ -149,8 +149,121 @@ describe('Perforamnce Data Component', () => {
 
         expect(component.performanceSource.performanceRows.length > 0);
     }));
-    
 
+    it('Should enable the existing performance data for editable format', async(() => {
+
+        component.ngOnInit();
+        component.perfDataForm.controls['schoolId'].setValue(313);
+        component.loadClassDetailsBySchool();
+
+        component.perfDataForm.controls['classId'].setValue(487);
+        component.perfDataForm.controls['month'].setValue(2);
+
+        component.populateWeekWorkingDays();
+
+        component.perfDataForm.controls['week'].setValue("04-Feb-2019~05-Feb-2019~08-Feb-2019~09-Feb-2019");
+
+        component.searchPerformanceData();
+
+        component.editPerformanceData();
+
+        expect(component.performanceSource.performanceRows.length <= 0);
+    }));
+
+    it('Should update the editable existing performance data to server', async(() => {
+
+        component.ngOnInit();
+        component.perfDataForm.controls['schoolId'].setValue(313);
+        component.loadClassDetailsBySchool();
+
+        component.perfDataForm.controls['classId'].setValue(487);
+        component.perfDataForm.controls['month'].setValue(2);
+
+        component.populateWeekWorkingDays();
+
+        component.perfDataForm.controls['week'].setValue("04-Feb-2019~05-Feb-2019~08-Feb-2019~09-Feb-2019");
+
+        component.searchPerformanceData();
+
+        component.editPerformanceData();
+
+        component.submitPerformanceData();
+
+        expect(component.performanceSource.performanceRows.length <= 0);
+    }));
+
+    it('Should load the new performance data from server', async(() => {
+
+        component.ngOnInit();
+        component.perfDataForm.controls['schoolId'].setValue(313);
+        component.loadClassDetailsBySchool();
+
+        component.perfDataForm.controls['classId'].setValue(487);
+        component.perfDataForm.controls['month'].setValue(2);
+
+        component.populateWeekWorkingDays();
+
+        component.perfDataForm.controls['week'].setValue("04-Feb-2019~05-Feb-2019~08-Feb-2019~09-Feb-2019");
+
+        component.addPerformanceData();
+
+        expect(component.performanceSource.performanceRows.length <= 0);
+    }));
+
+    it('Should save the new performance data to server', async(() => {
+
+        component.ngOnInit();
+        component.perfDataForm.controls['schoolId'].setValue(313);
+        component.loadClassDetailsBySchool();
+
+        component.perfDataForm.controls['classId'].setValue(487);
+        component.perfDataForm.controls['month'].setValue(2);
+
+        component.populateWeekWorkingDays();
+
+        component.perfDataForm.controls['week'].setValue("04-Feb-2019~05-Feb-2019~08-Feb-2019~09-Feb-2019");
+
+        component.addPerformanceData();
+        component.editPerformanceData();
+
+        component.submitPerformanceData();
+
+        expect(component.performanceSource.performanceRows.length <= 0);
+    }));
+
+    /*
+    it('Should save the new performance data to server', async(() => {
+
+        component.ngOnInit();
+        component.perfDataForm.controls['schoolId'].setValue(313);
+
+        component.loadClassDetailsBySchool();
+        component.perfDataForm.controls['classId'].setValue(487);
+        component.perfDataForm.controls['month'].setValue(2);
+
+        component.populateWeekWorkingDays();
+        component.perfDataForm.controls['week'].setValue("04-Feb-2019~05-Feb-2019~08-Feb-2019~09-Feb-2019");
+
+        component.addPerformanceData();
+        component.editPerformanceData();
+
+        component.performanceSource.performanceRows.forEach(
+            (performanceRow) => {
+                performanceRow.performanceDays.forEach(
+                    (performanceDay) => {
+                        if (performanceDay.dateValue === 'HomeWork') {
+                            performanceDay.performanceData.forEach(
+                                (performanceData) => {
+                                    component.checkCellPerformanceDataStatus(true, performanceRow, performanceDay, performanceData);
+                                });
+                        }
+                    });
+            });
+
+        expect(component.performanceSource.performanceRows.length <= 0);
+    }));
+    */
+    
     /*
     it('Should open bulk upload performance data', async(() => {
         component.ngOnInit();
@@ -159,6 +272,5 @@ describe('Perforamnce Data Component', () => {
         expect(component).toBeTruthy();
     }));
     */
-
 
 });

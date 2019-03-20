@@ -173,12 +173,10 @@ export class PerformanceDataComponent implements OnInit {
             && !ValidatorUtil.isEmpty(this.perfDataForm.getRawValue().month)) {
 
             this.isSpinner = true;
-
             let searchPerformanceData: ISearchPerformanceData = this.getSearchParamObject();
-
+            
             this.performanceDataService.getWeekDaysByMonth(searchPerformanceData).subscribe(
                 (response) => {
-                    console.log(response.result);
                     this.weekDays = response.result;
                     this.isSpinner = false;
                 },
@@ -233,7 +231,6 @@ export class PerformanceDataComponent implements OnInit {
     }
 
     public searchPerformanceData(): void {
-
         this.isSearchDataNotValid = false;
         this.searchDataErrorMsg = '';
         if (this.perfDataForm.valid) {
@@ -266,7 +263,7 @@ export class PerformanceDataComponent implements OnInit {
 
     public submitPerformanceData(): void {
 
-        this.performanceSource.userId = '534556';
+        this.performanceSource.userId = localStorage.getItem('userId');
 
         if (this.action === 'create') {
             this.isSpinner = true;

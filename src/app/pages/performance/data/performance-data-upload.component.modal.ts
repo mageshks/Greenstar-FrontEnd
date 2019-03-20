@@ -51,14 +51,13 @@ export class PerformanceDataUploadModalComponent implements OnInit {
     }
 
     public uploadBulkData(): void {
-
         this.isDisableButton = true;
         this.isShowSuccessMsg = false;
 
         if (this.uploadFile != null) {
             const formData = new FormData();
             formData.append('file', this.uploadFile);
-            formData.append('userId', '534556');
+            formData.append('userId', localStorage.getItem('userId'));
 
             this.isSpinner = true;
             this.performanceDataService.uploadBulkPerformanceData(formData).subscribe(
