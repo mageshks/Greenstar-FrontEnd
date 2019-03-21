@@ -8,8 +8,7 @@ import { PerformanceDataUploadModalComponent } from './performance-data-upload.c
 import { PerformanceDataService } from './performance-data.service';
 
 describe('Perforamnce Data Bulk upload Component', () => {
-
-    let originalTimeout;
+   
     let component: PerformanceDataUploadModalComponent;
     let fixture: ComponentFixture<PerformanceDataUploadModalComponent>;
 
@@ -37,21 +36,15 @@ describe('Perforamnce Data Bulk upload Component', () => {
         fixture = TestBed.createComponent(PerformanceDataUploadModalComponent);
         component = fixture.componentInstance;
 
-        originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 50000;
     });
-
-    afterEach(function () {
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
-    });
-
-    /*
+    
     it('Should perforamnce data bulk upload component create', () => {
         component.ngOnInit();
         fixture.detectChanges();
         expect(component).toBeTruthy();
     });
 
+    /*
     it('Should close the data bulk upload modal popup alert', () => {
         component.ngOnInit();
         component.closeModal();

@@ -47,7 +47,7 @@ describe('Perforamnce Data Component', () => {
     afterEach(function () {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
     });
-    
+
     it('Should perforamnce data component create', () => {
         component.ngOnInit();
         fixture.detectChanges();
@@ -154,7 +154,7 @@ describe('Perforamnce Data Component', () => {
         component.ngOnInit();
         component.addPerformanceData();
         fixture.detectChanges();
-        
+
         let compiled = fixture.debugElement.nativeElement;
         expect(compiled.querySelector('#errorSpanMsg').textContent).toContain('All fields are mandatory!');
     });
@@ -356,9 +356,9 @@ describe('Perforamnce Data Component', () => {
         component.checkAllPerformance(true);
         expect(component.performanceSource == null);
     }));
-    
+
     it('Should download bulk upload template file, without entering school, class and month', async(() => {
-        component.ngOnInit();        
+        component.ngOnInit();
         component.downloadTemplate();
         fixture.detectChanges();
 
@@ -371,6 +371,6 @@ describe('Perforamnce Data Component', () => {
         component.isFieldValid('schoolId');
         expect(component).toBeTruthy();
     }));
-    
+
 
 });
