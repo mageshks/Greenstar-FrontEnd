@@ -16,7 +16,7 @@ export class StudentService {
     }
 
     public getSchools(): Observable<any> {
-        return this.http.post(API_URL+'/school/getSchools', { headers: this.headerValue });
+        return this.http.get(API_URL+'/school/getSchools', { headers: this.headerValue });
     }
 
     public getClassList(school: ISchoolDetail): Observable<any> {

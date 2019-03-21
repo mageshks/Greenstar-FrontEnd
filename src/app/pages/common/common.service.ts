@@ -15,7 +15,7 @@ export class CommonService {
     }
 
     public getStates(): Observable<any> {
-        return this.http.post(API_URL+'/school/getStates', { headers: this.headerValue });
+        return this.http.get(API_URL+'/school/getStates', { headers: this.headerValue });
     }
 
     private handleError(error: Response | any): any {
