@@ -29,7 +29,7 @@ pipeline {
 
   stage('NPM test') {
    steps {
-    bat label: 'Run angular test', returnStatus: true, returnStdout: true, script: 'npm test --watch=false --code-coverage'
+    bat label: 'Run angular test', returnStatus: true, returnStdout: true, script: 'npm test'
    }
   }
 
