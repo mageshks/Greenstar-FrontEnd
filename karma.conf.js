@@ -7,8 +7,8 @@ module.exports = function (config) {
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
-     // require('karma-chrome-launcher'), /*comment out this line to disable the karma-chrome-launcher*/
-      require('karma-phantomjs-launcher'),  /* add this line to disable the karma-phantomjs-launcher*/
+      require('karma-chrome-launcher'), /*comment out this line to disable the karma-chrome-launcher*/
+     // require('karma-phantomjs-launcher'),  /* add this line to disable the karma-phantomjs-launcher*/
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma')
@@ -28,12 +28,12 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-   /* browsers: ['Chrome'],*//*remove chrome and replace it with PhantomJS */
-    browsers: ['PhantomJS'], 
+  browsers: ['Chrome','Chrome_without_security'],
+     /* browsers: ['PhantomJS'], */
     customLaunchers: {
       Chrome_travis_ci: {
         base: 'Chrome',
-        flags: ['--no-sandbox']
+        flags: ['--no-sandbox','--disable-web-security']
       }
     },
     singleRun: true /*make it true to run test suits only one time*/
