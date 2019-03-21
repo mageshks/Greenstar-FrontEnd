@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
-import { Ng2SmartTableModule, LocalDataSource } from 'ng2-smart-table';
+import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { OnInit } from '@angular/core';
-import { SchoolMessageModalContent } from '../school/schoolMessageModalContent.component';
-import { IClassSectionDetail, ISchoolDetail, IStudentDetail, IStudentSearchData, ISchoolTeamCount } from './student.interface';
-import { StudentBulkUploadModalComponent } from './student-bulk-upload.component.modal';
-import { StudentService } from './student.service';
 import { saveAs as tempSaveAs } from 'file-saver';
+import { LocalDataSource } from 'ng2-smart-table';
+import { SchoolMessageModalContent } from '../school/schoolMessageModalContent.component';
+import { StudentBulkUploadModalComponent } from './student-bulk-upload.component.modal';
+import { IClassSectionDetail, ISchoolDetail, ISchoolTeamCount, IStudentSearchData } from './student.interface';
+import { StudentService } from './student.service';
 
 @Component({
   selector: 'ngx-student',
@@ -18,23 +17,17 @@ export class StudentListComponent implements OnInit {
   public schoolList: ISchoolDetail[];
 
   public isSearch: boolean;
-
   public isBulkUploadRequestNotValid: boolean = false;
 
   public studentSearchData: IStudentSearchData = new IStudentSearchData();
-
   // Contains list of class to display in dropdown
   public classSectionList: IClassSectionDetail[] = [];
-
   // Contains all details of class
   public classSectionDetail: IClassSectionDetail = new IClassSectionDetail();
 
   public loadingDropdown: boolean = false;
-
   public loadingStudents: boolean = false;
-
   public isSearchDataNotValid: boolean = false;
-
   public isExportNotValid: boolean = false;
 
   // class table setting
@@ -89,7 +82,6 @@ export class StudentListComponent implements OnInit {
       schoolDetail.id = this.studentSearchData.schoolId;
       this.studentService.getClassList(schoolDetail).subscribe(
         (response) => {
-          console.log(response);
           this.classSectionList = response;
           this.loadingDropdown = false;
         },
@@ -112,8 +104,6 @@ export class StudentListComponent implements OnInit {
       classDetail.schoolId = this.studentSearchData.schoolId;
       this.studentService.getClassDetail(classDetail).subscribe(
         (response) => {
-          console.log("classDetail ==> ");
-          console.log(response);
           this.isSearch = true;
           this.classSectionDetail = response;
           this.studentSource.load(this.classSectionDetail.studentList);
@@ -152,7 +142,6 @@ export class StudentListComponent implements OnInit {
   public onStudentSubmit() {
     this.classSectionDetail.userId = "Magesh";
     this.classSectionDetail.schoolId = this.studentSearchData.schoolId;
-    console.log("this.classSectionDetail.studentList", JSON.stringify(this.classSectionDetail.studentList));
     let validationError = this.validateTeamName();
     // If error exist do not proceed open the error model
     if (validationError != '') {
@@ -162,7 +151,6 @@ export class StudentListComponent implements OnInit {
     this.loadingStudents = true;
     this.studentService.saveOrUpdateStudent(this.classSectionDetail).subscribe(
       (response) => {
-        console.log("classDetail ==> ",response);
         this.classSectionDetail = response;
         this.studentSource.load(this.classSectionDetail.studentList);
         this.teamNameTableSource.load(this.classSectionDetail.schoolTeamList);
@@ -246,11 +234,9 @@ export class StudentListComponent implements OnInit {
   }
 
   public downloadExcelExport(): void {
-
   }
 
   public onStudentCreate(event): void {
-    console.log('create triggerred!');
     // If any of the feilds are left blank 
     if (event.newData.teamName == null || event.newData.teamName == '' ||
       event.newData.studentName == null || event.newData.studentName == '') {
@@ -263,7 +249,6 @@ export class StudentListComponent implements OnInit {
   }
 
   public onStudentEdit(event): void {
-    console.log('edit triggerred!');
     if (event.newData.teamName == null || event.newData.teamName == '' ||
       event.newData.studentName == null || event.newData.studentName == '') {
       this.openModal('Validation Message', 'All fieilds are mandatory to edit a Student!');
@@ -275,7 +260,6 @@ export class StudentListComponent implements OnInit {
   }
 
   public onStudentDeleteConfirm(event): void {
-    console.log('delete triggerred!');
     if (window.confirm('Are you sure you want to delete? All the preformance data for the student will also get deleted!')) {
       this.classSectionDetail.studentList = event.source.data;
       for (let i = 0; i < this.classSectionDetail.studentList.length; i++) {

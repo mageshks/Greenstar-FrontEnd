@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { ISchoolDetail,IClassSectionDetail,IStudentSearchData } from "./student.interface";
-
 import { environment } from '../../../environments/environment';
+import { IClassSectionDetail, ISchoolDetail, IStudentSearchData } from "./student.interface";
+
 
 const API_URL: string = environment.API_URL+'/api';
 

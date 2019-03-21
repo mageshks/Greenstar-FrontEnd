@@ -1,14 +1,12 @@
-import { Component, Input } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
-import { SchoolData } from './school.data';
-import { ISchoolDetail, IClass } from './school.interface';
-import { OnInit } from '@angular/core';
-import { CommonService } from '../common/common.service';
-import { SchoolService } from './school.service';
-import { IState } from '../common/common.interface';
-import { SchoolMessageModalContent } from './schoolMessageModalContent.component';
+import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SmartTableDatePickerComponent } from '../../@theme/components/smart-table-date-picker-component/smart-table-date-picker.components';
+import { LocalDataSource } from 'ng2-smart-table';
+import { IState } from '../common/common.interface';
+import { CommonService } from '../common/common.service';
+import { SchoolData } from './school.data';
+import { ISchoolDetail } from './school.interface';
+import { SchoolService } from './school.service';
+import { SchoolMessageModalContent } from './schoolMessageModalContent.component';
 
 @Component({
   selector: 'nb-dialog',
@@ -24,7 +22,6 @@ export class SchoolComponent implements OnInit {
   public schoolDetail: ISchoolDetail = new ISchoolDetail();
 
   public stateList: IState[];
-
   public districtList: string[];
 
   // class table setting
@@ -78,7 +75,6 @@ export class SchoolComponent implements OnInit {
         } else {
           this.classDetail.load(this.schoolDetail.classList);
         }
-
         this.perfParamDynamicDetail.load(this.schoolDetail.perfParamList);
 
         if (this.schoolDetail.holidays == null) {
@@ -105,16 +101,12 @@ export class SchoolComponent implements OnInit {
 
   // On change of state set corresponding district to the district dropdown
   public onStateChange() {
-    console.log('this.schoolDetail.state' + this.schoolDetail.state);
-    console.log('this.stateList' + this.stateList);
     if (this.schoolDetail.state == '--Select State--') {
-      console.log('I am in no district');
       this.districtList = [];
     } else {
       this.stateList.forEach((state) => {
         if (state.stateName == this.schoolDetail.state) {
           this.districtList = state.districts;
-          console.log('I am in  district');
         }
       });
     }
@@ -268,14 +260,11 @@ export class SchoolComponent implements OnInit {
   }
 
   public onSubmitChanges(): void {
-    console.log(this.schoolDetail);
     let errorMessage = this.validateSubmit();
-    console.log('errorMessage ==> ' + errorMessage);
     if (errorMessage != '') {
       this.openModal('Validation Error', errorMessage);
     } else {
-      console.log("Validation Success ==> " + JSON.stringify(this.schoolDetail));
-      this.schoolDetail.userId = "Magesh";
+      this.schoolDetail.userId =  localStorage.getItem('userId');
       this.schoolDetail.action = this.action;
       this.schoolService.submitSchool(this.schoolDetail).subscribe(
         (response) => {
@@ -342,4 +331,5 @@ export class SchoolComponent implements OnInit {
     }
     return errorString;
   }
+  
 }

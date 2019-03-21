@@ -1,6 +1,5 @@
 export class ISchoolDetail {
 
-
     public id: number;
     public schoolName: string;
     public address: string;
@@ -24,7 +23,7 @@ export class ISchoolDetail {
     public weekendWorkingDays: IWeekendWorkingDay[];
 }
 
-export class ISchoolSearchData{
+export class ISchoolSearchData {
     public stateName: string;
     public district: string;
 }
@@ -36,20 +35,20 @@ export class IClass {
 }
 
 export class IPerformanceParam {
-    public id:number;
+    public id: number;
     public paramTitle: string;
     public paramDesc: string;
 }
 
 export class IHoliday {
-    public id:number;
+    public id: number;
     public fromDate: string;
     public toDate: string;
     public description: string;
 }
 
 export class IWeekendWorkingDay {
-    public id:number;
+    public id: number;
     public workingDate: string;
     public reason: string;
 }

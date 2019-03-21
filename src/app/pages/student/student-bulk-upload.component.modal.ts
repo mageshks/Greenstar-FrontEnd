@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { StudentService } from "./student.service";
 import { saveAs as tempSaveAs } from 'file-saver';
 import { IStudentSearchData } from "./student.interface";
+import { StudentService } from "./student.service";
 
 @Component({
     selector: 'ngx-modal',
@@ -11,21 +11,15 @@ import { IStudentSearchData } from "./student.interface";
 export class StudentBulkUploadModalComponent implements OnInit {
 
     public uploadFile: File;
-
     public schoolId: number;
-
     public classId: number;
-
     public fileName: string;
 
     public isDisableButton: boolean;
-
     public isShowSuccessMsg: boolean;
-
     public isShowErrorMsg: boolean;
 
     public errorMsg: string;
-
     public isSpinner: boolean;
 
     constructor(
@@ -100,7 +94,7 @@ export class StudentBulkUploadModalComponent implements OnInit {
         if (this.uploadFile != null) {
             const formData = new FormData();
             formData.append('file', this.uploadFile);
-            formData.append('userId', 'Magesh');
+            formData.append('userId', localStorage.getItem('userId'));
             formData.append('schoolId', this.schoolId + '');
 
             this.isSpinner = true;

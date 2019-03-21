@@ -1,11 +1,11 @@
-import { OnInit, Component } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
-import { SchoolComponent } from './school.component';
-import { SchoolService } from './school.service';
-import { ISchoolSearchData } from './school.interface';
+import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CommonService } from '../common/common.service';
+import { LocalDataSource } from 'ng2-smart-table';
 import { IState } from '../common/common.interface';
+import { CommonService } from '../common/common.service';
+import { SchoolComponent } from './school.component';
+import { ISchoolSearchData } from './school.interface';
+import { SchoolService } from './school.service';
 
 @Component({
   selector: 'ngx-school',
@@ -17,14 +17,11 @@ export class SchoolListComponent implements OnInit {
   public schoolSearchData: ISchoolSearchData = {} as ISchoolSearchData;
 
   public stateList: IState[];
-
   public districtList: string[];
 
   public searchDropdownLoading: boolean;
   public searchDataLoading: boolean;
-
   public isSearchError: boolean;
-
 
   // performance param table setting
   public schoolTableData: LocalDataSource = new LocalDataSource();
@@ -33,7 +30,6 @@ export class SchoolListComponent implements OnInit {
   constructor(private modalService: NgbModal,
     private commonService: CommonService,
     private schoolService: SchoolService) {
-
   }
 
   ngOnInit(): void {
@@ -58,7 +54,6 @@ export class SchoolListComponent implements OnInit {
       }
     );
   }
-
 
   public getSchoolTableSetting(): any {
     let settings: any = {
@@ -114,7 +109,6 @@ export class SchoolListComponent implements OnInit {
       this.searchDataLoading = true;
       this.schoolService.getSchoolsForSearch(this.schoolSearchData).subscribe(
         (response) => {
-          console.log(JSON.stringify(response));
           this.schoolTableData = new LocalDataSource(response);
           this.searchDataLoading = false;
         },
@@ -128,9 +122,6 @@ export class SchoolListComponent implements OnInit {
   }
 
   public editSchool(event) {
-    console.log(event.data);
-
-    console.log("Editing school Id ==> " + event.data.id);
     const activeModal = this.modalService.open(SchoolComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.title = 'Edit School Detail';
     activeModal.componentInstance.action = 'edit';
@@ -139,8 +130,6 @@ export class SchoolListComponent implements OnInit {
   }
 
   public viewSchool(event) {
-    console.log(event.data);
-    console.log("Viewing school Id ==> " + event.data.id);
     const activeModal = this.modalService.open(SchoolComponent, { size: 'lg', container: 'nb-layout' });
     activeModal.componentInstance.title = 'View School Detail';
     activeModal.componentInstance.action = 'view';
@@ -164,4 +153,5 @@ export class SchoolListComponent implements OnInit {
       return true;
     }
   }
+
 }
