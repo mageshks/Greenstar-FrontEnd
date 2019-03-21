@@ -9,7 +9,7 @@
                         <div class="col-sm-5">
                             <label for="schoolId" class="col-form-label required">School</label>
                             <div class="input-group required">
-                                <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" [ngClass]="displayFieldCss('schoolId')" (change)="loadIndividualClassDetailsBySchool()" required>
+                                <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" (change)="loadIndividualClassDetailsBySchool()" required>
                                     <option value=''>Select</option>
                                     <option *ngFor="let school of schoolList" value={{school.id}}>
                                         {{school.schoolName}}
@@ -21,7 +21,7 @@
                         <div class="col-sm-3">
                             <label for="className" class="col-form-label required">Class & Section</label>
                             <div class="input-group">
-                                <select id="classId" name="classId" formControlName="classId" class="form-control form-control-sm" [ngClass]="displayFieldCss('classId')">
+                                <select id="classId" name="classId" formControlName="classId" class="form-control form-control-sm">
                                     <option value=''>Select</option>
                                     <option *ngFor="let class of classList" value={{class.id}}>
                                         {{class.classAndSectionName}}
@@ -32,7 +32,7 @@
                         <div class='col-sm-2'>
                             <label for="month" class="col-form-label required">Month</label>
                             <div class="input-group">
-                                <select id="month" name="month" formControlName="month" class="form-control form-control-sm" [ngClass]="displayFieldCss('month')" (change)="populateWeekWorkingDays($event.target.value)" required>
+                                <select id="month" name="month" formControlName="month" class="form-control form-control-sm" (change)="populateWeekWorkingDays()" required>
                                     <option value=''>Select</option>
                                     <option value='1'>Jan</option>
                                     <option value='2'>Feb</option>
@@ -52,7 +52,7 @@
                         <div class='col-sm-2'>
                             <label for="week" class="col-form-label required">Week</label>
                             <div class="input-group">
-                                <select id="week" name="week" formControlName="week" class="form-control form-control-sm" [ngClass]="displayFieldCss('week')">
+                                <select id="week" name="week" formControlName="week" class="form-control form-control-sm">
                                     <option value=''>Select</option>
                                     <option *ngFor="let weekDay of weekDays | keyvalue" value={{weekDay.value}}>
                                         {{weekDay.key}}
@@ -137,7 +137,7 @@
                             <div class="col-sm-5">
                                 <label for="schoolId" class="col-form-label required">School</label>
                                 <div class="input-group required">
-                                    <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" [ngClass]="displayFieldCss('schoolId')" (change)="loadClasswiseClassDetailsBySchool()" required>
+                                    <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" (change)="loadClasswiseClassDetailsBySchool()" required>
                                         <option value=''>Select</option>
                                         <option *ngFor="let school of schoolList" value={{school.id}}>
                                             {{school.schoolName}}
@@ -149,7 +149,7 @@
                             <div class="col-sm-3">
                                 <label for="className" class="col-form-label required">Class</label>
                                 <div class="input-group">
-                                    <select [(ngModel)]="selectedClassName" id="classId" name="classId" formControlName="classId" class="form-control form-control-sm" [ngClass]="displayFieldCss('classId')">
+                                    <select [(ngModel)]="selectedClassName" id="classId" name="classId" formControlName="classId" class="form-control form-control-sm">
                                         <option value=''>Select</option>
                                         <option *ngFor="let classNameFromResponse of distinctClassList" [ngValue]="classNameFromResponse">
                                             {{classNameFromResponse}}
@@ -222,7 +222,7 @@
                             <div class="col-sm-5">
                                 <label for="schoolId" class="col-form-label required">School</label>
                                 <div class="input-group required">
-                                    <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" [ngClass]="displayFieldCss('schoolId')" (change)="loadTeamwiseClassDetailsBySchool()" required>
+                                    <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" (change)="loadTeamwiseClassDetailsBySchool()" required>
                                         <option value=''>Select</option>
                                         <option *ngFor="let school of schoolList" value={{school.id}}>
                                             {{school.schoolName}}
@@ -234,7 +234,7 @@
                             <div class="col-sm-3">
                                 <label for="className" class="col-form-label required">Class</label>
                                 <div class="input-group">
-                                    <select [(ngModel)]="selectedClassName" id="classId" name="classId" formControlName="classId" class="form-control form-control-sm" [ngClass]="displayFieldCss('classId')">
+                                    <select [(ngModel)]="selectedClassName" id="classId" name="classId" formControlName="classId" class="form-control form-control-sm">
                                         <option value=''>Select</option>
                                         <option *ngFor="let classNameFromResponse of distinctClassList" [ngValue]="classNameFromResponse">
                                             {{classNameFromResponse}}
@@ -308,7 +308,7 @@
                     <div class="col-sm-6">
                     <label for="schoolId" class="col-form-label required">School</label>
                     <div class="input-group required">
-                        <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" [ngClass]="displayFieldCss('schoolId')" (change)="loadEncouragingClassDetailsBySchool()" required>
+                        <select id="schoolId" name="schoolId" formControlName="schoolId" class="form-control form-control-sm" (change)="loadEncouragingClassDetailsBySchool()" required>
                             <option value=''>Select</option>
                             <option *ngFor="let school of schoolList" value={{school.id}}>
                                 {{school.schoolName}}

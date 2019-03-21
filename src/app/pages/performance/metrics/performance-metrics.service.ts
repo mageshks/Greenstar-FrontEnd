@@ -33,21 +33,4 @@ export class PerformanceMetricsService {
     public getEncouragingPerformanceMetrics(searchPerformanceMetrics: ISearchPerformanceMetrics): Observable<any> {
         return this.http.post(API_URL+'/perfmetrics/encouraging', searchPerformanceMetrics, { headers: this.headerValue });
     }
-    public exportIndividualPerformanceMetrics(searchPerformanceMetrics: ISearchPerformanceMetrics): Observable<any> {
-        return this.http.post(API_URL + '/perfmetrics/downloadIndividualdata', searchPerformanceMetrics, { responseType: 'blob' });
-    }
-
-    public exportTeamwisePerformanceMetrics(searchPerformanceMetrics: ISearchPerformanceMetrics): Observable<any> {
-        return this.http.post(API_URL + '/perfmetrics/downloadTeamwisedata', searchPerformanceMetrics, { responseType: 'blob' });
-    }
-
-    public exportClasswisePerformanceMetrics(searchPerformanceMetrics: ISearchPerformanceMetrics): Observable<any> {
-        return this.http.post(API_URL + '/perfmetrics/downloadClasswisedata', searchPerformanceMetrics, { responseType: 'blob' });
-    }
-
-    private handleError(error: Response | any): any {
-        console.log('API Service :: Handle Error' + error);
-        return Observable.throw(error);
-    }
-
 }

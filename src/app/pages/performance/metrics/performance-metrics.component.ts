@@ -103,14 +103,6 @@ export class PerformanceMetricsComponent implements OnInit {
         this.initializeTeamwiseForm();
     }
 
-    public isFieldValid(field: string): boolean {
-        this.isSearchDataNotValid = false;
-        return ValidatorUtil.isFieldValid(this.perfMetricsForm, field);
-    }
-
-    public displayFieldCss(field: string): Object {
-        return ValidatorUtil.displayFieldCss(this.perfMetricsForm, field);
-    }
     private loadSchoolDetails(): void {
         this.isSpinner = true;
         this.performanceStarService.getSchools().subscribe(
@@ -333,7 +325,7 @@ export class PerformanceMetricsComponent implements OnInit {
         return className;
     }
 
-    public populateWeekWorkingDays($event): void {
+    public populateWeekWorkingDays(): void {
 
         this.isSearchDataNotValid = false;
         this.searchDataErrorMsg = '';
@@ -365,7 +357,4 @@ export class PerformanceMetricsComponent implements OnInit {
         }
     }    
 
-    selected(){
-        alert(this.selectedClassName)
-      }
 }

@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 
 // To test the performance metrics component 
 describe('PerformanceMetricsComponent', () => {
+  let originalTimeout;
   let component: PerformanceMetricsComponent;
   let fixture: ComponentFixture<PerformanceMetricsComponent>;
 
@@ -35,6 +36,12 @@ describe('PerformanceMetricsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PerformanceMetricsComponent);
     component = fixture.componentInstance;
+    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
+  });
+
+  afterEach(function () {
+      jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
   });
 
   it('should create', () => {
@@ -42,37 +49,40 @@ describe('PerformanceMetricsComponent', () => {
   });
 
   it('should display error on individual metrics search fields empty', () => {
-    fakeAsync(() => {
+    async(() => {
       component.ngOnInit();
       fixture.detectChanges();
       component.viewIndividualPerformanceMetrics();
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#errorMessage')).name == 'errorMessage');
     });
+    component.resetPerformanceSearch();
   });
 
   it('should display error on classwise metrics search fields empty', () => {
-    fakeAsync(() => {
+    async(() => {
       component.ngOnInit();
       fixture.autoDetectChanges();
       component.viewClasswisePerformanceMetrics();
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#errorMessage')).name == 'errorMessage');
     });
+    component.resetClasswisePerformanceSearch();
   });
 
   it('should display error on teamwise metrics search fields empty', () => {
-    fakeAsync(() => {
+    async(() => {
       component.ngOnInit();
       fixture.detectChanges();
       component.viewTeamwisePerformanceMetrics();
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#errorMessage')).name == 'errorMessage');
     });
+    component.resetTeamwisePerformanceSearch();
   });
 
   it('should display error on encouraging metrics search fields empty', () => {
-    fakeAsync(() => {
+    async(() => {
       component.ngOnInit();
       fixture.detectChanges();
       component.viewEncouragingPerformanceMetrics();
@@ -83,12 +93,10 @@ describe('PerformanceMetricsComponent', () => {
   });
 
   it('should populate class dropdown on school change in Indvidual metrics screen', () => {
-    fakeAsync(() => {
-      component.ngOnInit();
+    component.ngOnInit();
+    async(() => {
       fixture.detectChanges();
-      component.perfMetricsForm.setValue({
-        schoolId : 313
-      });
+      component.perfMetricsForm.controls['schoolId'].setValue(313);
       component.loadIndividualClassDetailsBySchool();
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#classId')).name == "classId");
@@ -96,13 +104,11 @@ describe('PerformanceMetricsComponent', () => {
   });
 
   it('should populate class dropdown on school change in classwiese metrics screen', () => {
-    fakeAsync(() => {
-      component.ngOnInit();
+    component.ngOnInit();
+    async(() => {
       fixture.detectChanges();
-      component.perfMetricsForm.setValue({
-        schoolId : 313
-      });
-      component.loadIndividualClassDetailsBySchool();
+      component.classPerfMetricsForm.controls['schoolId'].setValue(313);
+      component.loadClasswiseClassDetailsBySchool();
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#classId')).name == "classId");
     });
@@ -110,41 +116,35 @@ describe('PerformanceMetricsComponent', () => {
   });
 
   it('should populate class dropdown on school change in teamwise metrics screen', () => {
-    fakeAsync(() => {
-      component.ngOnInit();
+    component.ngOnInit();
+    async(() => {
       fixture.detectChanges();
-      component.perfMetricsForm.setValue({
-        schoolId : 313
-      });
-      component.loadIndividualClassDetailsBySchool();
+      component.teamPerfMetricsForm.controls['schoolId'].setValue(313);
+      component.loadTeamwiseClassDetailsBySchool();
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#classId')).name == "classId");      
     });
   });
 
   it('should populate class dropdown on school change in encouraging metrics screen', () => {
-    fakeAsync(() => {
-      component.ngOnInit();
+    component.ngOnInit();
+    async(() => {
       fixture.detectChanges();
-      component.perfMetricsForm.setValue({
-        schoolId : 313
-      });
-      component.loadIndividualClassDetailsBySchool();
+      component.encouragingPerfMetricsForm.controls['schoolId'].setValue(313);
+      component.loadEncouragingClassDetailsBySchool();
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css('#classId')).name == "classId");
     });
   });
 
   it('should populate populate individual metrics on clicking the view individual metrics', () => {
-    fakeAsync(() => {
-      component.ngOnInit();
+    component.ngOnInit();
+    async(() => {
       fixture.detectChanges();
-      component.perfMetricsForm.setValue({
-        schoolId : 313,
-        classId : 487,
-        month: 1,
-        week: 1
-      });
+      component.perfMetricsForm.controls['schoolId'].setValue(313);
+      component.perfMetricsForm.controls['classId'].setValue(487);
+      component.perfMetricsForm.controls['month'].setValue(1);
+      component.perfMetricsForm.controls['week'].setValue(1);
       fixture.detectChanges();
       component.viewIndividualPerformanceMetrics();
       fixture.detectChanges();
@@ -152,13 +152,11 @@ describe('PerformanceMetricsComponent', () => {
     });
   });
   it('should populate populate classwise metrics on clicking the view classwise metrics', () => {
-    fakeAsync(() => {
-      component.ngOnInit();
+    component.ngOnInit();
+    async(() => {
       fixture.detectChanges();
-      component.classPerfMetricsForm.setValue({
-        schoolId : 313,
-        classId : 487
-      });
+      component.classPerfMetricsForm.controls['schoolId'].setValue(313);
+      component.classPerfMetricsForm.controls['classId'].setValue(487);
       fixture.detectChanges();
       component.viewClasswisePerformanceMetrics();
       fixture.detectChanges();
@@ -166,13 +164,13 @@ describe('PerformanceMetricsComponent', () => {
     });
   });
   it('should populate populate teamwise metrics on clicking the view teamwise metrics', () => {
-    fakeAsync(() => {
-      component.ngOnInit();
+    component.ngOnInit();
+    async(() => {
       fixture.detectChanges();
-      component.teamPerfMetricsForm.setValue({
-        schoolId : 313,
-        classId : 487
-      });
+      component.teamPerfMetricsForm.controls['schoolId'].setValue(313);
+      component.teamPerfMetricsForm.controls['classId'].setValue(487);
+      component.teamPerfMetricsForm.controls['month'].setValue(1);
+      component.teamPerfMetricsForm.controls['week'].setValue(1);
       fixture.detectChanges();
       component.viewTeamwisePerformanceMetrics();
       fixture.detectChanges();
@@ -180,20 +178,27 @@ describe('PerformanceMetricsComponent', () => {
     });
   });
   it('should populate populate encouraging metrics on clicking the compare metrics', () => {
-    fakeAsync(() => {
-      component.ngOnInit();
+    component.ngOnInit();
+    async(() =>{
       fixture.detectChanges();
-      component.encouragingPerfMetricsForm.setValue({
-        schoolId : 313,
-        classId : 487,
-        month1: 1,
-        month2: 2
-      });
+      component.encouragingPerfMetricsForm.controls['schoolId'].setValue(313);
+      component.encouragingPerfMetricsForm.controls['classId'].setValue(487);
+      component.encouragingPerfMetricsForm.controls['month1'].setValue(1);
+      component.encouragingPerfMetricsForm.controls['month2'].setValue(2);
       fixture.detectChanges();
-      component.viewIndividualPerformanceMetrics();
+      component.viewEncouragingPerformanceMetrics();
       fixture.detectChanges();
       expect(component.encouragingMetricsSource != null && component.encouragingMetricsSource.metrics !=null)      
     });
   });
+
+  it('Should load the week dropdown without search param', async(() => {
+
+    component.ngOnInit();
+    component.populateWeekWorkingDays();
+    fixture.detectChanges();
+
+    expect(component.weekDays.size <= 0);
+}));
 
 });
