@@ -1,26 +1,17 @@
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-    HttpInterceptor,
-    HttpRequest,
-    HttpResponse,
-    HttpHandler,
-    HttpEvent,
-    HttpErrorResponse,
-    HttpHeaders
-} from '@angular/common/http';
-
-import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { ErrorDialogModalComponent } from '../error-dialog/errordialog.modal.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { ErrorDialogModalComponent } from '../error-dialog/errordialog.modal.component';
 
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
 
     private allowedStatusCodes: number[] = [200, 201, 202, 203, 204, 205, 206, 207, 208, 226];
 
-    constructor(private modalService: NgbModal,private router: Router) { }
+    constructor(private modalService: NgbModal, private router: Router) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -28,8 +19,8 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         //If not login url then add headers
         if (request.url.indexOf('api/security/login') == -1) {
 
-            if(localStorage.getItem('apiToken') === undefined ||
-             localStorage.getItem('apiToken') ==''){
+            if (localStorage.getItem('apiToken') === undefined ||
+                localStorage.getItem('apiToken') == '') {
                 const activeModal = this.modalService.open(ErrorDialogModalComponent, { size: 'lg', container: 'nb-layout' });
                 activeModal.componentInstance.modalContent = 'Session expired or invalid.Login again';
                 this.router.navigate(['/login']);
@@ -38,7 +29,6 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             // clone the request to add the api authentication key to header.
             newRequest = request.clone({
                 headers: new HttpHeaders({
-                    'Content-Type': 'application/json',
                     'apitoken': localStorage.getItem('apiToken'),
                     'userid': localStorage.getItem('userId')
                 })
@@ -50,16 +40,16 @@ export class HttpConfigInterceptor implements HttpInterceptor {
 
                 if (event instanceof HttpResponse) {
                     // if block to check the http allowed status code and show the error message popup
-                    if(event.status == 504){
+                    if (event.status == 504) {
                         const activeModal = this.modalService.open(ErrorDialogModalComponent, { size: 'lg', container: 'nb-layout' });
                         activeModal.componentInstance.modalContent = 'Gateway timeout, Please retry after sometime!';
-                    }else if(event.status == 401){
+                    } else if (event.status == 401) {
                         const activeModal = this.modalService.open(ErrorDialogModalComponent, { size: 'lg', container: 'nb-layout' });
                         activeModal.componentInstance.modalContent = 'Session expired or invalid.Login again';
                         this.router.navigate(['/login']);
                         // Invalidate local storage
                         localStorage.clear();
-                    }else if (!this.allowedStatusCodes.includes(event.status)) {
+                    } else if (!this.allowedStatusCodes.includes(event.status)) {
                         const activeModal = this.modalService.open(ErrorDialogModalComponent, { size: 'lg', container: 'nb-layout' });
                         activeModal.componentInstance.modalContent = 'Error Occured, Please try again later';
                     }
@@ -70,7 +60,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             catchError((error: HttpErrorResponse) => {
                 let data = {};
                 console.log('Error--->>>', JSON.stringify(error));
-                if(error.status == 504){
+                if (error.status == 504) {
                     const activeModal = this.modalService.open(ErrorDialogModalComponent, { size: 'lg', container: 'nb-layout' });
                     activeModal.componentInstance.modalContent = 'Session timeout, Please retry after sometime!';
                     return throwError(error);
