@@ -320,7 +320,7 @@
                 <div class="col-sm-2">
                     <label for="className" class="col-form-label required">Class</label>
                     <div class="input-group">
-                        <select [(ngModel)]="selectedClassName" id="classId" name="classId" formControlName="classId" class="form-control form-control-sm" [ngClass]="displayFieldCss('classId')">
+                        <select [(ngModel)]="selectedClassName" id="classId" name="classId" formControlName="classId" class="form-control form-control-sm">
                             <option value=''>Select</option>
                             <option *ngFor="let classNameFromResponse of distinctClassList" [ngValue]="classNameFromResponse">
                                 {{classNameFromResponse}}

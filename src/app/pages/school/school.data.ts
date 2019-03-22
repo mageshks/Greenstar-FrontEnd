@@ -5,6 +5,66 @@ export class SchoolData {
     
     public static schoolDetail: ISchoolDetail = {} as ISchoolDetail;
 
+    public static getSchoolTableSetting(): any {
+        let settings: any = {
+          edit: {
+            editButtonContent: '<i class="ion-edit"></i>'
+          },
+          delete: {
+            deleteButtonContent: '<i class="ion-eye"></i>'
+          },
+          mode: 'external',
+          pager: { display: true, perPage: 5 },
+          actions: { add: false, position: 'right' },
+    
+          columns: {
+            schoolName: {
+              title: 'School Name',
+              type: 'string',
+            },
+            address: {
+              title: 'Address',
+              type: 'string',
+            },
+            district: {
+              title: 'District',
+              type: 'string',
+            }
+          }
+        };    
+        return settings;
+      }
+
+      public static getSchoolTableRestrictedSetting(): any {
+        let settings: any = {
+        edit: {
+            editButtonContent: '<i class="ion-edit"></i>'
+            },
+            delete: {
+            deleteButtonContent: '<i class="ion-eye"></i>'
+            },
+          mode: 'external',
+          pager: { display: true, perPage: 5 },
+          actions: { add: false, edit:false, position: 'right' },
+    
+          columns: {
+            schoolName: {
+              title: 'School Name',
+              type: 'string',
+            },
+            address: {
+              title: 'Address',
+              type: 'string',
+            },
+            district: {
+              title: 'District',
+              type: 'string',
+            }
+          }
+        };    
+        return settings;
+      }
+
     public static getClassTableSetting(action: string): any {
         let settings: any;
         if (action == 'view') {

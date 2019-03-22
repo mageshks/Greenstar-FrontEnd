@@ -18,8 +18,8 @@ export class LoginComponent implements OnInit {
   public ngOnInit(): void {
     localStorage.clear();
     this.loginForm = this.formBuilder.group({
-      userId: ['', Validators.required],
-      password: ['', Validators.required]
+      userId: ['panneer', Validators.required],
+      password: ['panneer', Validators.required]
     });
   }
 

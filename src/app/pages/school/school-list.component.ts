@@ -6,6 +6,7 @@ import { CommonService } from '../common/common.service';
 import { SchoolComponent } from './school.component';
 import { ISchoolSearchData } from './school.interface';
 import { SchoolService } from './school.service';
+import { SchoolData } from './school.data';
 
 @Component({
   selector: 'ngx-school',
@@ -25,7 +26,7 @@ export class SchoolListComponent implements OnInit {
 
   // performance param table setting
   public schoolTableData: LocalDataSource = new LocalDataSource();
-  public schoolTableParamSetting: any = this.getSchoolTableSetting();
+  public schoolTableParamSetting: any;
 
   constructor(private modalService: NgbModal,
     private commonService: CommonService,
@@ -39,6 +40,13 @@ export class SchoolListComponent implements OnInit {
     this.loadSearchDropDowns();
     this.schoolSearchData.stateName = "--Select State--";
     this.schoolSearchData.district = "--Select District--";
+
+    // school table setting based on logged user role
+    if (this.isGrantedRole()) {
+      this.schoolTableParamSetting = SchoolData.getSchoolTableSetting();
+    } else {
+      this.schoolTableParamSetting = SchoolData.getSchoolTableRestrictedSetting();
+    }
   }
 
   private loadSearchDropDowns() {
@@ -53,37 +61,6 @@ export class SchoolListComponent implements OnInit {
         this.searchDropdownLoading = false;
       }
     );
-  }
-
-  public getSchoolTableSetting(): any {
-    let settings: any = {
-      edit: {
-        editButtonContent: '<i class="ion-edit"></i>'
-      },
-      delete: {
-        deleteButtonContent: '<i class="ion-eye"></i>'
-      },
-      mode: 'external',
-      pager: { display: true, perPage: 5 },
-      actions: { add: false, position: 'right' },
-
-      columns: {
-        schoolName: {
-          title: 'School Name',
-          type: 'string',
-        },
-        address: {
-          title: 'Address',
-          type: 'string',
-        },
-        district: {
-          title: 'District',
-          type: 'string',
-        }
-      }
-    };
-
-    return settings;
   }
 
   // On change of state set corresponding district to the district dropdown
@@ -146,7 +123,6 @@ export class SchoolListComponent implements OnInit {
 
   public isGrantedRole(): boolean {
     const restrictedRole = 'Event POC';
-    //const restrictedRole = 'PMO';
     if (restrictedRole === localStorage.getItem('roleName')) {
       return false;
     } else {
