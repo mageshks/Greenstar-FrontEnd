@@ -70,34 +70,34 @@
                         <div class="col-sm-8 text-left errormsg">
                             <span id="errorSpanMsg" *ngIf="isSearchDataNotValid"> {{searchDataErrorMsg}} </span>
                         </div>
-                        <div class="col-sm-2 text-right">
+                        <div class="col-sm-2 text-right pt-2">
                             <button class="btn btn-primary btn-sm" type="button" (click)="resetPerformanceSearch();">Reset</button>
                         </div>
-                        <div class="col-sm-2 text-right">
+                        <div class="col-sm-2 text-right pt-2">
                             <button class="btn btn-primary btn-sm" type="submit">Search</button>
                         </div>
                     </div>
                 </form>
 
                 <div class="row pt-4">
-                    <div class="col-sm-2">
+                    <div class="col-sm-2 pt-2">
                         <button class="btn btn-primary btn-sm" (click)="openBulkUploadMmodal();">Bulk Upload</button>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 pt-2">
                         <button class="btn btn-primary btn-sm" (click)="downloadTemplate();">
                             <span>Download Template</span>
                         </button>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-2 pt-2">
                         <button class="btn btn-primary btn-sm" (click)="addPerformanceData();" [disabled]="!isPerformanceAddEnabled">Add</button>
                     </div>
-                    <div class="col-sm-2 text-right">
+                    <div class="col-sm-2 text-right pt-2">
                         <nb-checkbox (change)="checkAllPerformance($event.target.checked);" [disabled]="!isPerformanceChkboxEnabled">Select All</nb-checkbox>
                     </div>
-                    <div class="col-sm-1 text-right">
+                    <div class="col-sm-1 text-right pt-2">
                         <button class="btn btn-primary btn-sm" [disabled]="!isPerformanceEditEnabled" (click)="editPerformanceData();">Edit</button>
                     </div>
-                    <div class="col-sm-2 text-right">
+                    <div class="col-sm-2 text-right pt-2">
                         <button class="btn btn-primary btn-sm" [disabled]="!isPerformanceChkboxEnabled" (click)="submitPerformanceData();">Submit</button>
                     </div>
                 </div>

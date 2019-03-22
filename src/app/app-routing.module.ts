@@ -1,21 +1,13 @@
-import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import {
-  NbAuthComponent,
-  NbLoginComponent,
-  NbLogoutComponent,
-  NbRegisterComponent,
-  NbRequestPasswordComponent,
-  NbResetPasswordComponent,
-} from '@nebular/auth';
+import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 
-import { PAGE_ROUTES } from './pages/pages-routing.module';
 
 const parentRoutes: Routes = [
   {
     path: 'greenstarui',
     children: [      
       { path: 'login', loadChildren: 'app/login/login.module#LoginModule' },
+      { path: 'logout', loadChildren: 'app/login/login.module#LoginModule' },
       { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },
     ]
   },

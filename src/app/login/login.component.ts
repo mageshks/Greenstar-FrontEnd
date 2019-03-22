@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormGroup } from '@angular/forms';
-import { Validators } from '@angular/forms';
-import { FormBuilder } from '@angular/forms';
 import { LoginService } from './login.service';
-import { IUser } from './user.interface';
 
 @Component({
   selector: 'ngx-login-pages',
@@ -19,7 +16,7 @@ export class LoginComponent implements OnInit {
   public isSpinner: boolean = false;
 
   public ngOnInit(): void {
-
+    localStorage.clear();
     this.loginForm = this.formBuilder.group({
       userId: ['', Validators.required],
       password: ['', Validators.required]
@@ -33,6 +30,7 @@ export class LoginComponent implements OnInit {
 
   public doLoginAuth(): void {
 
+    localStorage.clear();
     this.isShowErrorMsg = false;
     if (this.loginForm.valid) {
 
@@ -47,11 +45,11 @@ export class LoginComponent implements OnInit {
           if (response !== null && response !== '') {
             let menuNames = null;
             if (response.roleName === 'Admin') {
-              menuNames = 'Dashboard~School~Student~Performance Data~Performance Star~Performance Metrics~Admin';
-            } else if (response.roleName === 'Event POC') {
-              menuNames = 'Dashboard~School~Student';
+              menuNames = 'Dashboard~School~Student~Performance Data~Performance Star~Performance Metrics~Admin~Logout';
             } else if (response.roleName === 'PMO') {
-              menuNames = 'Dashboard~School~Student~~Performance Data~Performance Star';
+              menuNames = 'Dashboard~School~Student~Performance Data~Performance Star~Performance Metrics~Logout';
+            } else if (response.roleName === 'Event POC') {
+              menuNames = 'School~Student~Performance Data~Performance Star~Performance Metrics~Logout';
             } else {
               console.log('No matches found');
             }
@@ -64,7 +62,11 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('uiMenuList', menuNames);
             localStorage.setItem('userId', this.loginForm.getRawValue().userId);
 
-            this.router.navigate(['greenstarui/pages/dashboard']);
+            if (response.roleName === 'Event POC') {
+              this.router.navigate(['greenstarui/pages/school']);
+            } else {
+              this.router.navigate(['greenstarui/pages/dashboard']);
+            }
           } else {
             this.isSpinner = false;
             this.isShowErrorMsg = true;

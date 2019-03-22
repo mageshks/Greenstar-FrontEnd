@@ -36,6 +36,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Admin',
     icon: 'nb-gear',
     link: '/greenstarui/pages/admin'
+  },
+  {
+    title: 'Logout',
+    icon: 'ion-log-out',
+    link: '/greenstarui/login'
   }
 ];
 

@@ -4,19 +4,17 @@
       <i class="nb-menu"></i>
     </a>
     <div class="logo" (click)="goToHome()">
+      <span><img src="../../assets/images/greenstar.jpg" width="55" height="50"></span>
       <span>Green Star Application</span>
     </div>
   </div>
 </div>
 
-<div class="header-container">
-  <nb-actions size="small">
+<div class="header-container">  
+  <nb-actions size="medium" [class.right]="position === 'normal'" [class.left]="position === 'inverse'">
+    <nb-action class="control-item" icon="ion-log-out" nbTooltip="Logout" nbTooltipPlacement="bottom" nbTooltipStatus="info" (click)="logout()"></nb-action>   
     <nb-action>
-      <span>Welcome</span>
-      <span class="pl-2">{{userId}}</span>
-      <span class="pl-3">        
-        <a href="#" (click)="logout();">Logout</a>
-      </span>
-    </nb-action>
+      <nb-user [name]="userId" disabled></nb-user>
+    </nb-action>    
   </nb-actions>
 </div>
