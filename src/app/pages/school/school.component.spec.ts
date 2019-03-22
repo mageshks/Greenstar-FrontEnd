@@ -8,12 +8,12 @@ import { NgbActiveModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from '../../@theme/theme.module';
 import { CommonService } from '../common/common.service';
-import { CommonMockService } from '../common/common.service.mock';
+import { CommonMockService } from '../common/mock/common.service.mock';
 import { SchoolServiceMock } from './mocks/school.service.mock';
 import { SchoolComponent } from './school.component';
 import { SchoolData } from './school.data';
 import { SchoolService } from './school.service';
-import { SchoolMessageModalContent } from './schoolMessageModalContent.component';
+import { SchoolMessageModalComponent } from './school-message.modal.component';
 
 describe('School Component', () => {
 
@@ -23,7 +23,7 @@ describe('School Component', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-            declarations: [SchoolComponent, SchoolMessageModalContent],
+            declarations: [SchoolComponent, SchoolMessageModalComponent],
             providers: [NgbActiveModal,
                 { provide: SchoolService, useClass: SchoolServiceMock },
                 { provide: CommonService, useClass: CommonMockService }
@@ -43,7 +43,7 @@ describe('School Component', () => {
 
         TestBed.overrideModule(BrowserDynamicTestingModule, {
             set: {
-                entryComponents: [SchoolMessageModalContent],
+                entryComponents: [SchoolMessageModalComponent],
             },
         }).compileComponents();
 

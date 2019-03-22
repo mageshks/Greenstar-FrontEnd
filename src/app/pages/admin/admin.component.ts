@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
-import { AdminData } from './admin.data';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AdminService } from './admin.service';
-import { IAdminDetail } from './admin.interface';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AdminModalComponent } from './admin.component.modal';
+import { LocalDataSource } from 'ng2-smart-table';
 import { ValidatorUtil } from '../util/validator-util';
+import { AdminModalComponent } from './admin.component.modal';
+import { AdminData } from './admin.data';
+import { IAdminDetail } from './admin.interface';
+import { AdminService } from './admin.service';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -31,7 +30,6 @@ export class AdminComponent implements OnInit {
   private loadUserRoleMappings(): void {
     this.adminService.getUserRoleMappings().subscribe(
       (response) => {
-        console.log('User Role::' + JSON.stringify(response));
         this.userRoleDetail.load(response);
         this.isSpinner = false;
       },
@@ -93,7 +91,6 @@ export class AdminComponent implements OnInit {
         this.isSpinner = true;
         this.adminService.updateUserRoleMapping(adminDetail).subscribe(
           (response) => {
-            console.log('User Role::' + JSON.stringify(response));
             this.isSpinner = false;
             if ('SUCCESS' === response) {
               event.confirm.resolve();

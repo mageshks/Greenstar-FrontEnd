@@ -8,7 +8,7 @@ import { NgbActiveModal, NgbModalModule, NgbModule } from '@ng-bootstrap/ng-boot
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from '../../@theme/theme.module';
 import { CommonService } from '../common/common.service';
-import { CommonMockService } from '../common/common.service.mock';
+import { CommonMockService } from '../common/mock/common.service.mock';
 import { SchoolServiceMock } from './mocks/school.service.mock';
 import { SchoolListComponent } from './school-list.component';
 import { SchoolComponent } from './school.component';
@@ -58,13 +58,11 @@ describe('School List Component', () => {
 
     it('Should school list component create', async(() => {
         component.ngOnInit();
-        component.getSchoolTableSetting();
         expect(component).toBeTruthy();
     }));
 
     it('Should load the district, without selecting state dropdown', async(() => {
         component.ngOnInit();
-        component.getSchoolTableSetting();
 
         component.schoolSearchData.stateName = "--Select State--";
         component.onStateChange();
@@ -73,8 +71,7 @@ describe('School List Component', () => {
 
     it('Should load the district, while selecting state dropdown', async(() => {
         component.ngOnInit();
-        component.getSchoolTableSetting();
-
+        
         component.schoolSearchData.stateName = "TAMIL NADU";
         component.onStateChange();
         expect(component.districtList.length > 0);
@@ -83,7 +80,6 @@ describe('School List Component', () => {
     it('Should load school details without search condition, while user click on search button', () => {
 
         component.ngOnInit();
-        component.getSchoolTableSetting();
 
         component.schoolSearchData.stateName = "TAMIL NADU";
         component.onStateChange();
@@ -97,7 +93,6 @@ describe('School List Component', () => {
     it('Should load school details with search condition, while user click on search button', () => {
 
         component.ngOnInit();
-        component.getSchoolTableSetting();
 
         component.schoolSearchData.stateName = "TAMIL NADU";
         component.onStateChange();
@@ -106,13 +101,6 @@ describe('School List Component', () => {
         component.onSearch();
         expect(component.schoolTableData !== null);
     });
-
-    it('Should logged user have permission to create school.', async(() => {
-        localStorage.setItem('roleName', 'Event POC');
-        component.isGrantedRole();
-
-        expect(component.schoolTableData !== null);
-    }));
 
     /*
     it('Should user to create new school details.', async(() => {

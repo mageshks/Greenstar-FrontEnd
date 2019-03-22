@@ -15,7 +15,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
     </div>
   `
 })
-export class SchoolMessageModalContent {
+export class SchoolMessageModalComponent {
   @Input() modalmessage;
   @Input() modalheadertext;
   constructor(public activeModal: NgbActiveModal) {}

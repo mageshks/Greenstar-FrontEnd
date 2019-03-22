@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { saveAs as tempSaveAs } from 'file-saver';
 import { LocalDataSource } from 'ng2-smart-table';
-import { SchoolMessageModalContent } from '../school/schoolMessageModalContent.component';
+import { RoleService } from '../common/role.service';
+import { SchoolMessageModalComponent } from '../school/school-message.modal.component';
 import { StudentBulkUploadModalComponent } from './student-bulk-upload.component.modal';
 import { IClassSectionDetail, ISchoolDetail, ISchoolTeamCount, IStudentSearchData } from './student.interface';
 import { StudentService } from './student.service';
@@ -32,7 +33,7 @@ export class StudentListComponent implements OnInit {
 
   // class table setting
   public studentSource: LocalDataSource = new LocalDataSource();
-  public tableSetting: any = this.studentTableSetting();
+  public tableSetting: any;
 
   // Team table setting
   public teamNameTableSource: LocalDataSource = new LocalDataSource();
@@ -40,10 +41,18 @@ export class StudentListComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private studentService: StudentService) {
+    private studentService: StudentService,
+    public roleService: RoleService) {
   }
 
   ngOnInit(): void {
+
+    if (this.roleService.isGrantedRole(['Admin', 'PMO'])) {
+      this.tableSetting = this.studentTableSetting();
+    } else {
+      this.tableSetting = this.studentTableSettingRestricted();
+    }
+
     this.loadSchoolDropDown();
     this.studentSearchData.schoolId = 0;
     this.studentSearchData.classId = 0;
@@ -233,9 +242,6 @@ export class StudentListComponent implements OnInit {
     }
   }
 
-  public downloadExcelExport(): void {
-  }
-
   public onStudentCreate(event): void {
     // If any of the feilds are left blank 
     if (event.newData.teamName == null || event.newData.teamName == '' ||
@@ -308,6 +314,24 @@ export class StudentListComponent implements OnInit {
     return settings;
   }
 
+  private studentTableSettingRestricted() {
+    let settings: any = {
+      actions: { add: false, edit: false, delete: false },
+      pager: { display: true, perPage: 10 },
+      columns: {
+        studentName: {
+          title: 'Student Name',
+          type: 'string'
+        },
+        teamName: {
+          title: 'Team Name',
+          type: 'string'
+        }
+      }
+    };
+    return settings;
+  }
+
   private teamTableSettings() {
     let settings: any = {
       actions: { add: false, edit: false, delete: false },
@@ -331,7 +355,7 @@ export class StudentListComponent implements OnInit {
   }
 
   private openModal(modalheadertext, modalmessage) {
-    const modalRef = this.modalService.open(SchoolMessageModalContent);
+    const modalRef = this.modalService.open(SchoolMessageModalComponent);
     modalRef.componentInstance.modalmessage = modalmessage;
     modalRef.componentInstance.modalheadertext = modalheadertext;
   }

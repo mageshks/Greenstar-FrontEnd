@@ -18,8 +18,8 @@ export class LoginComponent implements OnInit {
   public ngOnInit(): void {
     localStorage.clear();
     this.loginForm = this.formBuilder.group({
-      userId: ['panneer', Validators.required],
-      password: ['panneer', Validators.required]
+      userId: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
@@ -56,9 +56,9 @@ export class LoginComponent implements OnInit {
             console.log('roleName', response.roleName);
             console.log('apiToken', response.apiToken);
             console.log('uiMenuList', menuNames);
+
             localStorage.setItem('roleName', response.roleName);
             localStorage.setItem('apiToken', response.apiToken);
-            // localStorage.setItem('uiMenuList', JSON.stringify(response.uiMenuList));
             localStorage.setItem('uiMenuList', menuNames);
             localStorage.setItem('userId', this.loginForm.getRawValue().userId);
 

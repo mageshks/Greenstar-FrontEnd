@@ -3,10 +3,10 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LocalDataSource } from 'ng2-smart-table';
 import { IState } from '../common/common.interface';
 import { CommonService } from '../common/common.service';
+import { SchoolMessageModalComponent } from './school-message.modal.component';
 import { SchoolData } from './school.data';
 import { ISchoolDetail } from './school.interface';
 import { SchoolService } from './school.service';
-import { SchoolMessageModalContent } from './schoolMessageModalContent.component';
 
 @Component({
   selector: 'nb-dialog',
@@ -47,7 +47,6 @@ export class SchoolComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("this.action==> " + this.action);
     this.loadTableSettings();
     if (this.action === 'create') {
       this.schoolDetail = SchoolData.createSchoolDetailObject();
@@ -90,7 +89,6 @@ export class SchoolComponent implements OnInit {
         }
         //Load district list
         this.onStateChange();
-        console.log("Retrieved school Detail Response ==> " + response);
       },
       error => {
         this.openModal('Error Occured', "Error occured while retrieving school");
@@ -150,7 +148,6 @@ export class SchoolComponent implements OnInit {
 
   public onClassDeleteConfirm(event): void {
     // Only can delete the newly added class. Exisitng class cannot be deleted due to data loss
-    console.log(event);
     if (event.data.id == undefined) {
       if (window.confirm('Are you sure you want to delete class?')) {
         this.schoolDetail.classList = event.source.data;
@@ -223,13 +220,11 @@ export class SchoolComponent implements OnInit {
   }
 
   public onEditForWeekendWorking(event): void {
-    console.log("OnEdit ==> " + event.source.data);
     this.schoolDetail.weekendWorkingDays = event.source.data;
     event.confirm.resolve();
   }
 
   public onCreateForWeekendWorking(event): void {
-    console.log("OnCreate==> " + event.source.data);
     // If any of the feilds are left blank 
     if (event.newData.workingDate == null || event.newData.workingDate == '' ||
       event.newData.reason == null || event.newData.reason == '') {
@@ -243,7 +238,6 @@ export class SchoolComponent implements OnInit {
 
   public onDeleteForWeekendWorking(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
-      console.log("OnDeleteAccept==> ");
       this.schoolDetail.weekendWorkingDays = event.source.data;
       for (let i = 0; i < this.schoolDetail.weekendWorkingDays.length; i++) {
         let workingDay = this.schoolDetail.weekendWorkingDays[i];
@@ -264,7 +258,7 @@ export class SchoolComponent implements OnInit {
     if (errorMessage != '') {
       this.openModal('Validation Error', errorMessage);
     } else {
-      this.schoolDetail.userId =  localStorage.getItem('userId');
+      this.schoolDetail.userId = localStorage.getItem('userId');
       this.schoolDetail.action = this.action;
       this.schoolService.submitSchool(this.schoolDetail).subscribe(
         (response) => {
@@ -294,7 +288,7 @@ export class SchoolComponent implements OnInit {
   }
 
   private openModal(modalheadertext, modalmessage) {
-    const modalRef = this.modalService.open(SchoolMessageModalContent);
+    const modalRef = this.modalService.open(SchoolMessageModalComponent);
     modalRef.componentInstance.modalmessage = modalmessage;
     modalRef.componentInstance.modalheadertext = modalheadertext;
   }
@@ -331,5 +325,5 @@ export class SchoolComponent implements OnInit {
     }
     return errorString;
   }
-  
+
 }

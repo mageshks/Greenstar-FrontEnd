@@ -15,7 +15,7 @@ export class ValidatorUtil {
             } else if (control instanceof FormGroup) {
                 this.validateAllFormFields(control);
             }
-   
+
         });
     }
 

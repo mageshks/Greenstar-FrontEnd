@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 
-
 const parentRoutes: Routes = [
   {
     path: 'greenstarui',
-    children: [      
+    children: [
       { path: 'login', loadChildren: 'app/login/login.module#LoginModule' },
       { path: 'logout', loadChildren: 'app/login/login.module#LoginModule' },
       { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },

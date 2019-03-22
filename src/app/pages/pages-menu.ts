@@ -1,5 +1,5 @@
-import { NbMenuItem } from '@nebular/theme';
 import { OnInit } from '@angular/core';
+import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
@@ -58,7 +58,7 @@ export class PageMenu implements OnInit {
     this.finalMenu = [];
     let menu = localStorage.getItem('uiMenuList');
 
-    if ((typeof menu !== 'undefined') && null !== menu && '' !== menu ) {
+    if ((typeof menu !== 'undefined') && null !== menu && '' !== menu) {
       let uiMenuList = menu.split('~');
 
       for (let menuObj of MENU_ITEMS) {

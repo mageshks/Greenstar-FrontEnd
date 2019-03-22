@@ -1,11 +1,10 @@
-import { OnInit, Component } from '@angular/core';
-import { PerformanceStarService } from './performance-star.service';
-import { PerformanceGenerateStarService } from './performance-star.generate.service';
-import { ISearchPerformanceStarData, ISchoolDetail, IClassSectionDetail, IStudent, IPerformanceStarData } from "./performance-star.interface";
-
-import * as jspdf from 'jspdf';
-
+import { Component, OnInit } from '@angular/core';
 import * as html2canvas from 'html2canvas';
+import * as jspdf from 'jspdf';
+import { PerformanceGenerateStarService } from './performance-star.generate.service';
+import { IClassSectionDetail, IPerformanceStarData, ISchoolDetail, ISearchPerformanceStarData, IStudent } from "./performance-star.interface";
+import { PerformanceStarService } from './performance-star.service';
+
 @Component({
     selector: 'ngx-performance',
     styleUrls: ['./performance-star.component.scss'],
@@ -338,7 +337,7 @@ export class PerformanceStarComponent implements OnInit {
             this.isClassViewable = false;
             this.isNameViewable = false;
             this.isTeamViewable = false;
-        } 
+        }
         //Reset the dropdown values
         this.searchPerformanceStarData.classId = 0;
         this.searchPerformanceStarData.month = 0;

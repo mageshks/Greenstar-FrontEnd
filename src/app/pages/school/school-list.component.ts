@@ -7,6 +7,7 @@ import { SchoolComponent } from './school.component';
 import { ISchoolSearchData } from './school.interface';
 import { SchoolService } from './school.service';
 import { SchoolData } from './school.data';
+import { RoleService } from '../common/role.service';
 
 @Component({
   selector: 'ngx-school',
@@ -29,6 +30,7 @@ export class SchoolListComponent implements OnInit {
   public schoolTableParamSetting: any;
 
   constructor(private modalService: NgbModal,
+    public roleService: RoleService,
     private commonService: CommonService,
     private schoolService: SchoolService) {
   }
@@ -42,7 +44,7 @@ export class SchoolListComponent implements OnInit {
     this.schoolSearchData.district = "--Select District--";
 
     // school table setting based on logged user role
-    if (this.isGrantedRole()) {
+    if (this.roleService.isGrantedRole(['Admin','PMO'])) {
       this.schoolTableParamSetting = SchoolData.getSchoolTableSetting();
     } else {
       this.schoolTableParamSetting = SchoolData.getSchoolTableRestrictedSetting();
@@ -119,15 +121,6 @@ export class SchoolListComponent implements OnInit {
     activeModal.componentInstance.title = 'Add School Detail';
     activeModal.componentInstance.action = 'create';
     activeModal.componentInstance.stateList = this.stateList;
-  }
-
-  public isGrantedRole(): boolean {
-    const restrictedRole = 'Event POC';
-    if (restrictedRole === localStorage.getItem('roleName')) {
-      return false;
-    } else {
-      return true;
-    }
   }
 
 }

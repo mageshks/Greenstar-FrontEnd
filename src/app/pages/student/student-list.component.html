@@ -8,7 +8,6 @@
                 <nb-card>
                     <nb-card-body [nbSpinner]="loadingDropdown" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
                         <div class="row">
-
                             <div class="col-sm-4">
                                 <label for="school" class="col-form-label required">School</label>
                                 <div class="input-group">
@@ -35,31 +34,32 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class='col-sm-2 text-right'>
-                                <label for="uploadbtn" class="col-form-label empty">*</label>
-                                <div class="input-group">
-                                    <button nbButton status="primary" id="uploadbtn"
-                                        (click)="openBulkUploadDialog()">Bulk Upload</button>
-                                </div>
-                            </div>
-                            <div class='col-sm-2 text-right'>
-                                <label for="exportbtn" class="col-form-label empty">*</label>
-                                <div class="input-group pl-4">
-                                    <button nbButton status="primary" id="exportbtn"
-                                        (click)="exportStudents()">Export</button>
-                                </div>
-                            </div>
+
                             <div class='col-sm-2 text-right'>
                                 <label for="searchbtn" class="col-form-label empty">*</label>
                                 <div class="input-group">
-                                    <button nbButton status="primary" id="searchbtn" (click)="onClassEdit()">Edit
-                                        Class</button>
+                                    <button nbButton status="primary" id="searchbtn" (click)="onClassEdit()">Search</button>
                                 </div>
                             </div>
+
+                            <div class='col-sm-2 text-right' *ngIf="roleService.isGrantedRole(['Admin','PMO']);">
+                                <label for="uploadbtn" class="col-form-label empty">*</label>
+                                <div class="input-group">                                    
+                                    <button nbButton status="primary" id="uploadbtn" (click)="openBulkUploadDialog()">Bulk Upload</button>                                  
+                                </div>
+                            </div>
+
+                            <div class='col-sm-2 text-right'>
+                                <label for="exportbtn" class="col-form-label empty">*</label>
+                                <div class="input-group">
+                                    <button nbButton status="primary" id="exportbtn"(click)="exportStudents()">Export</button>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="row" *ngIf="isSearchDataNotValid">
                             <div class="col-sm-12 pt-2 text-left text-danger">
-                                <span>Both fields are mandatory to edit students!</span>
+                                <span>Both fields are mandatory to search students!</span>
                             </div>
                         </div>
                         <div class="row" *ngIf="isBulkUploadRequestNotValid">
@@ -83,8 +83,9 @@
                                     existing teams</span>
                             </div>
                             <div class='col-sm-3 text-right pb-2'>
-                                <button nbButton status="primary" id="submitbtn"
-                                    (click)="onStudentSubmit()">Update Students</button>
+                                <span *ngIf="roleService.isGrantedRole(['Admin','PMO']);">
+                                    <button nbButton status="primary" id="submitbtn"(click)="onStudentSubmit()">Update Students</button>
+                                </span>
                             </div>
                         </div>
                         <div class='row'>

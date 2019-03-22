@@ -36,16 +36,14 @@
                         </div>
 
                         <div class='row pt-3'>
-                                <div class='col-sm-5 text-right pt-3 errormsg'>
-                                        <span *ngIf="isSearchError">Please enter mandatory fields to search school!</span>
-                                </div>
-                                <div class='col-sm-3 text-right pt-2'>
-                                        <button nbButton status="primary" (click)="onSearch()">Search</button>
-                                </div>
-                            <div class='col-sm-4 text-right pt-2'>
-                                <span *ngIf='isGrantedRole();'>
-                                    <button id="addSchool" nbButton status="primary" (click)="createSchool()">Add School</button>
-                                </span>
+                            <div class='col-sm-5 text-left pt-3 errormsg'>
+                                <span *ngIf="isSearchError">Please enter mandatory fields to search school!</span>
+                            </div>
+                            <div class='col-sm-3 text-right pt-2'>
+                                <button nbButton status="primary" (click)="onSearch()">Search</button>
+                            </div>
+                            <div class='col-sm-4 text-right pt-2' *ngIf="roleService.isGrantedRole(['Admin','PMO']);">
+                                <button id="addSchool" nbButton status="primary" (click)="createSchool()">Add School</button>
                             </div>
 
                         </div>
@@ -55,7 +53,8 @@
                     <nb-card-body [nbSpinner]="searchDataLoading" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
                         <div class='row pt-3'>
                             <div class='col-sm-12'>
-                                <ng2-smart-table [settings]="schoolTableParamSetting" (edit)="editSchool($event)" (delete)="viewSchool($event)" [source]="schoolTableData">
+                                <ng2-smart-table [settings]="schoolTableParamSetting" (edit)="editSchool($event)"
+                                    (delete)="viewSchool($event)" [source]="schoolTableData">
                                 </ng2-smart-table>
                             </div>
                         </div>

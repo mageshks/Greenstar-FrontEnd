@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-
-import { MENU_ITEMS, PageMenu } from './pages-menu';
+import { Component } from '@angular/core';
+import { PageMenu } from './pages-menu';
 
 @Component({
   selector: 'ngx-pages',
