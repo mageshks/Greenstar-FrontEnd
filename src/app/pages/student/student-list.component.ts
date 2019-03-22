@@ -149,7 +149,7 @@ export class StudentListComponent implements OnInit {
 
   // On submit after updating the students
   public onStudentSubmit() {
-    this.classSectionDetail.userId = "Magesh";
+    this.classSectionDetail.userId = localStorage.getItem('userId');
     this.classSectionDetail.schoolId = this.studentSearchData.schoolId;
     let validationError = this.validateTeamName();
     // If error exist do not proceed open the error model
