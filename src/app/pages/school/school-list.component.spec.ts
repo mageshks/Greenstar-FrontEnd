@@ -9,6 +9,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from '../../@theme/theme.module';
 import { CommonService } from '../common/common.service';
 import { CommonMockService } from '../common/mock/common.service.mock';
+import { RoleService } from '../common/role.service';
 import { SchoolServiceMock } from './mocks/school.service.mock';
 import { SchoolListComponent } from './school-list.component';
 import { SchoolComponent } from './school.component';
@@ -23,7 +24,7 @@ describe('School List Component', () => {
         TestBed.configureTestingModule({
             schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
             declarations: [SchoolListComponent, SchoolComponent],
-            providers: [NgbActiveModal,
+            providers: [NgbActiveModal, RoleService, 
                 { provide: SchoolService, useClass: SchoolServiceMock },
                 { provide: CommonService, useClass: CommonMockService }
             ],
