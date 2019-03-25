@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     // this.userService.getUsers().subscribe((users: any) => this.user = users.nick);
 
-    this.userId = localStorage.getItem('userId');
+    this.userId = localStorage.getItem('userId') +"("+ localStorage.getItem('roleName')+")";
   }
 
   toggleSidebar(): boolean {
