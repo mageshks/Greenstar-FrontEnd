@@ -1,14 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NbDialogModule, NbSpinnerModule, NbStepperModule } from '@nebular/theme';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbModalModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ThemeModule } from '../../../@theme/theme.module';
 import { PerformanceDataServiceMock } from './mocks/performance-data.service.mock';
 import { PerformanceDataUploadModalComponent } from './performance-data-upload.component.modal';
 import { PerformanceDataService } from './performance-data.service';
 
 describe('Perforamnce Data Bulk upload Component', () => {
-   
+
     let component: PerformanceDataUploadModalComponent;
     let fixture: ComponentFixture<PerformanceDataUploadModalComponent>;
 
@@ -17,7 +17,12 @@ describe('Perforamnce Data Bulk upload Component', () => {
             declarations: [PerformanceDataUploadModalComponent],
 
             providers: [
-                { provide: PerformanceDataService, useClass: PerformanceDataServiceMock }
+                {
+                    provide: PerformanceDataService, useClass: PerformanceDataServiceMock,
+                },
+                {
+                    provide: NgbActiveModal, useClass: NgbActiveModal,
+                }
             ],
             imports: [
                 FormsModule,
@@ -26,6 +31,7 @@ describe('Perforamnce Data Bulk upload Component', () => {
                 NbStepperModule,
                 NbSpinnerModule,
                 NgbModule,
+                NgbModalModule,
                 NbDialogModule.forRoot()
             ],
         })
@@ -37,7 +43,7 @@ describe('Perforamnce Data Bulk upload Component', () => {
         component = fixture.componentInstance;
 
     });
-    
+
     it('Should perforamnce data bulk upload component create', () => {
         component.ngOnInit();
         fixture.detectChanges();
