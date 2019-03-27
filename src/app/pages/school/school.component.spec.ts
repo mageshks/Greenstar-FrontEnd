@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { RouterModule } from '@angular/router';
@@ -105,6 +105,20 @@ describe('School Component', () => {
         component.onSubmitChanges();
         expect(component.schoolDetail !== null);
     });
-
+    
+    it('Should not add existing class', () => {
+        component.ngOnInit();
+        const event = {
+            newData: { className: "I", sectionName: "A" },
+            source: {data: {className: "I", sectionName: "A" }},
+            confirm: {resolve: function resolveFunction() {
+            },
+            reject: function resolveFunction() {
+          }}
+        };
+        component.schoolDetail = JSON.parse('{"id":313,"userId":null,"action":null,"schoolName":"Coimbatore Government Hr Sec School","district":"COIMBATORE","state":"TAMIL NADU","cityName":"COIMBATORE","address":"COIMBATORE","classList":[{"id":487,"className":"I","sectionName":"A"},{"id":488,"className":"I","sectionName":"B"}],"holidays":[{"id":3161,"fromDate":"2019-01-01","toDate":"2019-01-01","description":"New Year’s Day"}]}');
+        component.onClassAdd(event);
+        expect(component.schoolDetail.classList.length == 2);
+    });
 
 });

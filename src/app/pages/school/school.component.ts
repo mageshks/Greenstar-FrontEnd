@@ -112,15 +112,27 @@ export class SchoolComponent implements OnInit {
   public onChangeTab(event) { }
 
   public onClassAdd(event): void {
-    this.schoolDetail.classList.forEach((clazzDetail) => {
-      // If school and section already exist then no need to add 
-      if (clazzDetail.className == event.newData.className &&
-        clazzDetail.sectionName == event.newData.sectionName) {
-        this.openModal('Validation Message', 'Already class available with same name and section');
-        event.confirm.reject();
-      }
-    });
+    if (this.schoolDetail.classList == null || this.schoolDetail.classList.length == 0) {
+      this.setClassList(event);
+    } else {
+      let i = 1;
+      this.schoolDetail.classList.forEach((clazzDetail) => {
+        // If school and section already exist then no need to add 
+        if (clazzDetail.className == event.newData.className &&
+          clazzDetail.sectionName == event.newData.sectionName) {
+          this.openModal('Validation Message', 'Already class available with same name and section');
+          event.confirm.reject();
+          return;
+        }
+        if (this.schoolDetail.classList.length == i) {
+          this.setClassList(event);
+        }
+        i++;
+      });
+    }
+  }
 
+  private setClassList(event): void {
     // If any of the feilds are left blank 
     if (event.newData.className == null || event.newData.className == '' ||
       event.newData.sectionName == null || event.newData.sectionName == '') {
@@ -129,7 +141,6 @@ export class SchoolComponent implements OnInit {
     } else {
       this.schoolDetail.classList = event.source.data;
       event.confirm.resolve();
-      console.log(this.schoolDetail.classList);
     }
   }
 
