@@ -234,7 +234,7 @@ export class PerformanceMetricsComponent implements OnInit {
         if (this.teamPerfMetricsForm.valid) {
             let searchPerformanceMetrics: ISearchPerformanceMetrics = {} as ISearchPerformanceMetrics;
             searchPerformanceMetrics.schoolId = this.teamPerfMetricsForm.getRawValue().schoolId;
-            //searchPerformanceMetrics.classId = this.teamPerfMetricsForm.getRawValue().classId;
+            searchPerformanceMetrics.classId = this.teamPerfMetricsForm.getRawValue().classId;
             searchPerformanceMetrics.className = this.selectedClassName;
             this.loadTeamwisePerformanceMetrics(searchPerformanceMetrics);
         } else {

@@ -232,12 +232,12 @@
                             </div>
     
                             <div class="col-sm-3">
-                                <label for="className" class="col-form-label required">Class</label>
+                                <label for="className" class="col-form-label required">Class & Section</label>
                                 <div class="input-group">
-                                    <select [(ngModel)]="selectedClassName" id="classId" name="classId" formControlName="classId" class="form-control form-control-sm">
+                                    <select id="classId" name="classId" formControlName="classId" class="form-control form-control-sm">
                                         <option value=''>Select</option>
-                                        <option *ngFor="let classNameFromResponse of distinctClassList" [ngValue]="classNameFromResponse">
-                                            {{classNameFromResponse}}
+                                        <option *ngFor="let class of classList" value={{class.id}}>
+                                            {{class.classAndSectionName}}
                                         </option>
                                     </select>
                                 </div>
