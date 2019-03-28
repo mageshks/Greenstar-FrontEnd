@@ -52,7 +52,6 @@ export class PerformanceStarComponent implements OnInit {
 
     public performanceStarData: IPerformanceStarData = {} as IPerformanceStarData;
 
-
     constructor(private performanceStarService: PerformanceStarService,
         private performanceGenerateStarService: PerformanceGenerateStarService) {
     }
@@ -79,7 +78,6 @@ export class PerformanceStarComponent implements OnInit {
             this.performanceStarData = {} as IPerformanceStarData;
             this.performanceGenerateStarService.getPerformanceStar(this.searchPerformanceStarData).subscribe(
                 (response) => {
-                    console.log("Response ==> " + JSON.stringify(response));
                     this.performanceStarData = response;
                     if (this.performanceStarData.paramOneMonthColorCodes == null) {
                         this.isDataAvailable = false;
@@ -108,14 +106,16 @@ export class PerformanceStarComponent implements OnInit {
     public printStar() {
         this.loading = true;
         let starSVGS = document.getElementsByClassName("svgClass");
-        console.log("Star Svg's count ==> " + starSVGS.length);
-        console.log("starSVGS[0] ==> " + starSVGS[0]);
+        //console.log("Star Svg's count ==> " + starSVGS.length);
+        //console.log("starSVGS[0] ==> " + starSVGS[0]);
+
         // Set the height and width of the star so that the svg will render properly in pdf
         starSVGS[0].setAttribute("width", "500");
         starSVGS[0].setAttribute("height", "500");
         //Dynamically choose the parent since the second step content won't be enabled on the first rendering
         let paramContent = document.getElementsByName("starDisplayContent")[0];
-        console.log("Content to be printed ==> " + paramContent.id);
+
+        //console.log("Content to be printed ==> " + paramContent.id);
 
         html2canvas(paramContent, { logging: true }).then(canvas => {
             const paramStar = canvas.toDataURL('image/png')
@@ -126,7 +126,7 @@ export class PerformanceStarComponent implements OnInit {
             starSVGS[0].setAttribute("width", "100%");
             starSVGS[0].setAttribute("height", "100%");
             this.loading = false;
-            console.log("Star Printed!");
+            // console.log("Star Printed!");
         });
     }
 
@@ -143,7 +143,6 @@ export class PerformanceStarComponent implements OnInit {
             this.loadingDropdown = true;
             this.performanceStarService.getSchools().subscribe(
                 (response) => {
-                    console.log(JSON.stringify(response));
                     this.schoolList = response;
                     this.enableSearchComponents(selectedValue);
                     this.loadingDropdown = false;
@@ -183,7 +182,6 @@ export class PerformanceStarComponent implements OnInit {
             schoolDetail.id = this.searchPerformanceStarData.schoolId;
             this.performanceStarService.getClassList(schoolDetail).subscribe(
                 (response) => {
-                    console.log(JSON.stringify(response));
                     this.classList = response;
                     this.loadingDropdown = false;
                 },
@@ -228,7 +226,6 @@ export class PerformanceStarComponent implements OnInit {
                 (response) => {
                     //Reset the dropdown values
                     this.teamList = [];
-                    console.log(JSON.stringify(response));
                     this.studentList = response.studentList;
                     this.teamList = response.teamList;
                     this.loadingDropdown = false;
@@ -261,8 +258,6 @@ export class PerformanceStarComponent implements OnInit {
     }
 
     public onChangeStudentChange() {
-        console.log("searchPerformanceStarData ==> ");
-        console.log(this.searchPerformanceStarData);
         this.studentName = this.getStudentSelectedValue(this.searchPerformanceStarData.studentId);
         // Reset other dropdowns
         this.searchPerformanceStarData.month = 0;
@@ -276,9 +271,6 @@ export class PerformanceStarComponent implements OnInit {
     }
 
     private getStudentSelectedValue(studentId: number): string {
-        console.log("searchPerformanceStarData in change method==> ");
-        console.log(this.searchPerformanceStarData);
-        console.log(this.studentList);
         if (studentId == 0) {
             return "--Select--"
         }

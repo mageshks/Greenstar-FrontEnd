@@ -63,7 +63,6 @@ export class StudentListComponent implements OnInit {
   private loadSchoolDropDown() {
     this.studentService.getSchools().subscribe(
       (response) => {
-        console.log(response);
         this.schoolList = response;
       },
       error => {

@@ -153,7 +153,6 @@ export class SchoolComponent implements OnInit {
     } else {
       this.schoolDetail.classList = event.source.data;
       event.confirm.resolve();
-      console.log(this.schoolDetail.classList);
     }
   }
 
@@ -178,7 +177,6 @@ export class SchoolComponent implements OnInit {
       this.openModal('Message', 'Existing class in DB cannot be deleted it will erase entire performance data for the class. You can rename it!');
       event.confirm.reject();
     }
-    console.log(this.schoolDetail.classList);
   }
 
   public onParameterEdit(event): void {

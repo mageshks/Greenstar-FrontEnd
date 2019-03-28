@@ -340,7 +340,6 @@ export class PerformanceMetricsComponent implements OnInit {
 
             this.performanceMetricsService.getWeekDaysByMonth(searchPerformanceMetrics).subscribe(
                 (response) => {
-                    console.log(response.result);
                     this.weekDays = response.result;
                     this.isSpinner = false;
                 },

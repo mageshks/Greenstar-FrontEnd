@@ -1,10 +1,9 @@
 import { Component } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { PerformanceDataService } from "./performance-data.service";
 
 @Component({
-    selector: 'ngx-modal',
-    template: `
+  selector: 'ngx-modal',
+  template: `
     <div class="modal-header">
       <span>Alert</span>
       <button class="close" aria-label="Close" (click)="closeModal()">
@@ -21,19 +20,12 @@ import { PerformanceDataService } from "./performance-data.service";
 })
 export class PerformanceDataSuccessModalComponent {
 
-    public modalContent: string;
+  public modalContent: string;
 
-    constructor(
-        private activeModal: NgbActiveModal,
-        private performanceDataService: PerformanceDataService
-    ) { }
+  constructor(private activeModal: NgbActiveModal) { }
 
-    public uploadBulkData(): void {
-
-    }
-
-    public closeModal(): void {
-        this.activeModal.close();
-    }
+  public closeModal(): void {
+    this.activeModal.close();
+  }
 
 }

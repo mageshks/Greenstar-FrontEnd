@@ -101,7 +101,6 @@ export class StudentBulkUploadModalComponent implements OnInit {
             this.studentService.bulkUploadStudentData(formData).subscribe(
                 (response) => {
                     this.isSpinner = false;
-                    console.log("response ==> " + response);
                     if (response == 'Bulk Uplaod Successful!') {
                         this.isShowSuccessMsg = true;
                         this.isDisableButton = true;
