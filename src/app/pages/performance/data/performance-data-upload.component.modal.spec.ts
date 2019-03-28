@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NbDialogModule, NbSpinnerModule, NbStepperModule } from '@nebular/theme';
-import { NgbModule, NgbModalModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ThemeModule } from '../../../@theme/theme.module';
 import { PerformanceDataServiceMock } from './mocks/performance-data.service.mock';
 import { PerformanceDataUploadModalComponent } from './performance-data-upload.component.modal';
@@ -15,14 +15,9 @@ describe('Perforamnce Data Bulk upload Component', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [PerformanceDataUploadModalComponent],
-
             providers: [
-                {
-                    provide: PerformanceDataService, useClass: PerformanceDataServiceMock,
-                },
-                {
-                    provide: NgbActiveModal, useClass: NgbActiveModal,
-                }
+                { provide: PerformanceDataService, useClass: PerformanceDataServiceMock },
+                { provide: NgbActiveModal, useClass: NgbActiveModal }
             ],
             imports: [
                 FormsModule,
@@ -50,7 +45,7 @@ describe('Perforamnce Data Bulk upload Component', () => {
         expect(component).toBeTruthy();
     });
 
-    /*
+
     it('Should close the data bulk upload modal popup alert', () => {
         component.ngOnInit();
         component.closeModal();
@@ -97,21 +92,9 @@ describe('Perforamnce Data Bulk upload Component', () => {
 
     it('Should upload the performance bulk upload excel file', () => {
         component.ngOnInit();
-
-        const blob = new Blob([""], { type: "text/html" });
-        blob["lastModifiedDate"] = "03/20/2019";
-        blob["name"] = "text.xlsx";
-
-        const file = <File>blob;
-
-        const fileList = {
-            0: file,
-            length: 1,
-            item: (index: number) => file
-        };
-
+        component.uploadFile = new File([""], "SSVM_Matriculation_school_I_1.xlsx", { type: 'application/octet-stream' });
         component.uploadBulkData();
         expect(component).toBeTruthy();
     });
-    */
+
 });
