@@ -47,7 +47,7 @@ describe('Login Component', () => {
         expect(component.isShowErrorMsg === true);
     }));
 
-    it('Login Module: Should login Admin User', async(() => {
+    it('Login Module: Should login Admin User', () => {
         component.ngOnInit();
 
         component.loginForm.controls['userId'].setValue('panneer');
@@ -59,9 +59,9 @@ describe('Login Component', () => {
         expect(localStorage.getItem('userId') === 'panneer');
         expect(localStorage.getItem('roleName') === 'Admin');
         expect(localStorage.getItem('apiToken') !== null);
-    }));
+    });
 
-    it('Login Module: Should login PMO User', async(() => {
+    it('Login Module: Should login PMO User', () => {
         component.ngOnInit();
 
         component.loginForm.controls['userId'].setValue('magesh');
@@ -74,9 +74,9 @@ describe('Login Component', () => {
         expect(localStorage.getItem('userId') === 'magesh');
         expect(localStorage.getItem('roleName') === 'PMO');
         expect(localStorage.getItem('apiToken') !== null);
-    }));
+    });
 
-    it('Login Module: Should login Event POC User', async(() => {
+    it('Login Module: Should login Event POC User', () => {
         component.ngOnInit();
 
         component.loginForm.controls['userId'].setValue('bharath');
@@ -88,9 +88,9 @@ describe('Login Component', () => {
         expect(localStorage.getItem('userId') === 'bharath');
         expect(localStorage.getItem('roleName') === 'Event POC');
         expect(localStorage.getItem('apiToken') !== null);
-    }));
+    });
 
-    it('Login Module: Should login Invalid user', async(() => {
+    it('Login Module: Should login Invalid user', () => {
         component.ngOnInit();
 
         component.loginForm.controls['userId'].setValue('senthil');
@@ -98,6 +98,6 @@ describe('Login Component', () => {
 
         component.doLoginAuth();
         expect(component.isShowErrorMsg === true);
-    }));
+    });
 
 });

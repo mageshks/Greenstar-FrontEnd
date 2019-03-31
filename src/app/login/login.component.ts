@@ -36,11 +36,7 @@ export class LoginComponent implements OnInit {
     localStorage.clear();
     this.isShowErrorMsg = false;
     if (this.loginForm.valid) {
-      this.isSpinner = true;
-      
-      const formData: FormData = new FormData();
-      formData.append('userId', this.loginForm.getRawValue().userId);
-      formData.append('password', this.loginForm.getRawValue().password);
+      this.isSpinner = true;      
       const user = { "username": this.loginForm.getRawValue().userId, "password": this.loginForm.getRawValue().password };
       
       this.loginService.userLogin(user).subscribe(
