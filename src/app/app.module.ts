@@ -9,6 +9,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UserIdleModule } from 'angular-user-idle';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -23,10 +24,10 @@ import { HttpConfigInterceptor } from './interceptor/httpconfig.interceptor';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
+    UserIdleModule.forRoot({idle: 300, timeout: 30, ping: 10})
   ],
   entryComponents: [
     ErrorDialogModalComponent

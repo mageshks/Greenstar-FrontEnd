@@ -34,6 +34,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 })
             });
         }
+
         // Forward the request
         return next.handle(newRequest).pipe(
             map((event: HttpEvent<any>) => {
@@ -59,18 +60,26 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             // catch error block to check error and show to error popup alert.
             catchError((error: HttpErrorResponse) => {
                 let data = {};
-                console.log('Error--->>>', JSON.stringify(error));
+                console.log('Error ::', JSON.stringify(error));
                 if (error.status == 504) {
                     const activeModal = this.modalService.open(ErrorDialogModalComponent, { size: 'lg', container: 'nb-layout' });
                     activeModal.componentInstance.modalContent = 'Session timeout, Please retry after sometime!';
                     return throwError(error);
                 }
-                data = {
-                    reason: error && error.error.reason ? error.error.reason : '',
-                    status: error.status
-                };
-                const activeModal = this.modalService.open(ErrorDialogModalComponent, { size: 'lg', container: 'nb-layout' });
-                activeModal.componentInstance.modalContent = 'Error Occured, Please try again later';
+                if (error.status == 403) {
+                    const activeModal = this.modalService.open(ErrorDialogModalComponent, { size: 'lg', container: 'nb-layout' });
+                    activeModal.componentInstance.modalContent = 'User not authorized to access this link!';
+                    return throwError(error);
+                }
+                // 401 occurs only in case of login with wrong credentials
+                if (error.status != 401) {
+                    data = {
+                        reason: error && error.error.reason ? error.error.reason : '',
+                        status: error.status
+                    };
+                    const activeModal = this.modalService.open(ErrorDialogModalComponent, { size: 'lg', container: 'nb-layout' });
+                    activeModal.componentInstance.modalContent = 'Error Occured, Please try again later';
+                }
                 return throwError(error);
             }));
     }

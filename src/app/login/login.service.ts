@@ -13,7 +13,7 @@ export class LoginService {
     constructor(private http: HttpClient) {
     }
 
-    public userLogin(formData: FormData): Observable<any> {
+    public userLogin(formData: any): Observable<any> {
         return this.http.post(API_URL + '/security/login', formData, { headers: this.headerValue });
     }
 

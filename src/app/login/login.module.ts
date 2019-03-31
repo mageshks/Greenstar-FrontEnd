@@ -9,9 +9,10 @@ import { PagesLoginComponent } from './pages-login.component';
 import { ThemeModule } from '../@theme/theme.module';
 import { LoginService } from './login.service';
 import { NbSpinnerModule } from '@nebular/theme';
+import { SessionoutDialogModalComponent } from './sessionout.modal.component';
 
 const LOGIN_PAGES_COMPONENTS = [
-  PagesLoginComponent, LoginComponent
+  PagesLoginComponent, LoginComponent, SessionoutDialogModalComponent
 ];
 
 @NgModule({
@@ -25,6 +26,9 @@ const LOGIN_PAGES_COMPONENTS = [
   ],
   providers: [
     LoginService
-  ]
+  ],
+  entryComponents: [
+    SessionoutDialogModalComponent
+  ],
 })
 export class LoginModule { }
