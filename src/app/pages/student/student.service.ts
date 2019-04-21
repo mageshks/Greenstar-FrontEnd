@@ -17,7 +17,7 @@ export class StudentService {
 
     public getSchools(): Observable<any> {
         //Set the schools assigned if Event POC
-        let schoolIds;
+        let schoolIds=' ';
         if(localStorage.getItem('roleName') == 'Event POC'){
             schoolIds = localStorage.getItem('assignedSchools');
         }

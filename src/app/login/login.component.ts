@@ -72,11 +72,10 @@ export class LoginComponent implements OnInit {
               // If Event POC then get the schools assigned to him
               this.loginService.getAssignedSchools(this.loginForm.getRawValue().userId).subscribe(
                 (response) => {
-                  console.log('',response);
+                  console.log('response',response);
                   localStorage.setItem('assignedSchools', response);
-                  this.router.navigate(['greenstarui/pages/school']);
                   this.isSpinner = false;
-                  this.isShowErrorMsg = true;
+                  this.router.navigate(['greenstarui/pages/school']);
                 },
                 error => {
                   console.log("Http Server error", error);
