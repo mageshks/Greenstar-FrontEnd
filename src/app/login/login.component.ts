@@ -74,8 +74,8 @@ export class LoginComponent implements OnInit {
                 (response) => {
                   console.log('response',response);
                   localStorage.setItem('assignedSchools', response);
-                  this.isSpinner = false;
                   this.router.navigate(['greenstarui/pages/school']);
+                  this.isSpinner = false;
                 },
                 error => {
                   console.log("Http Server error", error);
