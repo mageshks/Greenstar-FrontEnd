@@ -34,4 +34,21 @@ export class DashboardPage {
         element(by.xpath("//a[@href='/greenstarui/pages/admin']")).click();
     }
 
+    public setSearchSchoolParam() {
+        element(by.id('state')).sendKeys('TAMIL NADU');
+        element(by.id('district')).sendKeys('COIMBATORE');        
+    }
+
+    public setSearchStudentParam() {
+        element(by.id('school')).sendKeys('SSVM Matriculation school');
+        element(by.id('className')).sendKeys('I-A');        
+    }
+
+    public setSearchPerformanceDataParam() {
+        element(by.id('schoolId')).sendKeys('SSVM Matriculation school');
+        element(by.id('classId')).sendKeys('I-A');
+        element(by.id('month')).sendKeys('Jan');
+        element(by.id('week')).sendKeys('Week-1');
+    }
+
 }
