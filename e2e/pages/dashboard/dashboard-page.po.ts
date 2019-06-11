@@ -36,18 +36,38 @@ export class DashboardPage {
 
     public setSearchSchoolParam() {
         element(by.id('state')).sendKeys('TAMIL NADU');
+        browser.sleep(2000);
         element(by.id('district')).sendKeys('COIMBATORE');        
     }
 
     public setSearchStudentParam() {
         element(by.id('school')).sendKeys('SSVM Matriculation school');
+        browser.sleep(2000);
         element(by.id('className')).sendKeys('I-A');        
     }
 
     public setSearchPerformanceDataParam() {
         element(by.id('schoolId')).sendKeys('SSVM Matriculation school');
+        browser.sleep(2000);
         element(by.id('classId')).sendKeys('I-A');
         element(by.id('month')).sendKeys('Jan');
+        browser.sleep(2000);
+        element(by.id('week')).sendKeys('Week-1');
+    }
+
+    public setSearchPerformanceStarParam() {
+        element(by.id('caltype')).sendKeys('School');
+        browser.sleep(2000);
+        element(by.id('school')).sendKeys('SSVM Matriculation school');
+        element(by.id('month')).sendKeys('Jan');
+    }
+
+    public setSearchPerformanceMetricParamForIndividual() {
+        element(by.id('schoolId')).sendKeys('SSVM Matriculation school');
+        browser.sleep(2000);
+        element(by.id('classId')).sendKeys('I-A');
+        element(by.id('month')).sendKeys('Jan');
+        browser.sleep(2000);
         element(by.id('week')).sendKeys('Week-1');
     }
 
