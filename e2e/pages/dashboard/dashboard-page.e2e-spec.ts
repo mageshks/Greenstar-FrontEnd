@@ -33,6 +33,7 @@ describe('Green Star Application - e2e testing', () => {
     // school module - start
     it('When user click on school menu and it navigated to school screen.', () => {
         dashboard.navigateToSchoolScreen();
+        browser.sleep(3000);
         expect(browser.driver.getCurrentUrl()).toContain('/school');
     });
 
@@ -47,6 +48,7 @@ describe('Green Star Application - e2e testing', () => {
     // student module - start
     it('When user click on student menu and it navigated to student screen.', () => {
         dashboard.navigateToStudentScreen();
+        browser.sleep(3000);
         expect(browser.driver.getCurrentUrl()).toContain('/student');
     });
 
@@ -68,6 +70,7 @@ describe('Green Star Application - e2e testing', () => {
     // performance data module - start
     it('When user click on performance data menu and it navigated to performance data screen.', () => {
         dashboard.navigateToPerfDataScreen();
+        browser.sleep(3000);
         expect(browser.driver.getCurrentUrl()).toContain('/performancedata');
     });
 
@@ -88,6 +91,7 @@ describe('Green Star Application - e2e testing', () => {
     // performance star module - start
     it('When user click on performance star menu and it navigated to performance star screen.', () => {
         dashboard.navigateToPerfStarScreen();
+        browser.sleep(3000);
         expect(browser.driver.getCurrentUrl()).toContain('/performancestar');
     });
 
@@ -108,6 +112,7 @@ describe('Green Star Application - e2e testing', () => {
     // performance metric module - start
     it('When user click on performance metric menu and it navigated to performance metric screen-Individual Performance Metric Tab.', () => {
         dashboard.navigateToPerfMetricsScreen();
+        browser.sleep(3000);
         expect(browser.driver.getCurrentUrl()).toContain('/performancemetrics');
     });
 
