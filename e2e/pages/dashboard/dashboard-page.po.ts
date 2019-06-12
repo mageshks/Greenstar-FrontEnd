@@ -1,4 +1,4 @@
-import { browser, by, element, promise, ElementFinder, ElementArrayFinder } from 'protractor';
+import { browser, by, element } from 'protractor';
 
 export class DashboardPage {
 
@@ -34,6 +34,10 @@ export class DashboardPage {
         element(by.xpath("//a[@href='/greenstarui/pages/admin']")).click();
     }
 
+    public navigateToLoginScreen(): void {
+        element(by.xpath("//a[@href='/greenstarui/login']")).click();
+    }
+
     public setSearchSchoolParam() {
         element(by.id('state')).sendKeys('TAMIL NADU');
         browser.sleep(2000);
@@ -41,13 +45,13 @@ export class DashboardPage {
     }
 
     public setSearchStudentParam() {
-        element(by.id('school')).sendKeys('SSVM Matriculation school');
+        element(by.id('school')).sendKeys('Coimbatore Government Hr Sec School');
         browser.sleep(2000);
         element(by.id('className')).sendKeys('I-A');        
     }
 
     public setSearchPerformanceDataParam() {
-        element(by.id('schoolId')).sendKeys('SSVM Matriculation school');
+        element(by.id('schoolId')).sendKeys('Coimbatore Government Hr Sec School');
         browser.sleep(2000);
         element(by.id('classId')).sendKeys('I-A');
         element(by.id('month')).sendKeys('Jan');
@@ -58,12 +62,12 @@ export class DashboardPage {
     public setSearchPerformanceStarParam() {
         element(by.id('caltype')).sendKeys('School');
         browser.sleep(2000);
-        element(by.id('school')).sendKeys('SSVM Matriculation school');
+        element(by.id('school')).sendKeys('Coimbatore Government Hr Sec School');
         element(by.id('month')).sendKeys('Jan');
     }
 
     public setSearchPerformanceMetricParamForIndividual() {
-        element(by.id('schoolId')).sendKeys('SSVM Matriculation school');
+        element(by.id('schoolId')).sendKeys('Coimbatore Government Hr Sec School');
         browser.sleep(2000);
         element(by.id('classId')).sendKeys('I-A');
         element(by.id('month')).sendKeys('Jan');
